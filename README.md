@@ -6,7 +6,7 @@ Minun muistilista:
 
 * Tee tehtävät
 * Muista commitit
-* Ruoki kissa
+* Ruoki kissat
 
 > Apina, banaani, cembalo. - Antti Laaksonen
 
