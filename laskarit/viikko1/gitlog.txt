@@ -113,7 +113,7 @@ Date:   Sat Mar 20 13:07:54 2021 +0200
  2 files changed, 1 insertion(+)
 
 commit 249768c3ef15b27c4491f9410135dbc88a575654
-Author: asianomainen <oskarinuottonen@gmail.com>
+Author: asianomainen <oskari.nuottonen@gmail.com>
 Date:   Sat Mar 20 13:05:28 2021 +0200
 
     tiedosto.txt luotu
