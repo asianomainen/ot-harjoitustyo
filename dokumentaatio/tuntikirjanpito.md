@@ -1,4 +1,4 @@
-# Työaikakirjanpito
+# Tuntikirjanpito
 
 | pvm | aika | mitä tein  |
 | :----:|:-----| :-----|
