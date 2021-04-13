@@ -1,4 +1,4 @@
-package spaceinvaders.domain;
+package test;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -20,7 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class SpaceInvadersTest extends ApplicationTest {
+public class SpaceInvadersApplicationTest extends ApplicationTest {
 
     public static int WIDTH = 1000;
     public static int HEIGHT = 700;

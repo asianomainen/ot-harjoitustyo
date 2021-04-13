@@ -1,4 +1,4 @@
-package spaceinvaders.domain;
+package main;
 
 import javafx.application.Application;
 import javafx.geometry.*;
