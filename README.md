@@ -14,6 +14,8 @@ Sovellus on toteutettu ja testattu Javan versiolla 11.
 
 ## Komentorivitoiminnot
 
+Komentorivitoimintojen käyttäminen edellyttää niiden suorittamista **projektihakemistossa**.
+
 ### Sovelluksen käynnistäminen
 
 Sovelluksen voi käynnistää komennolla
