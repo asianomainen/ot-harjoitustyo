@@ -26,7 +26,7 @@ mvn compile exec:java -Dexec.mainClass=main.SpaceInvadersApplication
 
 ### Testaus
 
-Toistaiseksi ohjelmassa on 4 testiä, jotka testaavat vain käyttöliitymän tekstejä. Testit voi suorittaa komennolla
+Toistaiseksi ohjelmassa on 4 testiä, jotka testaavat, että käyttöliittymän nappien tekstit ovat oikeat. Testit voi suorittaa komennolla
 
 ```
 mvn test
