@@ -14,7 +14,7 @@ Sovellus on toteutettu ja testattu Javan versiolla 11.
 
 ## Komentorivitoiminnot
 
-## Sovelluksen käynnistäminen
+### Sovelluksen käynnistäminen
 
 Sovelluksen voi käynnistää komennolla
 
