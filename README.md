@@ -38,10 +38,9 @@ Testikattavuusraportin voi luoda komennolla
 mvn jacoco:report
 ```
 
-Kattavuusraporttia voi tarkastella projektin juuresta löytyvästä tiedostosta **target/site/jacoco/index.html** tai esimerkiksi Chromium-selaimessa komennolla
+Kattavuusraporttia voi tarkastella projektin juuresta löytyvästä tiedostosta **target/site/jacoco/index.html** tai esimerkiksi Chromium-selaimessa komennolla (edellyttää Chromium-selaimen asennuksen)
 
 ```
 chromium-browser target/site/jacoco/index.html
-(edellyttää Chromium-selaimen asennuksen)
 ```
 
