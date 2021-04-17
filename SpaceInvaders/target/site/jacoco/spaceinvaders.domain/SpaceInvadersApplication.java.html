@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpaceInvadersApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SpaceInvadersApplication</a> &gt; <a href="index.source.html" class="el_package">spaceinvaders.domain</a> &gt; <span class="el_source">SpaceInvadersApplication.java</span></div><h1>SpaceInvadersApplication.java</h1><pre class="source lang-java linenums">package spaceinvaders.domain;
+
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.*;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.effect.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="nc" id="L18">public class SpaceInvadersApplication extends Application {</span>
+<span class="nc" id="L19">    public static int WIDTH = 1280;</span>
+<span class="nc" id="L20">    public static int HEIGHT = 720;</span>
+<span class="nc" id="L21">    ColorInput color = new ColorInput();</span>
+<span class="nc" id="L22">    Blend blend = new Blend(BlendMode.DIFFERENCE);</span>
+
+    @Override
+    public void start(Stage stage) {
+        // Create scene for main menu
+<span class="nc" id="L27">        VBox vbButtons = new VBox();</span>
+<span class="nc" id="L28">        vbButtons.setSpacing(20);</span>
+<span class="nc" id="L29">        vbButtons.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L30">        vbButtons.setPrefSize(WIDTH, HEIGHT);</span>
+
+<span class="nc" id="L32">        Button btnStart = new Button(&quot;Start Game&quot;);</span>
+<span class="nc" id="L33">        btnStart.setStyle(&quot;-fx-font-size:40&quot;);</span>
+<span class="nc" id="L34">        Button btnSettings = new Button(&quot;Settings&quot;);</span>
+<span class="nc" id="L35">        btnSettings.setStyle(&quot;-fx-font-size:40&quot;);</span>
+<span class="nc" id="L36">        Button btnHighScores = new Button(&quot;High Scores&quot;);</span>
+<span class="nc" id="L37">        btnHighScores.setStyle(&quot;-fx-font-size:40&quot;);</span>
+<span class="nc" id="L38">        Button btnExit = new Button(&quot;Exit&quot;);</span>
+<span class="nc" id="L39">        btnExit.setStyle(&quot;-fx-font-size:40&quot;);</span>
+
+<span class="nc" id="L41">        vbButtons.getChildren().addAll(btnStart, btnSettings, btnHighScores, btnExit);</span>
+
+<span class="nc" id="L43">        Scene mainMenu = new Scene(vbButtons);</span>
+
+
+        //Create scene for game
+<span class="nc" id="L47">        Pane pane = new Pane();</span>
+<span class="nc" id="L48">        Platform.runLater(pane::requestFocus);</span>
+<span class="nc" id="L49">        pane.requestFocus();</span>
+<span class="nc" id="L50">        pane.setPrefSize(WIDTH, HEIGHT);</span>
+
+<span class="nc" id="L52">        PlayerShip ship = new PlayerShip(640, 650);</span>
+
+<span class="nc" id="L54">        Button gameBackButton = new Button(&quot;Back to Main Menu&quot;);</span>
+<span class="nc" id="L55">        gameBackButton.setDefaultButton(false);</span>
+<span class="nc" id="L56">        gameBackButton.setTranslateX(0);</span>
+<span class="nc" id="L57">        gameBackButton.setTranslateY(0);</span>
+<span class="nc" id="L58">        gameBackButton.setOnAction(event -&gt; stage.setScene(mainMenu));</span>
+
+<span class="nc" id="L60">        pane.getChildren().addAll(ship.getShape(), gameBackButton);</span>
+
+<span class="nc" id="L62">        Scene game = new Scene(pane);</span>
+
+<span class="nc" id="L64">        Map&lt;KeyCode, Boolean&gt; pressedKeys = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L66">        game.setOnKeyPressed(event -&gt; {</span>
+<span class="nc" id="L67">            pressedKeys.put(event.getCode(), Boolean.TRUE);</span>
+<span class="nc" id="L68">        });</span>
+
+<span class="nc" id="L70">        game.setOnKeyReleased(event -&gt; {</span>
+<span class="nc" id="L71">            pressedKeys.put(event.getCode(), Boolean.FALSE);</span>
+<span class="nc" id="L72">        });</span>
+
+<span class="nc" id="L74">        new AnimationTimer() {</span>
+
+            @Override
+            public void handle(long presentTime) {
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {</span>
+<span class="nc" id="L79">                    ship.moveLeft();</span>
+                }
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">                if (pressedKeys.getOrDefault(KeyCode.RIGHT, false)) {</span>
+<span class="nc" id="L83">                    ship.moveRight();</span>
+                }
+<span class="nc" id="L85">            }</span>
+<span class="nc" id="L86">        }.start();</span>
+
+
+        // Create scene for settings menu
+<span class="nc" id="L90">        GridPane stgGrid = new GridPane();</span>
+<span class="nc" id="L91">        stgGrid.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L92">        stgGrid.setPrefSize(WIDTH, HEIGHT);</span>
+<span class="nc" id="L93">        stgGrid.setHgap(20);</span>
+<span class="nc" id="L94">        stgGrid.setVgap(20);</span>
+
+<span class="nc" id="L96">        CheckBox soundCheck = new CheckBox(&quot;Sound ON&quot;);</span>
+<span class="nc" id="L97">        soundCheck.setSelected(true);</span>
+<span class="nc" id="L98">        soundCheck.setStyle(&quot;-fx-font-size:40&quot;);</span>
+
+<span class="nc" id="L100">        CheckBox invertColours = new CheckBox(&quot;Invert colours&quot;);</span>
+<span class="nc" id="L101">        invertColours.setStyle(&quot;-fx-font-size:40&quot;);</span>
+
+<span class="nc" id="L103">        Button stgBackButton = new Button(&quot;Back to Main Menu&quot;);</span>
+<span class="nc" id="L104">        stgBackButton.setStyle(&quot;-fx-font-size:30&quot;);</span>
+<span class="nc" id="L105">        GridPane.setHalignment(stgBackButton, HPos.CENTER);</span>
+
+<span class="nc" id="L107">        stgGrid.add(soundCheck, 0, 0);</span>
+<span class="nc" id="L108">        stgGrid.add(invertColours, 0, 1);</span>
+<span class="nc" id="L109">        stgGrid.add(stgBackButton, 0, 2);</span>
+
+<span class="nc" id="L111">        Scene stgMenu = new Scene(stgGrid);</span>
+
+
+        // Create scene for High Scores
+<span class="nc" id="L115">        VBox hsVBox = new VBox();</span>
+<span class="nc" id="L116">        hsVBox.setSpacing(20);</span>
+<span class="nc" id="L117">        hsVBox.setPadding(new Insets(20, 20, 20, 20));</span>
+<span class="nc" id="L118">        hsVBox.setPrefSize(WIDTH, HEIGHT);</span>
+
+<span class="nc" id="L120">        TableView&lt;String&gt; hsTable = new TableView&lt;&gt;();</span>
+<span class="nc" id="L121">        hsTable.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);</span>
+<span class="nc" id="L122">        TableColumn ranking = new TableColumn(&quot;#&quot;);</span>
+<span class="nc" id="L123">        ranking.setStyle(&quot;-fx-font-size:30&quot;);</span>
+<span class="nc" id="L124">        ranking.setMinWidth(100);</span>
+<span class="nc" id="L125">        TableColumn playerName = new TableColumn(&quot;Name&quot;);</span>
+<span class="nc" id="L126">        playerName.setStyle(&quot;-fx-font-size:30&quot;);</span>
+<span class="nc" id="L127">        playerName.setMinWidth(700);</span>
+<span class="nc" id="L128">        TableColumn time = new TableColumn(&quot;Time&quot;);</span>
+<span class="nc" id="L129">        time.setStyle(&quot;-fx-font-size:30&quot;);</span>
+<span class="nc" id="L130">        time.setMinWidth(200);</span>
+<span class="nc" id="L131">        hsTable.getColumns().addAll(ranking, playerName, time);</span>
+
+<span class="nc" id="L133">        Button hsBackButton = new Button(&quot;Back to Main Menu&quot;);</span>
+<span class="nc" id="L134">        hsBackButton.setStyle(&quot;-fx-font-size:30&quot;);</span>
+<span class="nc" id="L135">        hsVBox.setAlignment(Pos.CENTER);</span>
+
+<span class="nc" id="L137">        hsVBox.getChildren().addAll(hsTable, hsBackButton);</span>
+
+<span class="nc" id="L139">        Scene hsMenu = new Scene(hsVBox);</span>
+
+
+        // Start game button functions
+<span class="nc" id="L143">        btnStart.setOnAction(event -&gt; stage.setScene(game));</span>
+
+
+        // Settings button functions
+<span class="nc" id="L147">        btnSettings.setOnAction(event -&gt; stage.setScene(stgMenu));</span>
+<span class="nc" id="L148">        stgBackButton.setOnAction(event -&gt; stage.setScene(mainMenu));</span>
+<span class="nc" id="L149">        soundCheck.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            if (soundCheck.isSelected()) {</span>
+<span class="nc" id="L151">                soundCheck.setText(&quot;Sound ON&quot;);</span>
+            } else {
+<span class="nc" id="L153">                soundCheck.setText(&quot;Sound OFF&quot;);</span>
+            }
+<span class="nc" id="L155">        });</span>
+<span class="nc" id="L156">        invertColours.setOnAction((event) -&gt; {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            if (invertColours.isSelected()) {</span>
+<span class="nc" id="L158">                color.setPaint(Color.WHITE);</span>
+<span class="nc" id="L159">                ship.setColor(Color.GREEN);</span>
+            } else {
+<span class="nc" id="L161">                color.setPaint(Color.BLACK);</span>
+<span class="nc" id="L162">                ship.setColor(Color.ORANGERED);</span>
+            }
+
+<span class="nc" id="L165">            color.setWidth(Double.MAX_VALUE);</span>
+<span class="nc" id="L166">            color.setHeight(Double.MAX_VALUE);</span>
+<span class="nc" id="L167">            blend.setBottomInput(color);</span>
+<span class="nc" id="L168">            pane.setEffect(blend);</span>
+<span class="nc" id="L169">            vbButtons.setEffect(blend);</span>
+<span class="nc" id="L170">            hsVBox.setEffect(blend);</span>
+<span class="nc" id="L171">            stgGrid.setEffect(blend);</span>
+<span class="nc" id="L172">        });</span>
+
+
+        // High Scores button functions
+<span class="nc" id="L176">        btnHighScores.setOnAction(event -&gt; stage.setScene(hsMenu));</span>
+<span class="nc" id="L177">        hsBackButton.setOnAction(event -&gt; stage.setScene(mainMenu));</span>
+
+
+        // Exit button functions
+<span class="nc" id="L181">        btnExit.setOnAction(event -&gt; stage.close());</span>
+
+
+<span class="nc" id="L184">        stage.setResizable(false);</span>
+<span class="nc" id="L185">        stage.setScene(mainMenu);</span>
+<span class="nc" id="L186">        stage.setTitle(&quot;Space Invaders&quot;);</span>
+<span class="nc" id="L187">        stage.show();</span>
+<span class="nc" id="L188">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L191">        launch(SpaceInvadersApplication.class);</span>
+<span class="nc" id="L192">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

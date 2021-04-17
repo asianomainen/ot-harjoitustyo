@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+SpaceInvadersApplication,spaceinvaders.domain,PlayerShip,91,0,0,0,2,0,1,0,1,0
+SpaceInvadersApplication,spaceinvaders.domain,Shape,77,0,0,0,19,0,5,0,5,0
+SpaceInvadersApplication,spaceinvaders.domain,SpaceInvadersApplication.new AnimationTimer() {...},37,0,4,0,6,0,4,0,2,0
+SpaceInvadersApplication,spaceinvaders.domain,SpaceInvadersApplication,516,0,4,0,110,0,17,0,15,0
