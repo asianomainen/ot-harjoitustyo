@@ -21,7 +21,7 @@ Komentorivitoimintojen käyttäminen edellyttää niiden suorittamista **projekt
 Sovelluksen voi käynnistää komennolla
 
 ```
-mvn compile exec:java -Dexec.mainClass=main.SpaceInvadersApplication
+mvn compile exec:java -Dexec.mainClass=spaceinvaders.domain.SpaceInvadersApplication
 ```
 
 ### Testaus
