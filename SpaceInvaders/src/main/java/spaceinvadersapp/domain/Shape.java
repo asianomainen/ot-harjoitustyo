@@ -40,9 +40,4 @@ public abstract class Shape {
         Shape shape1 = (Shape) o;
         return Objects.equals(shape, shape1.shape);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(shape);
-    }
 }
