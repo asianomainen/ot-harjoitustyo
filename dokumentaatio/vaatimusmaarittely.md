@@ -14,13 +14,46 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
 
 ## Perusversion tarjoama toiminnallisuus
 
-- Pelissä tulee olemaan 10 toinen toistaan vaikeampaa tasoa.
+- Pelissä tulee olemaan 5 toinen toistaan vaikeampaa tasoa.
 - Ennätyksiä mitataan pelin läpäisynopeudella.
 - Ennätyksen (TOP 10) saavutettuaan, pelaaja voi syöttää kolmimerkkisen tunnisteen, joka tallentuu ennätyslistalle läpäisyajan kera.
 - Pelaaja voi muuttaa halutessaan seuraavia asetuksia:
   - Näppäinasetukset
   - Väriasetukset
   - Ääniasetukset
+
+## Sovelluksen eteneminen
+
+1. Käyttöliittymä
+   - [x] Napit:
+     - [x] Start Game
+     - [x] Settings
+     - [x] High Score
+     - [x] Exit
+   - [ ] Peli:
+      - [x] Aloittaa pelin
+      - [ ] Peli sulkeutuu
+        - [x] Käyttöliittymässä näkyää nappia painamalla
+        - [ ] ESC-näppäintä painamalla
+      - [x] Omalla aluksella pystyy liikkumaan
+      - [ ] Omalla aluksella pystyy ampumaan
+      - [ ] Pelissä on vihollisia
+      - [ ] Viholliset liikkuvat
+      - [ ] Vihollisia pystyy ampumaan
+      - [ ] Viholliset pystyvät ampumaan pelaajaa
+      - [ ] Viholliset liikkuvat
+      - [ ] Pelissä on esteitä (seiniä)
+      - [ ] Esteitä voi tuhota
+      - [ ] Taso vaihtuu
+   - [ ] Asetukset:
+      - [ ] Näppäinasetukset
+      - [x] Väriasetukset
+      - [x] Ääniasetukset (toistaiseksi sovellukseen ei ole lisätty ääniä)
+   - [ ] Ennätykset:
+      - [x] Ennätyslista
+      - [ ] Uudet ennätykset tallentuvat listalle
+   - [x] Exit:
+      - [x] Sulkee sovelluksen
 
 ## Jatkokehitysideoita
 
