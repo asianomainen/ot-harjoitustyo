@@ -32,9 +32,10 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
      - [x] Exit
    - [ ] Peli:
       - [x] Aloittaa pelin
-      - [ ] Peli sulkeutuu
-        - [x] Käyttöliittymässä näkyää nappia painamalla
-        - [ ] ESC-näppäintä painamalla
+      - [ ] Pelin aikana ESC-napin painaminen:
+        - [ ] Peli pysähtyy
+        - [ ] Asetuksia voi vaihtaa
+        - [ ] Pelin voi lopettaa
       - [x] Omalla aluksella pystyy liikkumaan
       - [ ] Omalla aluksella pystyy ampumaan
       - [ ] Pelissä on vihollisia
