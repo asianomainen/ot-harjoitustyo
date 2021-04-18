@@ -8,6 +8,8 @@ Tämä ohjelma emuloi Space Invaders -peliä. Pelissä on toistaiseksi luotu alu
 
 [Tuntikirjanpito](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+[Arkkitehtuuri](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
 ## Javan versio
 
 Sovellus on toteutettu ja testattu Javan versiolla 11.
@@ -21,12 +23,12 @@ Komentorivitoimintojen käyttäminen edellyttää niiden suorittamista **projekt
 Sovelluksen voi käynnistää komennolla
 
 ```
-mvn compile exec:java -Dexec.mainClass=spaceinvaders.domain.SpaceInvadersApplication
+mvn compile exec:java -Dexec.mainClass=spaceinvadersapp.Main
 ```
 
 ### Testaus
 
-Toistaiseksi ohjelmassa on 4 testiä, jotka testaavat, että käyttöliittymän nappien tekstit ovat oikeat. Testit voi suorittaa komennolla
+Toistaiseksi ohjelmassa on 10 testiä, jotka testaavat abstraktin luokan Shape periviä PlayerShape- ja PlayerBullet-luokkia.
 
 ```
 mvn test
