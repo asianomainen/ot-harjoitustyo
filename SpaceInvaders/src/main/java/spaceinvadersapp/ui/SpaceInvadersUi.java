@@ -1,5 +1,6 @@
-package spaceinvaders.domain;
+package spaceinvadersapp.ui;
 
+import spaceinvadersapp.domain.PlayerShip;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpaceInvadersApplication extends Application {
+public class SpaceInvadersUi extends Application {
     public static int WIDTH = 1280;
     public static int HEIGHT = 720;
     ColorInput color = new ColorInput();
@@ -45,19 +46,12 @@ public class SpaceInvadersApplication extends Application {
 
         //Create scene for game
         Pane pane = new Pane();
-        Platform.runLater(pane::requestFocus);
-        pane.requestFocus();
         pane.setPrefSize(WIDTH, HEIGHT);
 
-        PlayerShip ship = new PlayerShip(640, 650);
+        PlayerShip playerShip = new PlayerShip(640, 650, Color.ORANGERED);
+        Label pressEscToPause = new Label("Press ESC to return to Main Menu");
 
-        Button gameBackButton = new Button("Back to Main Menu");
-        gameBackButton.setDefaultButton(false);
-        gameBackButton.setTranslateX(0);
-        gameBackButton.setTranslateY(0);
-        gameBackButton.setOnAction(event -> stage.setScene(mainMenu));
-
-        pane.getChildren().addAll(ship.getShape(), gameBackButton);
+        pane.getChildren().addAll(playerShip.getShape(), pressEscToPause);
 
         Scene game = new Scene(pane);
 
@@ -65,6 +59,11 @@ public class SpaceInvadersApplication extends Application {
 
         game.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
+
+            if (event.getCode().equals(KeyCode.ESCAPE)) {
+                stage.setScene(mainMenu);
+                pressedKeys.clear();
+            }
         });
 
         game.setOnKeyReleased(event -> {
@@ -76,11 +75,11 @@ public class SpaceInvadersApplication extends Application {
             @Override
             public void handle(long presentTime) {
                 if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
-                    ship.moveLeft();
+                    playerShip.moveLeft();
                 }
 
                 if (pressedKeys.getOrDefault(KeyCode.RIGHT, false)) {
-                    ship.moveRight();
+                    playerShip.moveRight();
                 }
             }
         }.start();
@@ -93,20 +92,20 @@ public class SpaceInvadersApplication extends Application {
         stgGrid.setHgap(20);
         stgGrid.setVgap(20);
 
-        CheckBox soundCheck = new CheckBox("Sound ON");
-        soundCheck.setSelected(true);
-        soundCheck.setStyle("-fx-font-size:40");
+        CheckBox soundCheckBox = new CheckBox("Sound ON");
+        soundCheckBox.setSelected(true);
+        soundCheckBox.setStyle("-fx-font-size:40");
 
         CheckBox invertColours = new CheckBox("Invert colours");
         invertColours.setStyle("-fx-font-size:40");
 
-        Button stgBackButton = new Button("Back to Main Menu");
-        stgBackButton.setStyle("-fx-font-size:30");
-        GridPane.setHalignment(stgBackButton, HPos.CENTER);
+        Button btnSettingsBackToMainMenu = new Button("Back to Main Menu");
+        btnSettingsBackToMainMenu.setStyle("-fx-font-size:30");
+        GridPane.setHalignment(btnSettingsBackToMainMenu, HPos.CENTER);
 
-        stgGrid.add(soundCheck, 0, 0);
+        stgGrid.add(soundCheckBox, 0, 0);
         stgGrid.add(invertColours, 0, 1);
-        stgGrid.add(stgBackButton, 0, 2);
+        stgGrid.add(btnSettingsBackToMainMenu, 0, 2);
 
         Scene stgMenu = new Scene(stgGrid);
 
@@ -130,11 +129,11 @@ public class SpaceInvadersApplication extends Application {
         time.setMinWidth(200);
         hsTable.getColumns().addAll(ranking, playerName, time);
 
-        Button hsBackButton = new Button("Back to Main Menu");
-        hsBackButton.setStyle("-fx-font-size:30");
+        Button btnHighScoreBackToMainMenu = new Button("Back to Main Menu");
+        btnHighScoreBackToMainMenu.setStyle("-fx-font-size:30");
         hsVBox.setAlignment(Pos.CENTER);
 
-        hsVBox.getChildren().addAll(hsTable, hsBackButton);
+        hsVBox.getChildren().addAll(hsTable, btnHighScoreBackToMainMenu);
 
         Scene hsMenu = new Scene(hsVBox);
 
@@ -145,21 +144,19 @@ public class SpaceInvadersApplication extends Application {
 
         // Settings button functions
         btnSettings.setOnAction(event -> stage.setScene(stgMenu));
-        stgBackButton.setOnAction(event -> stage.setScene(mainMenu));
-        soundCheck.setOnAction(event -> {
-            if (soundCheck.isSelected()) {
-                soundCheck.setText("Sound ON");
+        btnSettingsBackToMainMenu.setOnAction(event -> stage.setScene(mainMenu));
+        soundCheckBox.setOnAction(event -> {
+            if (soundCheckBox.isSelected()) {
+                soundCheckBox.setText("Sound ON");
             } else {
-                soundCheck.setText("Sound OFF");
+                soundCheckBox.setText("Sound OFF");
             }
         });
         invertColours.setOnAction((event) -> {
             if (invertColours.isSelected()) {
                 color.setPaint(Color.WHITE);
-                ship.setColor(Color.GREEN);
             } else {
                 color.setPaint(Color.BLACK);
-                ship.setColor(Color.ORANGERED);
             }
 
             color.setWidth(Double.MAX_VALUE);
@@ -174,7 +171,7 @@ public class SpaceInvadersApplication extends Application {
 
         // High Scores button functions
         btnHighScores.setOnAction(event -> stage.setScene(hsMenu));
-        hsBackButton.setOnAction(event -> stage.setScene(mainMenu));
+        btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenu));
 
 
         // Exit button functions
@@ -188,6 +185,6 @@ public class SpaceInvadersApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch(SpaceInvadersApplication.class);
+        launch(SpaceInvadersUi.class);
     }
 }
