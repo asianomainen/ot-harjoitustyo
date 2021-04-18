@@ -46,3 +46,12 @@ Kattavuusraporttia voi tarkastella projektin juuresta löytyvästä tiedostosta 
 chromium-browser target/site/jacoco/index.html
 ```
 
+### Checkstyle
+
+Tiedostoon [checkstyle.xml](https://github.com/asianomainen/ot-harjoitustyo/blob/master/SpaceInvaders/checkstyle.xml) määritellyt, koodin luettavuuteen liittyvät, tarkistukset voi tehdä komennolla
+
+```
+ mvn jxr:jxr checkstyle:checkstyle
+```
+
+Virheilmoitukset voi tarkistaa avaamalla selaimella tiedoston _target/site/checkstyle.html_
