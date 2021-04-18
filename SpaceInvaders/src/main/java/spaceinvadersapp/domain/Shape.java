@@ -5,7 +5,7 @@ import javafx.scene.shape.Polygon;
 
 import java.util.Objects;
 
-public class Shape {
+public abstract class Shape {
     private final Polygon shape;
 
     public Shape(Polygon polygon, Color color, int x, int y) {
@@ -33,10 +33,16 @@ public class Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Shape)) {
-            return false;
+        if (this == o) {
+            return true;
         }
+        if (!(o instanceof Shape)) return false;
         Shape shape1 = (Shape) o;
         return Objects.equals(shape, shape1.shape);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape);
     }
 }
