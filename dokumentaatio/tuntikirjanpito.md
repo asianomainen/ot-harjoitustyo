@@ -16,4 +16,5 @@
 | 18.4. | 1    | Checkstyle otettu käyttöön ja koodia korjattu |
 | 22.4. | 2    | Lisätty pelissä ampumisen toiminnallisuus |
 | 23.4. | 1    | Päivitetty testejä |
-| Yhteensä | 24    |
+| 26.4. | 1    | Ensimmäinen release julkaistu |
+| Yhteensä | 25    |
