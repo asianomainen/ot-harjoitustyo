@@ -26,6 +26,20 @@ Sovelluksen voi käynnistää komennolla
 mvn compile exec:java -Dexec.mainClass=spaceinvadersapp.Main
 ```
 
+### Suoritettavan jar-tiedoston luominen
+
+jar-tiedosto luodaan komennolla
+
+```
+mvn package
+```
+
+Luotu tiedosto löytyy target-hakemistosta. Sovelluksen pystyy käynnistämään komennolla
+
+```
+java -jar target/SpaceInvadersApplication-1.0-SNAPSHOT.jar
+```
+
 ### Testaus
 
 Toistaiseksi ohjelmassa on 10 testiä, jotka testaavat abstraktin luokan Shape periviä PlayerShape- ja PlayerBullet-luokkia.
