@@ -4,7 +4,7 @@ Lataa tiedosto [SpaceInvadersApplication.jar](https://github.com/asianomainen/ot
 
 ## Ohjelman käynnistäminen
 
-Ohjelma käynnistetään siirtymällä ladatun jar-tiedoston sisältävään hakemistoon ja suorittamalla komennon
+Ohjelma käynnistetään siirtymällä ladatun jar-tiedoston sisältämään hakemistoon ja suorittamalla komennon
 
 ```
 java -jar SpaceInvadersApplication.jar
