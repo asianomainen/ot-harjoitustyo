@@ -33,13 +33,13 @@ public class PlayerShipTest {
     public void moveLeftWorks() {
         PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
         ship.moveLeft();
-        assertEquals(11.5, ship.getX(), 0);
+        assertEquals(11.5, ship.getShape().getTranslateX(), 0);
     }
 
     @Test
     public void moveRightWorks() {
         PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
         ship.moveRight();
-        assertEquals(18.5, ship.getX(), 0);
+        assertEquals(18.5, ship.getShape().getTranslateX(), 0);
     }
 }

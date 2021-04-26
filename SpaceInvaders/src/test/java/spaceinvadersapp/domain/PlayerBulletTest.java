@@ -33,13 +33,13 @@ public class PlayerBulletTest {
     public void moveLeftWorks() {
         PlayerBullet bullet = new PlayerBullet(15, 15, Color.BEIGE);
         bullet.moveLeft();
-        assertEquals(11.5, bullet.getX(), 0);
+        assertEquals(11.5, bullet.getShape().getTranslateX(), 0);
     }
 
     @Test
     public void moveRightWorks() {
         PlayerBullet bullet = new PlayerBullet(15, 15, Color.BEIGE);
         bullet.moveRight();
-        assertEquals(18.5, bullet.getX(), 0);
+        assertEquals(18.5, bullet.getShape().getTranslateX(), 0);
     }
 }

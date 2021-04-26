@@ -1,9 +1,9 @@
 package spaceinvadersapp.ui;
 
+import spaceinvadersapp.domain.PlayerBullet;
 import spaceinvadersapp.domain.PlayerShip;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,9 +12,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import spaceinvadersapp.domain.Shape;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SpaceInvadersUi extends Application {
     public static int WIDTH = 1280;
@@ -56,6 +59,7 @@ public class SpaceInvadersUi extends Application {
         Scene game = new Scene(pane);
 
         Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
+        ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
 
         game.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
@@ -81,6 +85,21 @@ public class SpaceInvadersUi extends Application {
                 if (pressedKeys.getOrDefault(KeyCode.RIGHT, false)) {
                     playerShip.moveRight();
                 }
+
+                if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
+                    PlayerBullet bullet = new PlayerBullet((int) playerShip.getShape().getTranslateX(), (int) playerShip.getShape().getTranslateY(), Color.BLACK);
+                    playerBullets.add(bullet);
+                    pane.getChildren().add(bullet.getShape());
+                }
+
+                playerBullets.forEach(Shape::moveUp);
+
+                playerBullets.stream()
+                        .filter(Shape::outOfBounds)
+                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
+                playerBullets.removeAll(playerBullets.stream()
+                        .filter(Shape::outOfBounds)
+                        .collect(Collectors.toList()));
             }
         }.start();
 

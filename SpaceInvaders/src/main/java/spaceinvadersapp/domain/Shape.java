@@ -7,12 +7,14 @@ import java.util.Objects;
 
 public abstract class Shape {
     private final Polygon shape;
+    private boolean alive;
 
     public Shape(Polygon polygon, Color color, int x, int y) {
         this.shape = polygon;
         this.shape.setFill(color);
         this.shape.setTranslateX(x);
         this.shape.setTranslateY(y);
+        this.alive = true;
     }
 
     public Polygon getShape() {
@@ -27,8 +29,12 @@ public abstract class Shape {
         this.shape.setTranslateX(this.shape.getTranslateX() + 3.5);
     }
 
-    public double getX() {
-        return this.shape.getTranslateX();
+    public void moveUp() {
+        this.shape.setTranslateY(this.shape.getTranslateY() - 5);
+    }
+
+    public boolean outOfBounds() {
+        return this.shape.getTranslateY() < 0;
     }
 
     @Override
