@@ -14,4 +14,6 @@
 | 18.4. | 1    | Koodin refaktorointia |
 | 18.4. | 2    | Testien lisäämistä |
 | 18.4. | 1    | Checkstyle otettu käyttöön ja koodia korjattu |
-| Yhteensä | 22    |
+| 22.4. | 2    | Lisätty pelissä ampumisen toiminnallisuus |
+| 23.4. | 1    | Päivitetty testejä |
+| Yhteensä | 24    |
