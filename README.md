@@ -1,6 +1,6 @@
 # Ohte harjoitustyö - Space Invaders
 
-Tämä ohjelma emuloi Space Invaders -peliä. Pelissä on toistaiseksi luotu alustava käyttöliittymä. Peliä ei itse vielä voi pelata.
+Tämä ohjelma emuloi Space Invaders -peliä. Peli on yksinpeli ja siinä on 5 vaikeutuvaa tasoa.
 
 
 ## Dokumentaatio
@@ -34,7 +34,7 @@ jar-tiedosto luodaan komennolla
 mvn package
 ```
 
-Luotu tiedosto löytyy target-hakemistosta. Sovelluksen pystyy käynnistämään komennolla
+Luotu tiedosto löytyy target-hakemistosta. jar-tiedoston pystyy käynnistämään komennolla
 
 ```
 java -jar target/SpaceInvadersApplication-1.0-SNAPSHOT.jar
