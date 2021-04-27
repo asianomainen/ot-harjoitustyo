@@ -17,4 +17,6 @@
 | 22.4. | 2    | Lisätty pelissä ampumisen toiminnallisuus |
 | 23.4. | 1    | Päivitetty testejä |
 | 26.4. | 1    | Ensimmäinen release julkaistu |
-| Yhteensä | 25    |
+| 27.4. | 1    | Sekvenssikaavion luonti testien päivittäminen |
+| 27.4. | 2    | Testien päivittäminen ja uusi release |
+| Yhteensä | 28    |
