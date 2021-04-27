@@ -1,14 +1,20 @@
 # Ohte harjoitustyö - Space Invaders
 
-Tämä ohjelma emuloi Space Invaders -peliä. Pelissä on toistaiseksi luotu alustava käyttöliittymä. Peliä ei itse vielä voi pelata.
+Tämä ohjelma emuloi Space Invaders -peliä. Peli on yksinpeli ja siinä on 5 vaikeutuvaa tasoa.
 
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
 [Tuntikirjanpito](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 [Arkkitehtuuri](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
+## Releaset
+
+[Viikko 5](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko5) (katso ohjeet ohjelman käynnistämiseen [käyttöohjeista](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md))
 
 ## Javan versio
 
@@ -34,7 +40,7 @@ jar-tiedosto luodaan komennolla
 mvn package
 ```
 
-Luotu tiedosto löytyy target-hakemistosta. Sovelluksen pystyy käynnistämään komennolla
+Luotu tiedosto löytyy target-hakemistosta. jar-tiedoston pystyy käynnistämään komennolla
 
 ```
 java -jar target/SpaceInvadersApplication-1.0-SNAPSHOT.jar
