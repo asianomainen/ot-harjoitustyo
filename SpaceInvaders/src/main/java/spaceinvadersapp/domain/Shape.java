@@ -42,7 +42,9 @@ public abstract class Shape {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Shape)) return false;
+        if (!(o instanceof Shape)) {
+            return false;
+        }
         Shape shape1 = (Shape) o;
         return Objects.equals(shape, shape1.shape);
     }
