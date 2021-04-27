@@ -3,8 +3,8 @@ package spaceinvadersapp.domain;
 import javafx.scene.paint.Color;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 public class PlayerShipTest {
 
@@ -41,5 +41,24 @@ public class PlayerShipTest {
         PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
         ship.moveRight();
         assertEquals(18.5, ship.getShape().getTranslateX(), 0);
+    }
+
+    @Test
+    public void moveUpWorks() {
+        PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
+        ship.moveUp();
+        assertEquals(10, ship.getShape().getTranslateY(), 0);
+    }
+
+    @Test
+    public void returnsTrueWhenOutOfBounds() {
+        PlayerShip ship = new PlayerShip(15, -5, Color.BEIGE);
+        assertTrue(ship.outOfBounds());
+    }
+
+    @Test
+    public void returnsFalseWhenNotOutOfBounds() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        assertFalse(ship.outOfBounds());
     }
 }

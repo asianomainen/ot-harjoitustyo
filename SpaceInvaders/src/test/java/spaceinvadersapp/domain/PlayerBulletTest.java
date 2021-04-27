@@ -3,8 +3,7 @@ package spaceinvadersapp.domain;
 import javafx.scene.paint.Color;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class PlayerBulletTest {
 
@@ -41,5 +40,24 @@ public class PlayerBulletTest {
         PlayerBullet bullet = new PlayerBullet(15, 15, Color.BEIGE);
         bullet.moveRight();
         assertEquals(18.5, bullet.getShape().getTranslateX(), 0);
+    }
+
+    @Test
+    public void moveUpWorks() {
+        PlayerBullet bullet = new PlayerBullet(15, 15, Color.BEIGE);
+        bullet.moveUp();
+        assertEquals(10, bullet.getShape().getTranslateY(), 0);
+    }
+
+    @Test
+    public void returnsTrueWhenOutOfBounds() {
+        PlayerBullet bullet = new PlayerBullet(15, -5, Color.BEIGE);
+        assertTrue(bullet.outOfBounds());
+    }
+
+    @Test
+    public void returnsFalseWhenNotOutOfBounds() {
+        PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
+        assertFalse(bullet.outOfBounds());
     }
 }
