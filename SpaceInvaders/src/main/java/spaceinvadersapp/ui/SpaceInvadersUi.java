@@ -1,5 +1,7 @@
 package spaceinvadersapp.ui;
 
+import javafx.scene.text.Text;
+import spaceinvadersapp.domain.EnemyShip;
 import spaceinvadersapp.domain.PlayerBullet;
 import spaceinvadersapp.domain.PlayerShip;
 import javafx.animation.AnimationTimer;
@@ -17,6 +19,7 @@ import spaceinvadersapp.domain.Shape;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SpaceInvadersUi extends Application {
@@ -51,15 +54,26 @@ public class SpaceInvadersUi extends Application {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
 
+        Text text = new Text(1200, 700, "Points: 0");
         PlayerShip playerShip = new PlayerShip(640, 650, Color.ORANGERED);
         Label pressEscToPause = new Label("Press ESC to return to Main Menu");
+        AtomicInteger points = new AtomicInteger();
 
-        pane.getChildren().addAll(playerShip.getShape(), pressEscToPause);
+        pane.getChildren().addAll(text, playerShip.getShape(), pressEscToPause);
 
         Scene game = new Scene(pane);
 
         Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
         ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
+        ArrayList<EnemyShip> enemies = new ArrayList<>();
+
+        for (int i = 1; i <= 5; i++) {
+            for (int j = 1; j <= 10; j++) {
+                enemies.add(new EnemyShip((j * 80), (i * 80), Color.PURPLE));
+            }
+        }
+
+        enemies.forEach(enemy -> pane.getChildren().add(enemy.getShape()));
 
         game.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
@@ -99,6 +113,30 @@ public class SpaceInvadersUi extends Application {
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
                 playerBullets.removeAll(playerBullets.stream()
                         .filter(Shape::outOfBounds)
+                        .collect(Collectors.toList()));
+
+                playerBullets.forEach(bullet -> {
+                    enemies.forEach(enemy -> {
+                        if (bullet.collision(enemy)) {
+                            bullet.setAlive(false);
+                            enemy.setAlive(false);
+                            text.setText("Points: " + (points.addAndGet(100)));
+                        }
+                    });
+                });
+
+                playerBullets.stream()
+                        .filter(Shape::getAlive)
+                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
+                playerBullets.removeAll(playerBullets.stream()
+                        .filter(Shape::getAlive)
+                        .collect(Collectors.toList()));
+
+                enemies.stream()
+                        .filter(Shape::getAlive)
+                        .forEach(enemy -> pane.getChildren().remove(enemy.getShape()));
+                enemies.removeAll(enemies.stream()
+                        .filter(Shape::getAlive)
                         .collect(Collectors.toList()));
             }
         }.start();
