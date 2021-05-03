@@ -42,7 +42,6 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
       - [ ] Viholliset liikkuvat
       - [ ] Vihollisia pystyy ampumaan
       - [ ] Viholliset pystyvät ampumaan pelaajaa
-      - [ ] Viholliset liikkuvat
       - [ ] Pelissä on esteitä (seiniä)
       - [ ] Esteitä voi tuhota
       - [ ] Taso vaihtuu

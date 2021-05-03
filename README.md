@@ -10,11 +10,11 @@ Tämä ohjelma emuloi Space Invaders -peliä. Peli on yksinpeli ja siinä on 5 v
 
 [Tuntikirjanpito](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-[Arkkitehtuuri](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+[Arkkitehtuurikuvaus](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
 ## Releaset
 
-[Viikko 5](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko5) (katso ohjeet ohjelman käynnistämiseen [käyttöohjeista](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md))
+[Viikko 5](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko5_v2) (katso ohjeet ohjelman käynnistämiseen [käyttöohjeista](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md))
 
 ## Javan versio
 
