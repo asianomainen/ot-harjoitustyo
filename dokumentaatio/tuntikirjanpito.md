@@ -21,4 +21,5 @@
 | 27.4. | 2    | Testien päivittäminen ja uusi release |
 | 29.4. | 2    | Vihollisia ilmestyy peliin ja niitä voi ampua |
 | 30.4. | 2    | jar-tiedoston luomisen error korjattu ja JavaDocin luominen |
-| Yhteensä | 32    |
+| 3.5.  | 1    | Korjattiin bugi liittyen JavaDocin luomiseen |
+| Yhteensä | 33    |
