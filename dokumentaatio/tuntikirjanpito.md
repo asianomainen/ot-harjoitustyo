@@ -19,4 +19,6 @@
 | 26.4. | 1    | Ensimmäinen release julkaistu |
 | 27.4. | 1    | Sekvenssikaavion luonti testien päivittäminen |
 | 27.4. | 2    | Testien päivittäminen ja uusi release |
-| Yhteensä | 28    |
+| 29.4. | 2    | Vihollisia ilmestyy peliin ja niitä voi ampua |
+| 30.4. | 2    | jar-tiedoston luomisen error korjattu ja JavaDocin luominen |
+| Yhteensä | 32    |
