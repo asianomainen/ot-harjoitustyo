@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SpaceInvadersUi extends Application {
-    public static int WIDTH = 1280;
+    public static int WIDTH = 960;
     public static int HEIGHT = 720;
     ColorInput color = new ColorInput();
     Blend blend = new Blend(BlendMode.DIFFERENCE);
@@ -54,7 +54,8 @@ public class SpaceInvadersUi extends Application {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
 
-        Text text = new Text(1200, 700, "Points: 0");
+        Text text = new Text(WIDTH - 150, 20, "Points: 0");
+        text.setStyle("-fx-font-size:20");
         PlayerShip playerShip = new PlayerShip(640, 650, Color.ORANGERED);
         Label pressEscToPause = new Label("Press ESC to return to Main Menu");
         AtomicInteger points = new AtomicInteger();
@@ -69,7 +70,7 @@ public class SpaceInvadersUi extends Application {
 
         for (int i = 1; i <= 5; i++) {
             for (int j = 1; j <= 10; j++) {
-                enemies.add(new EnemyShip((j * 80), (i * 80), Color.PURPLE));
+                enemies.add(new EnemyShip((j * 80), (i * 70), Color.PURPLE));
             }
         }
 
@@ -126,18 +127,22 @@ public class SpaceInvadersUi extends Application {
                 });
 
                 playerBullets.stream()
-                        .filter(Shape::getAlive)
+                        .filter(bullet -> !bullet.getAlive())
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
                 playerBullets.removeAll(playerBullets.stream()
-                        .filter(Shape::getAlive)
+                        .filter(bullet -> !bullet.getAlive())
                         .collect(Collectors.toList()));
 
                 enemies.stream()
-                        .filter(Shape::getAlive)
+                        .filter(enemy -> !enemy.getAlive())
                         .forEach(enemy -> pane.getChildren().remove(enemy.getShape()));
                 enemies.removeAll(enemies.stream()
-                        .filter(Shape::getAlive)
+                        .filter(enemy -> !enemy.getAlive())
                         .collect(Collectors.toList()));
+
+                if (playerShip.outOfBounds()) {
+                    playerShip.getShape().setTranslateX(playerShip.getShape().getTranslateX());
+                }
             }
         }.start();
 

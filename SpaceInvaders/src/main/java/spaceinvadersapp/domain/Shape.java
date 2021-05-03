@@ -42,7 +42,7 @@ public abstract class Shape {
     }
 
     public boolean getAlive() {
-        return !this.alive;
+        return this.alive;
     }
 
     public boolean collision(Shape target) {
@@ -58,6 +58,6 @@ public abstract class Shape {
             return false;
         }
         Shape shape1 = (Shape) o;
-        return Objects.equals(shape, shape1.shape);
+        return Objects.equals(this.shape, shape1.shape);
     }
 }

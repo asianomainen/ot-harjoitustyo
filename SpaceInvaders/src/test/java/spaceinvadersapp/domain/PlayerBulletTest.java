@@ -46,7 +46,7 @@ public class PlayerBulletTest {
     public void moveUpWorks() {
         PlayerBullet bullet = new PlayerBullet(15, 15, Color.BEIGE);
         bullet.moveUp();
-        assertEquals(10, bullet.getShape().getTranslateY(), 0);
+        assertEquals(5, bullet.getShape().getTranslateY(), 0);
     }
 
     @Test
@@ -59,5 +59,32 @@ public class PlayerBulletTest {
     public void returnsFalseWhenNotOutOfBounds() {
         PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
         assertFalse(bullet.outOfBounds());
+    }
+
+    @Test
+    public void returnsTrueWhenAlive() {
+        PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
+        assertTrue(bullet.getAlive());
+    }
+
+    @Test
+    public void returnsFalseWhenNotAlive() {
+        PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
+        bullet.setAlive(false);
+        assertFalse(bullet.getAlive());
+    }
+
+    @Test
+    public void returnsTrueWhenColliding() {
+        PlayerBullet bullet1 = new PlayerBullet(15, 5, Color.BEIGE);
+        PlayerBullet bullet2 = new PlayerBullet(15, 5, Color.BEIGE);
+        assertTrue(bullet1.collision(bullet2));
+    }
+
+    @Test
+    public void returnsFalseWhenNotColliding() {
+        PlayerBullet bullet1 = new PlayerBullet(15, 5, Color.BEIGE);
+        PlayerBullet bullet2 = new PlayerBullet(115, 105, Color.BEIGE);
+        assertFalse(bullet1.collision(bullet2));
     }
 }
