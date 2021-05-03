@@ -38,9 +38,9 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
         - [x] Pelin voi lopettaa
       - [x] Omalla aluksella pystyy liikkumaan
       - [x] Omalla aluksella pystyy ampumaan
-      - [ ] Pelissä on vihollisia
+      - [x] Pelissä on vihollisia
       - [ ] Viholliset liikkuvat
-      - [ ] Vihollisia pystyy ampumaan
+      - [x] Vihollisia pystyy ampumaan
       - [ ] Viholliset pystyvät ampumaan pelaajaa
       - [ ] Pelissä on esteitä (seiniä)
       - [ ] Esteitä voi tuhota
