@@ -4,7 +4,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * Class for making enemy bullets
+ * class for making enemy bullets
+ * extends abstract class Shape
+ *
+ * @see spaceinvadersapp.domain.Shape
  */
 
 public class EnemyBullet extends Shape {

@@ -4,7 +4,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * Class for making a player ship
+ * class for making a player ship
+ * extends abstract class Shape
+ *
+ * @see spaceinvadersapp.domain.Shape
  */
 
 public class PlayerShip extends Shape {

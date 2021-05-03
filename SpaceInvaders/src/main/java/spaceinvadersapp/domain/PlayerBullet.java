@@ -4,7 +4,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * Class for making player bullets
+ * class for making player bullets
+ * extends abstract class Shape
+ *
+ * @see spaceinvadersapp.domain.Shape
  */
 
 public class PlayerBullet extends Shape {
