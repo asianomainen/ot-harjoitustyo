@@ -54,13 +54,13 @@ public class SpaceInvadersUi extends Application {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
 
-        Text text = new Text(WIDTH - 150, 20, "Points: 0");
-        text.setStyle("-fx-font-size:20");
+        Text pointsText = new Text(WIDTH - 150, 20, "Points: 0");
+        pointsText.setStyle("-fx-font-size:20");
         PlayerShip playerShip = new PlayerShip(640, 650, Color.ORANGERED);
         Label pressEscToPause = new Label("Press ESC to return to Main Menu");
         AtomicInteger points = new AtomicInteger();
 
-        pane.getChildren().addAll(text, playerShip.getShape(), pressEscToPause);
+        pane.getChildren().addAll(pointsText, playerShip.getShape(), pressEscToPause);
 
         Scene game = new Scene(pane);
 
@@ -121,7 +121,7 @@ public class SpaceInvadersUi extends Application {
                         if (bullet.collision(enemy)) {
                             bullet.setAlive(false);
                             enemy.setAlive(false);
-                            text.setText("Points: " + (points.addAndGet(100)));
+                            pointsText.setText("Points: " + (points.addAndGet(100)));
                         }
                     });
                 });
