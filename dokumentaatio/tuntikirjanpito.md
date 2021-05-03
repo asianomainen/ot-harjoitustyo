@@ -23,4 +23,5 @@
 | 30.4. | 2    | jar-tiedoston luomisen error korjattu ja JavaDocin luominen |
 | 3.5.  | 1    | Korjattiin bugi liittyen JavaDocin luomiseen |
 | 3.5.  | 1    | Lisättiin bossi ja estettiin pelaajan liikkuminen kentän ulkopuolelle |
-| Yhteensä | 34    |
+| 4.5.  | 1    | Viholliset pystyvät nyt ampumaan ja tappamaan pelaajan |
+| Yhteensä | 35    |
