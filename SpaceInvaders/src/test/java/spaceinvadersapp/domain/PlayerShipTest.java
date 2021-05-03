@@ -65,14 +65,14 @@ public class PlayerShipTest {
     @Test
     public void returnsTrueWhenAlive() {
         PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
-        assertTrue(ship.getAlive());
+        assertTrue(ship.isAlive());
     }
 
     @Test
     public void returnsFalseWhenNotAlive() {
         PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
         ship.setAlive(false);
-        assertFalse(ship.getAlive());
+        assertFalse(ship.isAlive());
     }
 
     @Test

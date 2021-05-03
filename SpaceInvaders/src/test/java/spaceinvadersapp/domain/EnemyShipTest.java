@@ -65,14 +65,14 @@ public class EnemyShipTest {
     @Test
     public void returnsTrueWhenAlive() {
         EnemyShip ship = new EnemyShip(15, 5, Color.BEIGE);
-        assertTrue(ship.getAlive());
+        assertTrue(ship.isAlive());
     }
 
     @Test
     public void returnsFalseWhenNotAlive() {
         EnemyShip ship = new EnemyShip(15, 5, Color.BEIGE);
         ship.setAlive(false);
-        assertFalse(ship.getAlive());
+        assertFalse(ship.isAlive());
     }
 
     @Test

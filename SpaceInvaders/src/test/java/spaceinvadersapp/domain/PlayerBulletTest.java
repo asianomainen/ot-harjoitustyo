@@ -64,14 +64,14 @@ public class PlayerBulletTest {
     @Test
     public void returnsTrueWhenAlive() {
         PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
-        assertTrue(bullet.getAlive());
+        assertTrue(bullet.isAlive());
     }
 
     @Test
     public void returnsFalseWhenNotAlive() {
         PlayerBullet bullet = new PlayerBullet(15, 5, Color.BEIGE);
         bullet.setAlive(false);
-        assertFalse(bullet.getAlive());
+        assertFalse(bullet.isAlive());
     }
 
     @Test
