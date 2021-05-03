@@ -87,20 +87,20 @@ public abstract class Shape {
     /**
      * compares two objects to determine if they are equal
      *
-     * @param   o   the object to compare with
+     * @param   obj   the object to compare with
      *
      * @return true if the objects are equal, false if not
      */
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof Shape)) {
+        if (!(obj instanceof Shape)) {
             return false;
         }
-        Shape shape1 = (Shape) o;
+        Shape shape1 = (Shape) obj;
         return Objects.equals(this.shape, shape1.shape);
     }
 }
