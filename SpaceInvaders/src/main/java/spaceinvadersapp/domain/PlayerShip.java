@@ -27,7 +27,11 @@ public class PlayerShip extends Shape {
 
     @Override
     public void moveRight() {
+<<<<<<< HEAD
         if (this.getShape().getTranslateX() > 940) {
+=======
+        if (this.getShape().getTranslateX() > 94git 0) {
+>>>>>>> 5ed42312498614d8f488b7aa4cc8b7f25026df22
             return;
         }
 
