@@ -34,7 +34,7 @@ public abstract class Shape {
     }
 
     public void moveUp() {
-        this.shape.setTranslateY(this.shape.getTranslateY() - 5);
+        this.shape.setTranslateY(this.shape.getTranslateY() - 10);
     }
 
     public boolean outOfBounds() {
