@@ -49,6 +49,14 @@ public abstract class Shape {
     }
 
     /**
+     * moves enemy bullets down
+     */
+
+    public void moveDown() {
+        this.shape.setTranslateY(this.shape.getTranslateY() + 7.5);
+    }
+
+    /**
      * for checking if object is out of bounds (out of the application window size)
      *
      * @return true if the object is out of bounds, false if not
