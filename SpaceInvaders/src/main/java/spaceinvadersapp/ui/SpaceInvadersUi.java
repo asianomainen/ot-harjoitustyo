@@ -12,9 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class SpaceInvadersUi extends Application {
     private final static int HEIGHT = 720;
     private final ColorInput color = new ColorInput();
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
+    private double time = 0.0;
 
     @Override
     public void start(Stage stage) {
@@ -65,8 +68,10 @@ public class SpaceInvadersUi extends Application {
         Scene game = new Scene(pane);
 
         Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
+        ArrayList<PlayerShip> players = new ArrayList<>();
         ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
         ArrayList<EnemyShip> enemies = new ArrayList<>();
+        ArrayList<EnemyBullet> enemyBullets = new ArrayList<>();
         ArrayList<BossEnemyShip> bosses = new ArrayList<>();
 
         for (int i = 3; i <= 12; i++) {
@@ -76,8 +81,8 @@ public class SpaceInvadersUi extends Application {
         }
 
         enemies.forEach(enemy -> pane.getChildren().add(enemy.getShape()));
-
         bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
+        players.add(playerShip);
 
         game.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
@@ -94,6 +99,7 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
+                time += 0.05;
                 if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
                     playerShip.moveLeft();
                 }
@@ -103,12 +109,24 @@ public class SpaceInvadersUi extends Application {
                 }
 
                 if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
-                    PlayerBullet bullet = new PlayerBullet((int) playerShip.getShape().getTranslateX(), (int) playerShip.getShape().getTranslateY(), Color.BLACK);
-                    playerBullets.add(bullet);
-                    pane.getChildren().add(bullet.getShape());
+                    PlayerBullet playerBullet = new PlayerBullet((int) playerShip.getShape().getTranslateX(), (int) playerShip.getShape().getTranslateY(), Color.BLACK);
+                    playerBullets.add(playerBullet);
+                    pane.getChildren().add(playerBullet.getShape());
+                }
+
+                if (time > 2) {
+                    if (Math.random() > 0.5) {
+                        int random = randomNumberGenerator(0, enemies.size() - 1);
+                        EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
+                        enemyBullets.add(enemyBullet);
+                        pane.getChildren().add(enemyBullet.getShape());
+                    }
+
+                    time = 0;
                 }
 
                 playerBullets.forEach(Shape::moveUp);
+                enemyBullets.forEach(Shape::moveDown);
 
                 playerBullets.stream()
                         .filter(Shape::outOfBounds)
@@ -117,11 +135,25 @@ public class SpaceInvadersUi extends Application {
                         .filter(Shape::outOfBounds)
                         .collect(Collectors.toList()));
 
+                enemyBullets.stream()
+                        .filter(Shape::outOfBounds)
+                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
+                enemyBullets.removeAll(enemyBullets.stream()
+                        .filter(Shape::outOfBounds)
+                        .collect(Collectors.toList()));
+
                 playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
                     if (bullet.collision(enemy)) {
                         bullet.setAlive(false);
                         enemy.setAlive(false);
                         pointsText.setText("Points: " + (points.addAndGet(100)));
+                    }
+                }));
+
+                enemyBullets.forEach(bullet -> players.forEach(player -> {
+                    if (bullet.collision(player)) {
+                        bullet.setAlive(false);
+                        player.setAlive(false);
                     }
                 }));
 
@@ -140,10 +172,24 @@ public class SpaceInvadersUi extends Application {
                         .filter(bullet -> !bullet.isAlive())
                         .collect(Collectors.toList()));
 
+                enemyBullets.stream()
+                        .filter(bullet -> !bullet.isAlive())
+                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
+                enemyBullets.removeAll(enemyBullets.stream()
+                        .filter(bullet -> !bullet.isAlive())
+                        .collect(Collectors.toList()));
+
                 enemies.stream()
                         .filter(enemy -> !enemy.isAlive())
                         .forEach(enemy -> pane.getChildren().remove(enemy.getShape()));
                 enemies.removeAll(enemies.stream()
+                        .filter(enemy -> !enemy.isAlive())
+                        .collect(Collectors.toList()));
+
+                players.stream()
+                        .filter(enemy -> !enemy.isAlive())
+                        .forEach(enemy -> pane.getChildren().remove(enemy.getShape()));
+                players.removeAll(players.stream()
                         .filter(enemy -> !enemy.isAlive())
                         .collect(Collectors.toList()));
 
@@ -258,6 +304,12 @@ public class SpaceInvadersUi extends Application {
         stage.setScene(mainMenu);
         stage.setTitle("Space Invaders");
         stage.show();
+    }
+
+    public static int randomNumberGenerator(int min, int max) {
+        max++;
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
     }
 
     public static void main(String[] args) {
