@@ -23,10 +23,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class SpaceInvadersUi extends Application {
-    public static int WIDTH = 960;
-    public static int HEIGHT = 720;
-    ColorInput color = new ColorInput();
-    Blend blend = new Blend(BlendMode.DIFFERENCE);
+    private final static int WIDTH = 960;
+    private final static int HEIGHT = 720;
+    private final ColorInput color = new ColorInput();
+    private final Blend blend = new Blend(BlendMode.DIFFERENCE);
 
     @Override
     public void start(Stage stage) {

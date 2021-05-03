@@ -3,6 +3,10 @@ package spaceinvadersapp.domain;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+/**
+ * Class for making a player ship
+ */
+
 public class PlayerShip extends Shape {
 
     public PlayerShip(int x, int y, Color color) {

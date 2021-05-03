@@ -3,6 +3,10 @@ package spaceinvadersapp.domain;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+/**
+ * Class for making player bullets
+ */
+
 public class PlayerBullet extends Shape {
 
     public PlayerBullet(int x, int y, Color color) {
