@@ -89,9 +89,7 @@ public class SpaceInvadersUi extends Application {
             }
         });
 
-        game.setOnKeyReleased(event -> {
-            pressedKeys.put(event.getCode(), Boolean.FALSE);
-        });
+        game.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
 
         new AnimationTimer() {
 
@@ -120,15 +118,13 @@ public class SpaceInvadersUi extends Application {
                         .filter(Shape::outOfBounds)
                         .collect(Collectors.toList()));
 
-                playerBullets.forEach(bullet -> {
-                    enemies.forEach(enemy -> {
-                        if (bullet.collision(enemy)) {
-                            bullet.setAlive(false);
-                            enemy.setAlive(false);
-                            pointsText.setText("Points: " + (points.addAndGet(100)));
-                        }
-                    });
-                });
+                playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
+                    if (bullet.collision(enemy)) {
+                        bullet.setAlive(false);
+                        enemy.setAlive(false);
+                        pointsText.setText("Points: " + (points.addAndGet(100)));
+                    }
+                }));
 
                 playerBullets.stream()
                         .filter(bullet -> !bullet.isAlive())
@@ -184,15 +180,19 @@ public class SpaceInvadersUi extends Application {
 
         TableView<String> hsTable = new TableView<>();
         hsTable.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
         TableColumn ranking = new TableColumn("#");
         ranking.setStyle("-fx-font-size:30");
         ranking.setMinWidth(100);
+
         TableColumn playerName = new TableColumn("Name");
         playerName.setStyle("-fx-font-size:30");
         playerName.setMinWidth(700);
+
         TableColumn time = new TableColumn("Time");
         time.setStyle("-fx-font-size:30");
         time.setMinWidth(200);
+
         hsTable.getColumns().addAll(ranking, playerName, time);
 
         Button btnHighScoreBackToMainMenu = new Button("Back to Main Menu");
