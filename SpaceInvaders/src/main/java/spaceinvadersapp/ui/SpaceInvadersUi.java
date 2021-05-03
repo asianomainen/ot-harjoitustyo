@@ -22,6 +22,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+/**
+ * class for creating the ui
+ */
+
 public class SpaceInvadersUi extends Application {
     private final static int WIDTH = 960;
     private final static int HEIGHT = 720;
@@ -127,17 +131,17 @@ public class SpaceInvadersUi extends Application {
                 });
 
                 playerBullets.stream()
-                        .filter(bullet -> !bullet.getAlive())
+                        .filter(bullet -> !bullet.isAlive())
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
                 playerBullets.removeAll(playerBullets.stream()
-                        .filter(bullet -> !bullet.getAlive())
+                        .filter(bullet -> !bullet.isAlive())
                         .collect(Collectors.toList()));
 
                 enemies.stream()
-                        .filter(enemy -> !enemy.getAlive())
+                        .filter(enemy -> !enemy.isAlive())
                         .forEach(enemy -> pane.getChildren().remove(enemy.getShape()));
                 enemies.removeAll(enemies.stream()
-                        .filter(enemy -> !enemy.getAlive())
+                        .filter(enemy -> !enemy.isAlive())
                         .collect(Collectors.toList()));
 
                 if (playerShip.outOfBounds()) {

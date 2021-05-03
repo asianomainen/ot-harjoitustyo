@@ -59,7 +59,7 @@ public abstract class Shape {
     }
 
     /**
-     * enables an object to be determined as alive (true) or dead (false)
+     * enables an object to be set as alive (true) or dead (false)
      *
      * @param   value   boolean value for alive (true) or dead (false)
      */
@@ -68,7 +68,7 @@ public abstract class Shape {
         this.alive = value;
     }
 
-    public boolean getAlive() {
+    public boolean isAlive() {
         return this.alive;
     }
 
