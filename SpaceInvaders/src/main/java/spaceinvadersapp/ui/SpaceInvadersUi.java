@@ -1,9 +1,7 @@
 package spaceinvadersapp.ui;
 
 import javafx.scene.text.Text;
-import spaceinvadersapp.domain.EnemyShip;
-import spaceinvadersapp.domain.PlayerBullet;
-import spaceinvadersapp.domain.PlayerShip;
+import spaceinvadersapp.domain.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.*;
@@ -14,8 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import spaceinvadersapp.domain.Shape;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,14 +67,17 @@ public class SpaceInvadersUi extends Application {
         Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
         ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
         ArrayList<EnemyShip> enemies = new ArrayList<>();
+        ArrayList<BossEnemyShip> bosses = new ArrayList<>();
 
-        for (int i = 1; i <= 5; i++) {
-            for (int j = 1; j <= 10; j++) {
-                enemies.add(new EnemyShip((j * 80), (i * 70), Color.PURPLE));
+        for (int i = 3; i <= 12; i++) {
+            for (int j = 1; j <= 5; j++) {
+                enemies.add(new EnemyShip((i * 60), (j * 65), Color.PURPLE));
             }
         }
 
         enemies.forEach(enemy -> pane.getChildren().add(enemy.getShape()));
+
+        bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
 
         game.setOnKeyPressed(event -> {
             pressedKeys.put(event.getCode(), Boolean.TRUE);
@@ -126,6 +125,14 @@ public class SpaceInvadersUi extends Application {
                     }
                 }));
 
+                playerBullets.forEach(bullet -> bosses.forEach(boss -> {
+                    if (bullet.collision(boss)) {
+                        bullet.setAlive(false);
+                        boss.setAlive(false);
+                        pointsText.setText("Points: " + (points.addAndGet(500)));
+                    }
+                }));
+
                 playerBullets.stream()
                         .filter(bullet -> !bullet.isAlive())
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
@@ -140,9 +147,12 @@ public class SpaceInvadersUi extends Application {
                         .filter(enemy -> !enemy.isAlive())
                         .collect(Collectors.toList()));
 
-                if (playerShip.outOfBounds()) {
-                    playerShip.getShape().setTranslateX(playerShip.getShape().getTranslateX());
-                }
+                bosses.stream()
+                        .filter(boss -> !boss.isAlive())
+                        .forEach(boss -> pane.getChildren().remove(boss.getShape()));
+                bosses.removeAll(bosses.stream()
+                        .filter(boss -> !boss.isAlive())
+                        .collect(Collectors.toList()));
             }
         }.start();
 
