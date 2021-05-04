@@ -48,7 +48,7 @@ java -jar target/SpaceInvadersApplication-1.0-SNAPSHOT.jar
 
 ### Testaus
 
-Toistaiseksi ohjelmassa on 10 testiä, jotka testaavat abstraktin luokan Shape periviä PlayerShape- ja PlayerBullet-luokkia.
+Sovelluksen testit voi ajaa komennolla
 
 ```
 mvn test
@@ -74,4 +74,4 @@ Tiedostoon [checkstyle.xml](https://github.com/asianomainen/ot-harjoitustyo/blob
  mvn jxr:jxr checkstyle:checkstyle
 ```
 
-Virheilmoitukset voi tarkistaa avaamalla selaimella tiedoston _target/site/checkstyle.html_
+Mahdolliset virheilmoitukset voi tarkistaa avaamalla selaimella tiedoston _target/site/checkstyle.html_
