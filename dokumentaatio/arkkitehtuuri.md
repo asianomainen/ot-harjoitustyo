@@ -8,6 +8,18 @@ Ohjelman rakenne noudattaa toistaiseksi kaksitasoista kerrosarkkitehtuuria ja on
 
 Pakkaus _spaceinvadersapp.ui_ sisältää JavaFX:llä toteutetun käyttöliittymän ja _spaceinvadersapp.domain_ puolestaan ohjelman sovelluslogiikan.
 
+## Käyttöliittymä
+
+Käyttöliittymä sisältää neljä erillistä näkymää
+- main menu, eli päävalikko
+- pelinäkymä
+- asetukset
+- high scoret, eli ennätykset
+
+Joikainen edellä mainituista näkymistä on toteutettu omana [Scene](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html)-oliona. Näkymistä yksi kerrallaan on näkyvänä eli sijoitettuna sovelluksen [stageen](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html). Käyttöliittymä on toteutettu kokonaisuudessaan luokassa [spaceinvadersapp.ui.SpaceInvadersUi](https://github.com/asianomainen/ot-harjoitustyo/blob/master/SpaceInvaders/src/main/java/spaceinvadersapp/ui/SpaceInvadersUi.java).
+
+Käyttöliittymä on pyritty eristämään täysin sovelluslogiikasta. Se ainoastaan kutsuu sovelluslogiikkaa toteuttavien, abstraktin _Shape_ luokan, metodeja.
+
 ## Luokkakaavio
 
 Alustava luokkakaavio luokista ja niiden periytymisestä:
