@@ -31,9 +31,16 @@ public class PlayerShipTest {
 
     @Test
     public void moveLeftWorks() {
+        PlayerShip ship = new PlayerShip(50, 15, Color.BEIGE);
+        ship.moveLeft();
+        assertEquals(46.5, ship.getShape().getTranslateX(), 0);
+    }
+
+    @Test
+    public void doesNotMoveLeftIfTooCloseToEdge() {
         PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
         ship.moveLeft();
-        assertEquals(11.5, ship.getShape().getTranslateX(), 0);
+        assertEquals(15, ship.getShape().getTranslateX(), 0);
     }
 
     @Test
@@ -44,10 +51,24 @@ public class PlayerShipTest {
     }
 
     @Test
+    public void doesNotMoveRightIfTooCloseToEdge() {
+        PlayerShip ship = new PlayerShip(950, 15, Color.BEIGE);
+        ship.moveRight();
+        assertEquals(950, ship.getShape().getTranslateX(), 0);
+    }
+
+    @Test
     public void moveUpWorks() {
         PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
         ship.moveUp();
         assertEquals(5, ship.getShape().getTranslateY(), 0);
+    }
+
+    @Test
+    public void moveDownWorks() {
+        PlayerShip ship = new PlayerShip(15, 15, Color.BEIGE);
+        ship.moveDown();
+        assertEquals(22.5, ship.getShape().getTranslateY(), 0);
     }
 
     @Test
