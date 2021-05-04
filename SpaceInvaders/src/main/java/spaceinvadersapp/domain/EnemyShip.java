@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * class for making an enemy ship
- * extends abstract class Shape
+ * Class for making an enemy ship.
+ * Extends abstract class Shape.
  *
  * @see spaceinvadersapp.domain.Shape
  */

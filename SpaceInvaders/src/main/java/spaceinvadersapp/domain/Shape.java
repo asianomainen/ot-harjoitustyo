@@ -5,12 +5,21 @@ import javafx.scene.shape.Polygon;
 import java.util.Objects;
 
 /**
- * Abstract class for all shapes in the game
+ * Abstract class for all shapes in the game.
  */
 
 public abstract class Shape {
     private final Polygon shape;
     private boolean alive;
+
+    /**
+     * Creates a new shape.
+     *
+     * @param   polygon   shape of the object as a polygon
+     * @param   color     color of the object
+     * @param   x         x coordinate of the object
+     * @param   y         y coordinate of the object
+     */
 
     public Shape(Polygon polygon, Color color, int x, int y) {
         this.shape = polygon;
@@ -25,7 +34,8 @@ public abstract class Shape {
     }
 
     /**
-     * moves the ship to the left
+     * Moves the ship to the left.
+     * Decreases the current X coordinate value of the object by 3.5
      */
 
     public void moveLeft() {
@@ -33,7 +43,8 @@ public abstract class Shape {
     }
 
     /**
-     * moves the ship to the right
+     * Moves the ship to the right.
+     * Increases the current X coordinate value of the object by 3.5
      */
 
     public void moveRight() {
@@ -41,7 +52,8 @@ public abstract class Shape {
     }
 
     /**
-     * moves player bullets up
+     * Moves player bullets up.
+     * Decreases the current Y coordinate value of the object by 10.0
      */
 
     public void moveUp() {
@@ -49,7 +61,8 @@ public abstract class Shape {
     }
 
     /**
-     * moves enemy bullets down
+     * Moves enemy bullets down.
+     * Increases the current Y coordinate value of the object by 7.5
      */
 
     public void moveDown() {
@@ -57,7 +70,13 @@ public abstract class Shape {
     }
 
     /**
-     * for checking if object is out of bounds (out of the application window size)
+     * For checking if object is out of bounds (out of the application window size).
+     *
+     * Object is out of the window size if:
+     * Value of Y coordinate is below 0
+     * Value of Y coordinate is above 720
+     * Value of X coordinate is below 0
+     * Value of X coordinate is above 960
      *
      * @return true if the object is out of bounds, false if not
      */
@@ -67,7 +86,7 @@ public abstract class Shape {
     }
 
     /**
-     * enables an object to be set as alive (true) or dead (false)
+     * Enables an object to be set as alive (true) or dead (false).
      *
      * @param   value   boolean value for alive (true) or dead (false)
      */
@@ -76,12 +95,18 @@ public abstract class Shape {
         this.alive = value;
     }
 
+    /**
+     * For checking if an object is alive (has not been hit by bullet).
+     *
+     * @return true if the object is alive, false if not
+     */
+
     public boolean isAlive() {
         return this.alive;
     }
 
     /**
-     * checks if two objects are colliding
+     * Checks if two objects are colliding.
      *
      * @param   target   the object to compare with
      *
@@ -93,7 +118,7 @@ public abstract class Shape {
     }
 
     /**
-     * compares two objects to determine if they are equal
+     * Compares two objects to determine if they are equal.
      *
      * @param   obj   the object to compare with
      *

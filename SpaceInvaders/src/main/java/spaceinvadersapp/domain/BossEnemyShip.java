@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * class for making a boss enemy ship
- * extends abstract class Shape
+ * Class for making a boss enemy ship.
+ * Extends abstract class Shape.
  *
  * @see spaceinvadersapp.domain.Shape
  */
