@@ -29,9 +29,32 @@ Sovelluslogiikka muodostuu abstraktista luokasta _Shape_ ja sen perivistä luoki
 - EnemyBullet (vihollisen ammukset)
 - BossEnemyShip (päävihollisen hahmo)
 
-![Luokkakaavio](https://user-images.githubusercontent.com/46067482/116994989-29df0480-ace2-11eb-8a99-48fdcf79d353.jpg)
+![Luokkakaavio](https://user-images.githubusercontent.com/46067482/116996687-7cb9bb80-ace4-11eb-83f0-3eea687b44d4.jpg)
 
+Kyseisten luokkien toiminnot keskittyvät yksinomaan itse pelin toteuttamiseen.
 
+Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvitsevat metodit
+- getShape()
+  - palauttaa olion muodon
+- moveLeft()
+  - liikuttaa oliota vasemmalle
+- moveRight()
+  - liikuttaa oliota oikealle
+- moveRight()
+  - liikuttaa oliota oikealle
+- moveUp()
+  - liikuttaa oliota ylös
+- moveDown()
+  - liikuttaa oliota alas
+- outOfBounds()
+  - palauttaa true jos olio on ruudun ulkopuolella, muuten false
+- setalive(Boolean value)
+  - määrittää onko olio elossa (true) vai kuollut (false)
+- isAlive()
+  - palauttaa true jos olio on elossa, muuten false
+- collision(Shape target)
+  - vertaa ovatko kyseinen olio ja parametrina annettu olio törmänneet toisiinsa
+  - true jos kyllä, mutten false
 
 ## Sekvenssikaavio
 
