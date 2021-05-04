@@ -77,3 +77,14 @@ Tiedostoon [checkstyle.xml](https://github.com/asianomainen/ot-harjoitustyo/blob
 ```
 
 Mahdolliset virheilmoitukset voi tarkistaa avaamalla selaimella tiedoston _target/site/checkstyle.html_
+
+
+### JavaDoc
+
+Sovelluksen JavaDoc generoidaan komennolla
+
+```
+mvn javadoc:javadoc
+```
+
+JavaDociin voi perehtyä avaamalla selaimella tiedoston _target/site/apidocs/index.html_
