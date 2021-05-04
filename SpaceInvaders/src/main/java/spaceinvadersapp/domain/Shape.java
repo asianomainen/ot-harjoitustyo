@@ -63,7 +63,7 @@ public abstract class Shape {
      */
 
     public boolean outOfBounds() {
-        return this.shape.getTranslateY() < 0 || this.shape.getTranslateX() > 720 || this.shape.getTranslateX() < 0 || this.shape.getTranslateX() > 960;
+        return this.shape.getTranslateY() < 0 || this.shape.getTranslateY() > 720 || this.shape.getTranslateX() < 0 || this.shape.getTranslateX() > 960;
     }
 
     /**
