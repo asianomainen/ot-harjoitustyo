@@ -30,6 +30,7 @@ Pelissä on toistaiseksi
 - 50 vihollista / taso
   - taso ei vielä vaihdu vihollisten kuoltua
 - pistemäärä
+  - pistemäärä kasvaa aina 100:lla kun yksi vihollinen tapetaan
 
 Pelin näppäimet:
 - vasen nuolinäppäin: pelaaja liikkuu vasemmalle
