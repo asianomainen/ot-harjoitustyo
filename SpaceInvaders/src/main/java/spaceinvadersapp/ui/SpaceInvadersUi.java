@@ -128,20 +128,6 @@ public class SpaceInvadersUi extends Application {
                 playerBullets.forEach(Shape::moveUp);
                 enemyBullets.forEach(Shape::moveDown);
 
-                playerBullets.stream()
-                        .filter(Shape::outOfBounds)
-                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
-                playerBullets.removeAll(playerBullets.stream()
-                        .filter(Shape::outOfBounds)
-                        .collect(Collectors.toList()));
-
-                enemyBullets.stream()
-                        .filter(Shape::outOfBounds)
-                        .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
-                enemyBullets.removeAll(enemyBullets.stream()
-                        .filter(Shape::outOfBounds)
-                        .collect(Collectors.toList()));
-
                 playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
                     if (bullet.collision(enemy)) {
                         bullet.setAlive(false);
@@ -166,17 +152,17 @@ public class SpaceInvadersUi extends Application {
                 }));
 
                 playerBullets.stream()
-                        .filter(bullet -> !bullet.isAlive())
+                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
                 playerBullets.removeAll(playerBullets.stream()
-                        .filter(bullet -> !bullet.isAlive())
+                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
                         .collect(Collectors.toList()));
 
                 enemyBullets.stream()
-                        .filter(bullet -> !bullet.isAlive())
+                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
                         .forEach(bullet -> pane.getChildren().remove(bullet.getShape()));
                 enemyBullets.removeAll(enemyBullets.stream()
-                        .filter(bullet -> !bullet.isAlive())
+                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
                         .collect(Collectors.toList()));
 
                 enemies.stream()
