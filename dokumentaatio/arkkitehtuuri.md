@@ -34,27 +34,27 @@ Sovelluslogiikka muodostuu abstraktista luokasta _Shape_ ja sen perivistä luoki
 Kyseisten luokkien toiminnot keskittyvät yksinomaan itse pelin toteuttamiseen.
 
 Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvitsevat metodit
-- getShape()
+- Polygon getShape()
   - palauttaa olion muodon
-- moveLeft()
+- void moveLeft()
   - liikuttaa oliota vasemmalle
-- moveRight()
+- void moveRight()
   - liikuttaa oliota oikealle
-- moveRight()
+- void moveRight()
   - liikuttaa oliota oikealle
-- moveUp()
+- void moveUp()
   - liikuttaa oliota ylös
-- moveDown()
+- void moveDown()
   - liikuttaa oliota alas
-- outOfBounds()
+- boolean outOfBounds()
   - palauttaa true jos olio on ruudun ulkopuolella, muuten false
-- setalive(Boolean value)
+- void setalive(Boolean value)
   - määrittää onko olio elossa (true) vai kuollut (false)
-- isAlive()
+- boolean isAlive()
   - palauttaa true jos olio on elossa, muuten false
-- collision(Shape target)
+- boolean collision(Shape target)
   - vertaa ovatko kyseinen olio ja parametrina annettu olio törmänneet toisiinsa
-  - true jos kyllä, mutten false
+  - palauttaa true jos kyllä, muuten false
 
 ## Sekvenssikaavio
 
