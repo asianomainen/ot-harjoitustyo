@@ -48,7 +48,7 @@ Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvi
   - liikuttaa oliota alas
 - boolean outOfBounds()
   - palauttaa true jos olio on ruudun ulkopuolella, muuten false
-- void setalive(Boolean value)
+- void setAlive(Boolean value)
   - määrittää onko olio elossa (true) vai kuollut (false)
 - boolean isAlive()
   - palauttaa true jos olio on elossa, muuten false
@@ -56,7 +56,11 @@ Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvi
   - vertaa ovatko kyseinen olio ja parametrina annettu olio törmänneet toisiinsa
   - palauttaa true jos kyllä, muuten false
 
-## Sekvenssikaavio
+Abstraktin _Shape_ luokan ja sen perivien luokkien suhdetta kuvaava luokka/pakkauskaavio:
+
+![luokka_pakkauskaavio](https://user-images.githubusercontent.com/46067482/117036766-76d8d000-ad0e-11eb-8648-6706a10ecdac.jpg)
+
+## Päätoiminnallisuudet
 
 Alustava sekvenssikaavio pelin pelaamisesta. Sekvenssikaavio esittää uuden pelin aloittamista, liikettä ja ampumista:
 
