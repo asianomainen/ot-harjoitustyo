@@ -99,7 +99,7 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
-                time += 0.05;
+                time += 0.015;
                 if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
                     playerShip.moveLeft();
                 }
@@ -122,7 +122,7 @@ public class SpaceInvadersUi extends Application {
                         pane.getChildren().add(enemyBullet.getShape());
                     }
 
-                    time = 0;
+                    time = 1;
                 }
 
                 playerBullets.forEach(Shape::moveUp);
