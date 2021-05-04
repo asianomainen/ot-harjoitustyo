@@ -59,7 +59,7 @@ public class SpaceInvadersUi extends Application {
 
         Text pointsText = new Text(WIDTH - 150, 20, "Points: 0");
         pointsText.setStyle("-fx-font-size:20");
-        PlayerShip playerShip = new PlayerShip(640, 650, Color.ORANGERED);
+        PlayerShip playerShip = new PlayerShip(WIDTH / 2, 650, Color.ORANGERED);
         Label pressEscToPause = new Label("Press ESC to return to Main Menu");
         AtomicInteger points = new AtomicInteger();
 
