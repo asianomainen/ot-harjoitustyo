@@ -15,8 +15,9 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
 ## Perusversion tarjoama toiminnallisuus
 
 - Pelissä tulee olemaan 5 toinen toistaan vaikeampaa tasoa.
-- Ennätyksiä mitataan pelin läpäisynopeudella.
-- Ennätyksen (TOP 10) saavutettuaan, pelaaja voi syöttää kolmimerkkisen tunnisteen, joka tallentuu ennätyslistalle läpäisyajan kera.
+- Ennätyksiä mitataan pistemäärällä.
+  - Pistemäärä on identtinen mikäli pelin läpäisee kokonaan, tällöin vertailuun käytetään läpäisyaikaa.
+- Ennätyksen (TOP 10) saavutettuaan, pelaaja voi syöttää nimimerkin, joka tallentuu ennätyslistalle pisteiden ja läpäisyajan kera.
 - Pelaaja voi muuttaa halutessaan seuraavia asetuksia:
   - Näppäinasetukset
   - Väriasetukset
