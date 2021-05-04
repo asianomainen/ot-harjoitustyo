@@ -243,13 +243,17 @@ public class SpaceInvadersUi extends Application {
 
         TableColumn playerName = new TableColumn("Name");
         playerName.setStyle("-fx-font-size:30");
-        playerName.setMinWidth(700);
+        playerName.setMinWidth(420);
 
         TableColumn time = new TableColumn("Time");
         time.setStyle("-fx-font-size:30");
         time.setMinWidth(200);
 
-        hsTable.getColumns().addAll(ranking, playerName, time);
+        TableColumn score = new TableColumn("Score");
+        score.setStyle("-fx-font-size:30");
+        score.setMinWidth(200);
+
+        hsTable.getColumns().addAll(ranking, playerName, time, score);
 
         Button btnHighScoreBackToMainMenu = new Button("Back to Main Menu");
         btnHighScoreBackToMainMenu.setStyle("-fx-font-size:30");
