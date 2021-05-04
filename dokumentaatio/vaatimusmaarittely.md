@@ -25,7 +25,6 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
 
 ## Sovelluksen eteneminen
 
-1. Käyttöliittymä
    - [x] Napit:
      - [x] Start Game
      - [x] Settings
