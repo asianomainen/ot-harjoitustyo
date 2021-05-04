@@ -16,7 +16,7 @@ Tämä ohjelma emuloi Space Invaders -peliä. Peli on yksinpeli ja siinä on 5 v
 
 [Viikko 5](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko5_v2)
 
-[Viikko 6](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko6) (katso ohjeet ohjelman käynnistämiseen [käyttöohjeista](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md))
+[Viikko 6](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko6_v2) (katso ohjeet ohjelman käynnistämiseen [käyttöohjeista](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md))
 
 ## Javan versio
 
