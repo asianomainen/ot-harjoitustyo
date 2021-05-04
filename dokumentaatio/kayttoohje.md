@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [SpaceInvadersApplicationV6.jar](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko6)
+Lataa tiedosto [SpaceInvadersApplicationV6.jar](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko6_v2)
 
 ## Ohjelman käynnistäminen
 
