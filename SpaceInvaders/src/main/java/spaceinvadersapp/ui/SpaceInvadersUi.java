@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * Class for creating the ui.
+ * Class for creating the ui.U
  */
 
 public class SpaceInvadersUi extends Application {
