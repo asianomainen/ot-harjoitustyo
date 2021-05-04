@@ -20,11 +20,17 @@ Joikainen edellä mainituista näkymistä on toteutettu omana [Scene](https://do
 
 Käyttöliittymä on pyritty eristämään täysin sovelluslogiikasta. Se ainoastaan kutsuu sovelluslogiikkaa toteuttavien, abstraktin _Shape_ luokan, metodeja.
 
-## Luokkakaavio
+## Sovelluslogiikka
 
-Alustava luokkakaavio luokista ja niiden periytymisestä:
+Sovelluslogiikka muodostuu abstraktista luokasta _Shape_ ja sen perivistä luokista
+- PlayerShip (pelaajan hahmo)
+- PlayerBullet (pelaajan ammukset)
+- EnemyShip (vihollisen hahmo)
+- EnemyBullet (vihollisen ammukset)
+- BossEnemyShip (päävihollisen hahmo)
 
-![SpaceInvaders](https://user-images.githubusercontent.com/46067482/115159469-e6f31f00-a09b-11eb-8522-7efa0471c790.jpg)
+![Luokkakaavio](https://user-images.githubusercontent.com/46067482/116994989-29df0480-ace2-11eb-8a99-48fdcf79d353.jpg)
+
 
 
 ## Sekvenssikaavio
