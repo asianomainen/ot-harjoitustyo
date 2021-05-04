@@ -7,7 +7,7 @@ Lataa tiedosto [SpaceInvadersApplicationV6.jar](https://github.com/asianomainen/
 Ohjelma käynnistetään siirtymällä ladatun jar-tiedoston sisältävään hakemistoon ja suorittamalla komennon
 
 ```
-java -jar SpaceInvadersApplication.jar
+java -jar SpaceInvadersApplicationV6.jar
 ```
 ## Main menu
 
