@@ -307,6 +307,7 @@ public class SpaceInvadersUi extends Application {
     }
 
     public static int randomNumberGenerator(int min, int max) {
+        // Add one to max to include it in possible random numbers generated
         max++;
         Random random = new Random();
         return random.nextInt(max - min) + min;
