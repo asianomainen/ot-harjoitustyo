@@ -1,5 +1,8 @@
 package spaceinvadersapp.ui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import spaceinvadersapp.domain.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -11,7 +14,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -26,6 +28,7 @@ public class SpaceInvadersUi extends Application {
     private final ColorInput color = new ColorInput();
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
     private double time = 0.0;
+    private boolean paused = false;
 
     @Override
     public void start(Stage stage) {
@@ -45,8 +48,8 @@ public class SpaceInvadersUi extends Application {
         HighScoreUi highScoreUi = new HighScoreUi();
         Scene highScoreMenu = highScoreUi.createHighScoreUi(WIDTH,HEIGHT);
 
-        //
-        Map<KeyCode, Boolean> pressedKeys = new HashMap<>();
+        // Creates necessary array lists, hash maps and an atomic integer for game UI
+        HashMap<KeyCode, Boolean> pressedKeys = new HashMap<>();
         ArrayList<PlayerShip> players = new ArrayList<>();
         ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
         ArrayList<EnemyShip> enemies = new ArrayList<>();
@@ -54,6 +57,7 @@ public class SpaceInvadersUi extends Application {
         ArrayList<BossEnemyShip> bosses = new ArrayList<>();
         AtomicInteger points = new AtomicInteger();
 
+        // Spawns enemies
         for (int i = 3; i <= 12; i++) {
             for (int j = 1; j <= 5; j++) {
                 enemies.add(new EnemyShip((i * 60), (j * 65), Color.PURPLE));
@@ -64,113 +68,113 @@ public class SpaceInvadersUi extends Application {
         bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
         players.add(gameUi.playerShip);
 
-        game.setOnKeyPressed(event -> {
-            pressedKeys.put(event.getCode(), Boolean.TRUE);
-
-            if (event.getCode().equals(KeyCode.ESCAPE)) {
-                stage.setScene(mainMenu);
-                pressedKeys.clear();
-            }
-        });
-
+        game.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
         game.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
 
-        new AnimationTimer() {
+        AnimationTimer animation = new AnimationTimer() {
 
             @Override
             public void handle(long presentTime) {
-                time += 0.015;
-                if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
-                    gameUi.playerShip.moveLeft();
-                }
-
-                if (pressedKeys.getOrDefault(KeyCode.RIGHT, false)) {
-                    gameUi.playerShip.moveRight();
-                }
-
-                if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
-                    PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
-                    playerBullets.add(playerBullet);
-                    gameUi.pane.getChildren().add(playerBullet.getShape());
-                }
-
-                if (time > 2) {
-                    if (Math.random() > 0.5) {
-                        int random = randomNumberGenerator(0, enemies.size() - 1);
-                        EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
-                        enemyBullets.add(enemyBullet);
-                        gameUi.pane.getChildren().add(enemyBullet.getShape());
+                if (!paused) {
+                    time += 0.015;
+                    if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
+                        gameUi.playerShip.moveLeft();
                     }
 
-                    time = 1;
+                    if (pressedKeys.getOrDefault(KeyCode.RIGHT, false)) {
+                        gameUi.playerShip.moveRight();
+                    }
+
+                    if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
+                        PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
+                        playerBullets.add(playerBullet);
+                        gameUi.pane.getChildren().add(playerBullet.getShape());
+                    }
+
+                    if (time > 2) {
+                        if (Math.random() > 0.5) {
+                            int random = randomNumberGenerator(0, enemies.size() - 1);
+                            EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
+                            enemyBullets.add(enemyBullet);
+                            gameUi.pane.getChildren().add(enemyBullet.getShape());
+                        }
+
+                        time = 1;
+                    }
+
+                    playerBullets.forEach(Shape::moveUp);
+                    enemyBullets.forEach(Shape::moveDown);
+
+                    playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
+                        if (bullet.collision(enemy)) {
+                            bullet.setAlive(false);
+                            enemy.setAlive(false);
+                            gameUi.pointsText.setText("Points: " + (points.addAndGet(100)));
+                        }
+                    }));
+
+                    enemyBullets.forEach(bullet -> players.forEach(player -> {
+                        if (bullet.collision(player)) {
+                            bullet.setAlive(false);
+                            player.setAlive(false);
+                        }
+                    }));
+
+                    playerBullets.forEach(bullet -> bosses.forEach(boss -> {
+                        if (bullet.collision(boss)) {
+                            bullet.setAlive(false);
+                            boss.setAlive(false);
+                            gameUi.pointsText.setText("Points: " + (points.addAndGet(500)));
+                        }
+                    }));
+
+                    playerBullets.stream()
+                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                            .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+                    playerBullets.removeAll(playerBullets.stream()
+                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                            .collect(Collectors.toList()));
+
+                    enemyBullets.stream()
+                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                            .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+                    enemyBullets.removeAll(enemyBullets.stream()
+                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                            .collect(Collectors.toList()));
+
+                    enemies.stream()
+                            .filter(enemy -> !enemy.isAlive())
+                            .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
+                    enemies.removeAll(enemies.stream()
+                            .filter(enemy -> !enemy.isAlive())
+                            .collect(Collectors.toList()));
+
+                    players.stream()
+                            .filter(enemy -> !enemy.isAlive())
+                            .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
+                    players.removeAll(players.stream()
+                            .filter(enemy -> !enemy.isAlive())
+                            .collect(Collectors.toList()));
+
+                    bosses.stream()
+                            .filter(boss -> !boss.isAlive())
+                            .forEach(boss -> gameUi.pane.getChildren().remove(boss.getShape()));
+                    bosses.removeAll(bosses.stream()
+                            .filter(boss -> !boss.isAlive())
+                            .collect(Collectors.toList()));
                 }
 
-                playerBullets.forEach(Shape::moveUp);
-                enemyBullets.forEach(Shape::moveDown);
-
-                playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
-                    if (bullet.collision(enemy)) {
-                        bullet.setAlive(false);
-                        enemy.setAlive(false);
-                        gameUi.pointsText.setText("Points: " + (points.addAndGet(100)));
+                game.setOnKeyPressed(event -> {
+                    pressedKeys.put(event.getCode(), Boolean.TRUE);
+                    if (event.getCode().equals(KeyCode.ESCAPE)) {
+                        paused = !paused;
                     }
-                }));
-
-                enemyBullets.forEach(bullet -> players.forEach(player -> {
-                    if (bullet.collision(player)) {
-                        bullet.setAlive(false);
-                        player.setAlive(false);
-                    }
-                }));
-
-                playerBullets.forEach(bullet -> bosses.forEach(boss -> {
-                    if (bullet.collision(boss)) {
-                        bullet.setAlive(false);
-                        boss.setAlive(false);
-                        gameUi.pointsText.setText("Points: " + (points.addAndGet(500)));
-                    }
-                }));
-
-                playerBullets.stream()
-                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                        .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-                playerBullets.removeAll(playerBullets.stream()
-                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                        .collect(Collectors.toList()));
-
-                enemyBullets.stream()
-                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                        .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-                enemyBullets.removeAll(enemyBullets.stream()
-                        .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                        .collect(Collectors.toList()));
-
-                enemies.stream()
-                        .filter(enemy -> !enemy.isAlive())
-                        .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
-                enemies.removeAll(enemies.stream()
-                        .filter(enemy -> !enemy.isAlive())
-                        .collect(Collectors.toList()));
-
-                players.stream()
-                        .filter(enemy -> !enemy.isAlive())
-                        .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
-                players.removeAll(players.stream()
-                        .filter(enemy -> !enemy.isAlive())
-                        .collect(Collectors.toList()));
-
-                bosses.stream()
-                        .filter(boss -> !boss.isAlive())
-                        .forEach(boss -> gameUi.pane.getChildren().remove(boss.getShape()));
-                bosses.removeAll(bosses.stream()
-                        .filter(boss -> !boss.isAlive())
-                        .collect(Collectors.toList()));
+                });
             }
-        }.start();
+        }; animation.start();
 
         // Start game button functions
         mainMenuUi.btnStart.setOnAction(event -> stage.setScene(game));
-
 
         // Settings button functions
         mainMenuUi.btnSettings.setOnAction(event -> stage.setScene(settingsMenu));
@@ -182,6 +186,7 @@ public class SpaceInvadersUi extends Application {
                 settingsUi.soundCheckBox.setText("Sound OFF");
             }
         });
+
         settingsUi.invertColours.setOnAction((event) -> {
             if (settingsUi.invertColours.isSelected()) {
                 color.setPaint(Color.WHITE);
@@ -198,15 +203,12 @@ public class SpaceInvadersUi extends Application {
             settingsUi.stgGrid.setEffect(blend);
         });
 
-
         // High Scores button functions
         mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenu));
         highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenu));
 
-
         // Exit button functions
         mainMenuUi.btnExit.setOnAction(event -> stage.close());
-
 
         // Finalizes stage
         stage.setResizable(false);
