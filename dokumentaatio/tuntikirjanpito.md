@@ -25,5 +25,6 @@
 | 3.5.  | 1    | Lisättiin bossi ja estettiin pelaajan liikkuminen kentän ulkopuolelle |
 | 4.5.  | 1    | Viholliset pystyvät nyt ampumaan ja tappamaan pelaajan |
 | 4.5.  | 1    | Luotiin uusia testejä uusille luokille ja päivitettiin vanhoja testejä |
-| 4.5.  | 1    | JavaDoc päivitetty. Luotiin käyttöohjeet. README päivitetty. Arkkitehtuurikuvaus päivitettu |
-| Yhteensä | 37    |
+| 4.5.  | 1    | JavaDoc päivitetty. Luotiin käyttöohjeet. README päivitetty. Arkkitehtuurikuvaus päivitetty |
+| 6.5.  | 2    | Käyttöliittymän rakentaminen jaettu luokkiin ja lisätty toiminto pelin pysäyttämiseksi ja jatkamiseksi |
+| Yhteensä | 39    |
