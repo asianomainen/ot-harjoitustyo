@@ -91,11 +91,9 @@ public class SpaceInvadersUi extends Application {
 
                     if (time >= 50 * 0.02) {
                         enemyMovementCounter++;
-
                         if (enemyMovementCounter >= 120) {
                             enemyMovementCounter = 0;
                         }
-
                         enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
                     }
 
