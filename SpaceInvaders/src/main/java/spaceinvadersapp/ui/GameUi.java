@@ -20,7 +20,8 @@ public class GameUi {
         pointsText = new Text(WIDTH - 150, 20, "Points: 0");
         pointsText.setStyle("-fx-font-size:20");
         playerShip = new PlayerShip(WIDTH / 2, 650, Color.ORANGERED);
-        pressEscToPause = new Label("Press ESC to return to Main Menu");
+        pressEscToPause = new Label("Press ESC to pause/resume game");
+        pressEscToPause.setStyle("-fx-font-size:20");
 
         pane.getChildren().addAll(pointsText, playerShip.getShape(), pressEscToPause);
 
