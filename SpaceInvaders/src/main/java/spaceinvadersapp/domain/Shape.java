@@ -66,7 +66,7 @@ public abstract class Shape {
      */
 
     public void moveDown() {
-        this.shape.setTranslateY(this.shape.getTranslateY() + 7.5);
+        this.shape.setTranslateY(this.shape.getTranslateY() + 4.5);
     }
 
     /**

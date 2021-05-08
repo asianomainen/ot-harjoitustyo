@@ -26,7 +26,7 @@ public class SpaceInvadersUi extends Application {
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
     private double time = 0.0;
     private boolean isPaused = false;
-    int enemyMovementCounter = 60;
+    int enemyMovementCounter = 17;
 
     @Override
     public void start(Stage stage) {
@@ -37,6 +37,24 @@ public class SpaceInvadersUi extends Application {
         //Create scene for game
         GameUi gameUi = new GameUi();
         Scene game = gameUi.createGameUi(WIDTH, HEIGHT);
+
+                /*        // Create scene for pause menu popup in game
+        PauseGameUi pauseGameUi = new PauseGameUi();
+        Popup gamePausePopup = pauseGameUi.createPauseGameUi(WIDTH, HEIGHT);*/
+
+         /*                       System.out.println("Yep!\n\n\n\n\n\n\n\n\n\n\n\n");
+
+                        if (!isPaused) {
+                            isPaused = true;
+                            gameUi.pane.setEffect(new GaussianBlur());
+                            gamePausePopup.show(stage);
+                            //pop-up here
+                        }
+
+                        if (isPaused) {
+                            isPaused = false;
+                            gamePausePopup.hide();
+                        }*/
 
         // Create scene for settings menu
         SettingsUi settingsUi = new SettingsUi();
@@ -91,7 +109,7 @@ public class SpaceInvadersUi extends Application {
 
                     if (time >= 50 * 0.02) {
                         enemyMovementCounter++;
-                        if (enemyMovementCounter >= 120) {
+                        if (enemyMovementCounter >= 34) {
                             enemyMovementCounter = 0;
                         }
                         enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
@@ -111,6 +129,8 @@ public class SpaceInvadersUi extends Application {
                     playerBullets.forEach(Shape::moveUp);
                     enemyBullets.forEach(Shape::moveDown);
 
+                    //bulletCollisionHandler(playerBullets, enemies, gameUi, points, 100);
+
                     playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
                         if (bullet.collision(enemy)) {
                             bullet.setAlive(false);
@@ -123,6 +143,7 @@ public class SpaceInvadersUi extends Application {
                         if (bullet.collision(player)) {
                             bullet.setAlive(false);
                             player.setAlive(false);
+                            gameUi.pointsText.setText("Points: " + (points.addAndGet(-500)));
                         }
                     }));
 
@@ -230,6 +251,16 @@ public class SpaceInvadersUi extends Application {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
+
+/*    public static void bulletCollisionHandler(ArrayList<?> bullets, ArrayList<?> target, GameUi gameUi, AtomicInteger pointCounter, int points) {
+        bullets.forEach(bullet -> target.forEach(enemy -> {
+            if (bullet.collision(enemy)) {
+                bullet.setAlive(false);
+                enemy.setAlive(false);
+                gameUi.pointsText.setText("Points: " + (pointCounter.addAndGet(points)));
+            }
+        }));
+    }*/
 
     public static void main(String[] args) {
         launch(SpaceInvadersUi.class);

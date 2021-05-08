@@ -20,13 +20,30 @@ public class EnemyShip extends Shape {
     public void move(int counter) {
         if (counter == 0) {
             changeDirection();
+            moveDown();
+            return;
         }
 
         if (!direction) {
-            super.moveLeft();
+            moveLeft();
         } else {
-            super.moveRight();
+            moveRight();
         }
+    }
+
+    @Override
+    public void moveLeft() {
+        this.getShape().setTranslateX(this.getShape().getTranslateX() - 12.0);
+    }
+
+    @Override
+    public void moveRight() {
+        this.getShape().setTranslateX(this.getShape().getTranslateX() + 12.0);
+    }
+
+    @Override
+    public void moveDown() {
+        this.getShape().setTranslateY(this.getShape().getTranslateY() + 45);
     }
 
     public void changeDirection() {
