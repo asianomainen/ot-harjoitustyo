@@ -1,8 +1,5 @@
 package spaceinvadersapp.ui;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 import spaceinvadersapp.domain.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -28,13 +25,14 @@ public class SpaceInvadersUi extends Application {
     private final ColorInput color = new ColorInput();
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
     private double time = 0.0;
-    private boolean paused = false;
+    private boolean isPaused = false;
+    int enemyMovementCounter = 60;
 
     @Override
     public void start(Stage stage) {
         // Create scene for main menu
         MainMenuUi mainMenuUi = new MainMenuUi();
-        Scene mainMenu = mainMenuUi.createMainMenu(WIDTH,HEIGHT);
+        Scene mainMenu = mainMenuUi.createMainMenu(WIDTH, HEIGHT);
 
         //Create scene for game
         GameUi gameUi = new GameUi();
@@ -42,11 +40,11 @@ public class SpaceInvadersUi extends Application {
 
         // Create scene for settings menu
         SettingsUi settingsUi = new SettingsUi();
-        Scene settingsMenu = settingsUi.createSettingsUi(WIDTH,HEIGHT);
+        Scene settingsMenu = settingsUi.createSettingsUi(WIDTH, HEIGHT);
 
         // Create scene for High Scores
         HighScoreUi highScoreUi = new HighScoreUi();
-        Scene highScoreMenu = highScoreUi.createHighScoreUi(WIDTH,HEIGHT);
+        Scene highScoreMenu = highScoreUi.createHighScoreUi(WIDTH, HEIGHT);
 
         // Creates necessary array lists, hash maps and an atomic integer for game UI
         HashMap<KeyCode, Boolean> pressedKeys = new HashMap<>();
@@ -58,9 +56,9 @@ public class SpaceInvadersUi extends Application {
         AtomicInteger points = new AtomicInteger();
 
         // Spawns enemies
-        for (int i = 3; i <= 12; i++) {
-            for (int j = 1; j <= 5; j++) {
-                enemies.add(new EnemyShip((i * 60), (j * 65), Color.PURPLE));
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                enemies.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
             }
         }
 
@@ -75,8 +73,8 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
-                if (!paused) {
-                    time += 0.015;
+                if (!isPaused) {
+                    time += 0.02;
                     if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
                         gameUi.playerShip.moveLeft();
                     }
@@ -91,7 +89,17 @@ public class SpaceInvadersUi extends Application {
                         gameUi.pane.getChildren().add(playerBullet.getShape());
                     }
 
-                    if (time > 2) {
+                    if (time >= 50 * 0.02) {
+                        enemyMovementCounter++;
+
+                        if (enemyMovementCounter >= 120) {
+                            enemyMovementCounter = 0;
+                        }
+
+                        enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
+                    }
+
+                    if (time > 1) {
                         if (Math.random() > 0.5) {
                             int random = randomNumberGenerator(0, enemies.size() - 1);
                             EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
@@ -99,7 +107,7 @@ public class SpaceInvadersUi extends Application {
                             gameUi.pane.getChildren().add(enemyBullet.getShape());
                         }
 
-                        time = 1;
+                        time = 0;
                     }
 
                     playerBullets.forEach(Shape::moveUp);
@@ -167,11 +175,12 @@ public class SpaceInvadersUi extends Application {
                 game.setOnKeyPressed(event -> {
                     pressedKeys.put(event.getCode(), Boolean.TRUE);
                     if (event.getCode().equals(KeyCode.ESCAPE)) {
-                        paused = !paused;
+                        isPaused = !isPaused;
                     }
                 });
             }
-        }; animation.start();
+        };
+        animation.start();
 
         // Start game button functions
         mainMenuUi.btnStart.setOnAction(event -> stage.setScene(game));
