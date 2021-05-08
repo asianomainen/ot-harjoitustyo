@@ -33,7 +33,7 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
    - [ ] Peli:
       - [x] Aloittaa pelin
       - [ ] Pelin aikana ESC-napin painaminen:
-        - [ ] Peli pysähtyy
+        - [x] Peli pysähtyy
         - [ ] Asetuksia voi vaihtaa
         - [x] Pelin voi lopettaa
       - [x] Omalla aluksella pystyy liikkumaan
