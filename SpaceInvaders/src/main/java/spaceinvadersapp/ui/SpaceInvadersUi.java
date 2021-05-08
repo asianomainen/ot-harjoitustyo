@@ -142,7 +142,10 @@ public class SpaceInvadersUi extends Application {
                     enemyBullets.forEach(bullet -> players.forEach(player -> {
                         if (bullet.collision(player)) {
                             bullet.setAlive(false);
-                            player.setAlive(false);
+                            if (player.getLives() <= 1) {
+                                player.setAlive(false);
+                            }
+                            player.die();
                             gameUi.pointsText.setText("Points: " + (points.addAndGet(-500)));
                         }
                     }));
