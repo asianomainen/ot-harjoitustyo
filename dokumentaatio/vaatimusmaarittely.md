@@ -49,7 +49,9 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
       - [ ] Esteet (seinät)
         - [ ] Pelissä on esteitä
         - [ ] Esteitä voi tuhota
-      - [ ] Taso vaihtuu
+      - [x] Pelin tasot
+        - [x] Taso vaihtuu
+        - [x] Pelissä on 5 tasoa
    - [ ] Asetukset:
       - [ ] Näppäinasetukset
       - [x] Väriasetukset
