@@ -69,25 +69,23 @@ public class SpaceInvadersUi extends Application {
         PauseGameUi pauseGameUi = new PauseGameUi();
         Popup gamePausePopup = pauseGameUi.createPauseGameUi(WIDTH, HEIGHT);*/
 
-        // Creates necessary array lists, hash maps and an atomic integer for game UI
+        // Creates hash map for handling pressed keys during game
         pressedKeys = new HashMap<>();
+
+        // Creates array lists for handling shape creation and collision
         players = new ArrayList<>();
         playerBullets = new ArrayList<>();
         enemies = new ArrayList<>();
         enemyBullets = new ArrayList<>();
         bosses = new ArrayList<>();
+
+        // Creates atomic integer for counting points during game
         points = new AtomicInteger();
     }
 
     @Override
     public void start(Stage stage) {
-
-        // Spawns enemies
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 5; j++) {
-                enemies.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
-            }
-        }
+        spawnEnemies();
 
         enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
         bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
@@ -124,15 +122,17 @@ public class SpaceInvadersUi extends Application {
                         enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
                     }
 
-                    if (time > 1) {
-                        if (Math.random() > 0.5) {
-                            int random = randomNumberGenerator(0, enemies.size() - 1);
-                            EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
-                            enemyBullets.add(enemyBullet);
-                            gameUi.pane.getChildren().add(enemyBullet.getShape());
-                        }
+                    if (enemies.size() >= 1) {
+                        if (time > 1) {
+                            if (Math.random() > 0.5) {
+                                int random = randomNumberGenerator(0, enemies.size() - 1);
+                                EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
+                                enemyBullets.add(enemyBullet);
+                                gameUi.pane.getChildren().add(enemyBullet.getShape());
+                            }
 
-                        time = 0;
+                            time = 0;
+                        }
                     }
 
                     playerBullets.forEach(Shape::moveUp);
@@ -263,6 +263,9 @@ public class SpaceInvadersUi extends Application {
 
         // Exit button functions
         mainMenuUi.btnExit.setOnAction(event -> stage.close());
+        stage.setOnCloseRequest(e -> {
+
+        });
 
         // Finalizes stage
         stage.setResizable(false);
@@ -271,11 +274,23 @@ public class SpaceInvadersUi extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() {
+    }
+
     public static int randomNumberGenerator(int min, int max) {
         // Add one to max to include it in possible random numbers generated
         max++;
         Random random = new Random();
         return random.nextInt(max - min) + min;
+    }
+
+    public void spawnEnemies() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                enemies.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
+            }
+        }
     }
 
 /*    public static void bulletCollisionHandler(ArrayList<?> bullets, ArrayList<?> target, GameUi gameUi, AtomicInteger pointCounter, int points) {
