@@ -31,19 +31,24 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
      - [x] High Score
      - [x] Exit
    - [ ] Peli:
-      - [x] Aloittaa pelin
+      - [x] Pelin voi aloittaa
       - [ ] Pelin aikana ESC-napin painaminen:
         - [x] Peli pysähtyy
         - [ ] Asetuksia voi vaihtaa
         - [ ] Pelin voi lopettaa
-      - [x] Omalla aluksella pystyy liikkumaan
-      - [x] Omalla aluksella pystyy ampumaan
-      - [x] Pelissä on vihollisia
-      - [x] Viholliset liikkuvat
-      - [x] Vihollisia pystyy ampumaan
-      - [x] Viholliset pystyvät ampumaan pelaajaa
-      - [ ] Pelissä on esteitä (seiniä)
-      - [ ] Esteitä voi tuhota
+      - [x] Oma alus
+        - [x] Omalla aluksella pystyy liikkumaan
+        - [x] Omalla aluksella pystyy ampumaan
+        - [x] Pelaajalla on kolme elämää
+        - [x] Pelaaja on kuolematon kolmen sekunnin ajan, kun vihollinen tappaa hänet
+      - [x] Vihollisen alus
+        - [x] Pelissä on vihollisia
+        - [x] Viholliset liikkuvat
+        - [x] Vihollisia pystyy ampumaan
+        - [x] Viholliset pystyvät ampumaan pelaajaa
+      - [ ] Esteet (seinät)
+        - [ ] Pelissä on esteitä
+        - [ ] Esteitä voi tuhota
       - [ ] Taso vaihtuu
    - [ ] Asetukset:
       - [ ] Näppäinasetukset
