@@ -24,7 +24,6 @@ public class SpaceInvadersUi extends Application {
     private final static int HEIGHT = 720;
     private final ColorInput color = new ColorInput();
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
-    private double immortalTime = 0.0;
     private double time = 0.0;
     private boolean isPaused = false;
     private int enemyMovementCounter = 17;
