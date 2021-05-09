@@ -6,29 +6,31 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class MainMenuUi {
-    Button btnStart;
-    Button btnSettings;
-    Button btnHighScores;
-    Button btnExit;
-    VBox vbButtons;
+    public Button btnStart;
+    public Button btnSettings;
+    public Button btnHighScores;
+    public Button btnExit;
+    public VBox vbButtons;
 
-    public Scene createMainMenu(int WIDTH, int HEIGHT) {
-        vbButtons = new VBox();
-        vbButtons.setSpacing(20);
-        vbButtons.setAlignment(Pos.CENTER);
-        vbButtons.setPrefSize(WIDTH, HEIGHT);
+    public MainMenuUi(int width, int height) {
+        this.vbButtons = new VBox();
+        this.vbButtons.setSpacing(20);
+        this.vbButtons.setAlignment(Pos.CENTER);
+        this.vbButtons.setPrefSize(width, height);
 
-        btnStart = new Button("Start Game");
-        btnStart.setStyle("-fx-font-size:40");
-        btnSettings = new Button("Settings");
-        btnSettings.setStyle("-fx-font-size:40");
-        btnHighScores = new Button("High Scores");
-        btnHighScores.setStyle("-fx-font-size:40");
-        btnExit = new Button("Exit");
-        btnExit.setStyle("-fx-font-size:40");
+        this.btnStart = new Button("Start Game");
+        this.btnStart.setStyle("-fx-font-size:40");
+        this.btnSettings = new Button("Settings");
+        this.btnSettings.setStyle("-fx-font-size:40");
+        this.btnHighScores = new Button("High Scores");
+        this.btnHighScores.setStyle("-fx-font-size:40");
+        this.btnExit = new Button("Exit");
+        this.btnExit.setStyle("-fx-font-size:40");
 
-        vbButtons.getChildren().addAll(btnStart, btnSettings, btnHighScores, btnExit);
+        this.vbButtons.getChildren().addAll(this.btnStart, this.btnSettings, this.btnHighScores, this.btnExit);
+    }
 
-        return new Scene(vbButtons);
+    public Scene getScene() {
+        return new Scene(this.vbButtons);
     }
 }

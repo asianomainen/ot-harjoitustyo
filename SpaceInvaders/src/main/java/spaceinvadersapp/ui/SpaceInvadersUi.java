@@ -26,52 +26,61 @@ public class SpaceInvadersUi extends Application {
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
     private double time = 0.0;
     private boolean isPaused = false;
-    int enemyMovementCounter = 17;
+    private int enemyMovementCounter = 17;
+    private MainMenuUi mainMenuUi;
+    private Scene mainMenuScene;
+    private GameUi gameUi;
+    private Scene gameScene;
+    private SettingsUi settingsUi;
+    private Scene settingsMenuScene;
+    private HighScoreUi highScoreUi;
+    private Scene highScoreMenuScene;
+    private HashMap<KeyCode, Boolean> pressedKeys;
+    private ArrayList<PlayerShip> players;
+    private ArrayList<PlayerBullet> playerBullets;
+    private ArrayList<EnemyShip> enemies;
+    private ArrayList<EnemyBullet> enemyBullets;
+    private ArrayList<BossEnemyShip> bosses;
+    private AtomicInteger points;
 
     @Override
-    public void start(Stage stage) {
-        // Create scene for main menu
-        MainMenuUi mainMenuUi = new MainMenuUi();
-        Scene mainMenu = mainMenuUi.createMainMenu(WIDTH, HEIGHT);
+    public void init() {
+        // DAO
+
+
+        // Application logic
+        // Create UI for main menu
+        mainMenuUi = new MainMenuUi(WIDTH, HEIGHT);
+        mainMenuScene = mainMenuUi.getScene();
 
         //Create scene for game
-        GameUi gameUi = new GameUi();
-        Scene game = gameUi.createGameUi(WIDTH, HEIGHT);
+        gameUi = new GameUi(WIDTH, HEIGHT);
+        gameScene = gameUi.getScene();
 
-                /*        // Create scene for pause menu popup in game
+        // Create scene for settings menu
+        settingsUi = new SettingsUi(WIDTH, HEIGHT);
+        settingsMenuScene = settingsUi.getScene();
+
+        // Create scene for High Scores
+        highScoreUi = new HighScoreUi(WIDTH, HEIGHT);
+        highScoreMenuScene = highScoreUi.getScene();
+
+        /*        // Create scene for pause menu popup in game
         PauseGameUi pauseGameUi = new PauseGameUi();
         Popup gamePausePopup = pauseGameUi.createPauseGameUi(WIDTH, HEIGHT);*/
 
-         /*                       System.out.println("Yep!\n\n\n\n\n\n\n\n\n\n\n\n");
-
-                        if (!isPaused) {
-                            isPaused = true;
-                            gameUi.pane.setEffect(new GaussianBlur());
-                            gamePausePopup.show(stage);
-                            //pop-up here
-                        }
-
-                        if (isPaused) {
-                            isPaused = false;
-                            gamePausePopup.hide();
-                        }*/
-
-        // Create scene for settings menu
-        SettingsUi settingsUi = new SettingsUi();
-        Scene settingsMenu = settingsUi.createSettingsUi(WIDTH, HEIGHT);
-
-        // Create scene for High Scores
-        HighScoreUi highScoreUi = new HighScoreUi();
-        Scene highScoreMenu = highScoreUi.createHighScoreUi(WIDTH, HEIGHT);
-
         // Creates necessary array lists, hash maps and an atomic integer for game UI
-        HashMap<KeyCode, Boolean> pressedKeys = new HashMap<>();
-        ArrayList<PlayerShip> players = new ArrayList<>();
-        ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
-        ArrayList<EnemyShip> enemies = new ArrayList<>();
-        ArrayList<EnemyBullet> enemyBullets = new ArrayList<>();
-        ArrayList<BossEnemyShip> bosses = new ArrayList<>();
-        AtomicInteger points = new AtomicInteger();
+        pressedKeys = new HashMap<>();
+        players = new ArrayList<>();
+        playerBullets = new ArrayList<>();
+        enemies = new ArrayList<>();
+        enemyBullets = new ArrayList<>();
+        bosses = new ArrayList<>();
+        points = new AtomicInteger();
+    }
+
+    @Override
+    public void start(Stage stage) {
 
         // Spawns enemies
         for (int i = 0; i < 10; i++) {
@@ -84,8 +93,8 @@ public class SpaceInvadersUi extends Application {
         bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
         players.add(gameUi.playerShip);
 
-        game.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
-        game.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
+        gameScene.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
+        gameScene.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
 
         AnimationTimer animation = new AnimationTimer() {
 
@@ -194,7 +203,21 @@ public class SpaceInvadersUi extends Application {
                             .collect(Collectors.toList()));
                 }
 
-                game.setOnKeyPressed(event -> {
+                gameScene.setOnKeyPressed(event -> {
+                             /*                       System.out.println("Yep!\n\n\n\n\n\n\n\n\n\n\n\n");
+
+                        if (!isPaused) {
+                            isPaused = true;
+                            gameUi.pane.setEffect(new GaussianBlur());
+                            gamePausePopup.show(stage);
+                            //pop-up here
+                        }
+
+                        if (isPaused) {
+                            isPaused = false;
+                            gamePausePopup.hide();
+                        }*/
+
                     pressedKeys.put(event.getCode(), Boolean.TRUE);
                     if (event.getCode().equals(KeyCode.ESCAPE)) {
                         isPaused = !isPaused;
@@ -205,11 +228,11 @@ public class SpaceInvadersUi extends Application {
         animation.start();
 
         // Start game button functions
-        mainMenuUi.btnStart.setOnAction(event -> stage.setScene(game));
+        mainMenuUi.btnStart.setOnAction(event -> stage.setScene(gameScene));
 
         // Settings button functions
-        mainMenuUi.btnSettings.setOnAction(event -> stage.setScene(settingsMenu));
-        settingsUi.btnSettingsBackToMainMenu.setOnAction(event -> stage.setScene(mainMenu));
+        mainMenuUi.btnSettings.setOnAction(event -> stage.setScene(settingsMenuScene));
+        settingsUi.btnSettingsBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
         settingsUi.soundCheckBox.setOnAction(event -> {
             if (settingsUi.soundCheckBox.isSelected()) {
                 settingsUi.soundCheckBox.setText("Sound ON");
@@ -235,15 +258,15 @@ public class SpaceInvadersUi extends Application {
         });
 
         // High Scores button functions
-        mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenu));
-        highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenu));
+        mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenuScene));
+        highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
 
         // Exit button functions
         mainMenuUi.btnExit.setOnAction(event -> stage.close());
 
         // Finalizes stage
         stage.setResizable(false);
-        stage.setScene(mainMenu);
+        stage.setScene(mainMenuScene);
         stage.setTitle("Space Invaders");
         stage.show();
     }

@@ -8,23 +8,25 @@ import javafx.scene.text.Text;
 import spaceinvadersapp.domain.PlayerShip;
 
 public class GameUi {
-    Pane pane;
-    Text pointsText;
-    PlayerShip playerShip;
-    Label pressEscToPause;
+    public Pane pane;
+    public Text pointsText;
+    public PlayerShip playerShip;
+    public Label pressEscToPause;
 
-    public Scene createGameUi(int WIDTH, int HEIGHT) {
-        pane = new Pane();
-        pane.setPrefSize(WIDTH, HEIGHT);
+    public GameUi(int width, int height) {
+        this.pane = new Pane();
+        this.pane.setPrefSize(width, height);
 
-        pointsText = new Text(WIDTH - 150, 20, "Points: 0");
-        pointsText.setStyle("-fx-font-size:20");
-        playerShip = new PlayerShip(WIDTH / 2, 650, Color.ORANGERED);
-        pressEscToPause = new Label("Press ESC to pause/resume game");
-        pressEscToPause.setStyle("-fx-font-size:20");
+        this.pointsText = new Text(width - 150, 20, "Points: 0");
+        this.pointsText.setStyle("-fx-font-size:20");
+        this.playerShip = new PlayerShip(width / 2, 650, Color.ORANGERED);
+        this.pressEscToPause = new Label("Press ESC to pause/resume game");
+        this.pressEscToPause.setStyle("-fx-font-size:20");
 
-        pane.getChildren().addAll(pointsText, playerShip.getShape(), pressEscToPause);
+        this.pane.getChildren().addAll(this.pointsText, this.playerShip.getShape(), this.pressEscToPause);
+    }
 
-        return new Scene(pane);
+    public Scene getScene() {
+        return new Scene(this.pane);
     }
 }

@@ -8,33 +8,36 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 
 public class SettingsUi {
-    GridPane stgGrid;
-    CheckBox soundCheckBox;
-    CheckBox invertColours;
-    Button btnSettingsBackToMainMenu;
+    public GridPane stgGrid;
+    public CheckBox soundCheckBox;
+    public CheckBox invertColours;
+    public Button btnSettingsBackToMainMenu;
 
-    public Scene createSettingsUi(int WIDTH, int HEIGHT) {
-        stgGrid = new GridPane();
-        stgGrid.setAlignment(Pos.CENTER);
-        stgGrid.setPrefSize(WIDTH, HEIGHT);
-        stgGrid.setHgap(20);
-        stgGrid.setVgap(20);
+    public SettingsUi(int width, int height) {
+        this.stgGrid = new GridPane();
+        this.stgGrid.setAlignment(Pos.CENTER);
+        this.stgGrid.setPrefSize(width, height);
+        this.stgGrid.setHgap(20);
+        this.stgGrid.setVgap(20);
 
-        soundCheckBox = new CheckBox("Sound ON");
-        soundCheckBox.setSelected(true);
-        soundCheckBox.setStyle("-fx-font-size:40");
+        this.soundCheckBox = new CheckBox("Sound ON");
+        this.soundCheckBox.setSelected(true);
+        this.soundCheckBox.setStyle("-fx-font-size:40");
 
-        invertColours = new CheckBox("Invert colours");
-        invertColours.setStyle("-fx-font-size:40");
+        this.invertColours = new CheckBox("Invert colours");
+        this.invertColours.setSelected(true);
+        this.invertColours.setStyle("-fx-font-size:40");
 
-        btnSettingsBackToMainMenu = new Button("Back to Main Menu");
-        btnSettingsBackToMainMenu.setStyle("-fx-font-size:30");
-        GridPane.setHalignment(btnSettingsBackToMainMenu, HPos.CENTER);
+        this.btnSettingsBackToMainMenu = new Button("Back to Main Menu");
+        this.btnSettingsBackToMainMenu.setStyle("-fx-font-size:30");
+        GridPane.setHalignment(this.btnSettingsBackToMainMenu, HPos.CENTER);
 
-        stgGrid.add(soundCheckBox, 0, 0);
-        stgGrid.add(invertColours, 0, 1);
-        stgGrid.add(btnSettingsBackToMainMenu, 0, 2);
+        this.stgGrid.add(this.soundCheckBox, 0, 0);
+        this.stgGrid.add(this.invertColours, 0, 1);
+        this.stgGrid.add(this.btnSettingsBackToMainMenu, 0, 2);
+    }
 
-        return new Scene(stgGrid);
+    public Scene getScene() {
+        return new Scene(this.stgGrid);
     }
 }
