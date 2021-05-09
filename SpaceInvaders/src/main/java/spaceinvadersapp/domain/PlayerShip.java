@@ -12,14 +12,12 @@ import javafx.scene.shape.Polygon;
 
 public class PlayerShip extends Shape {
     private int lives;
-    private int x;
-    private int y;
+    private boolean immortal;
 
     public PlayerShip(int x, int y, Color color) {
         super(new Polygon(-20, 12, -20, 0, -17, -4, -3, -4, -1, -10, 1, -10, 3, -4, 17, -4, 20, 0, 20, 12), color, x, y);
         this.lives = 3;
-        this.x = x;
-        this.y = y;
+        this.immortal = false;
     }
 
     /**
@@ -58,8 +56,14 @@ public class PlayerShip extends Shape {
 
     public void die() {
         this.lives--;
-        this.getShape().setTranslateX(this.x);
-        this.getShape().setTranslateY(this.y);
+    }
+
+    public boolean isImmortal() {
+        return this.immortal;
+    }
+
+    public void setImmortal(boolean value) {
+        this.immortal = value;
     }
 
     public int getLives() {
