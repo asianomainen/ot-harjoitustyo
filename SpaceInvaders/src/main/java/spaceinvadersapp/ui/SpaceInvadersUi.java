@@ -24,9 +24,7 @@ public class SpaceInvadersUi extends Application {
     private final static int HEIGHT = 720;
     private final ColorInput color = new ColorInput();
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
-    private double time = 0.0;
     private boolean isPaused = false;
-    private int enemyMovementCounter = 17;
     private MainMenuUi mainMenuUi;
     private Scene mainMenuScene;
     private GameUi gameUi;
@@ -85,10 +83,8 @@ public class SpaceInvadersUi extends Application {
 
     @Override
     public void start(Stage stage) {
-        spawnEnemies();
 
-        enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
-        bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
+        //bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
         players.add(gameUi.playerShip);
 
         gameScene.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
@@ -97,11 +93,23 @@ public class SpaceInvadersUi extends Application {
 
         AnimationTimer animation = new AnimationTimer() {
             long previousEnemyMovement = 0;
+            long enemyMovementIncrement = 1_100_000_000;
             long immortalTime = 0;
             int killableCounter = 0;
+            int level = 1;
+            int enemyMovementCounter = 17;
+            double time = 0.0;
 
             @Override
             public void handle(long presentTime) {
+                if (enemies.size() == 0 && level <= 5) {
+                    spawnEnemies();
+                    enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
+                    enemyMovementCounter = 17;
+                    enemyMovementIncrement -= 200_000_000;
+                    level++;
+                }
+                System.out.println(enemyMovementIncrement);
                 if (!isPaused) {
                     time += 0.02;
                     if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
@@ -113,6 +121,7 @@ public class SpaceInvadersUi extends Application {
                     }
 
                     if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
+                    //if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                         if (gameUi.playerShip.isAlive()) {
                             PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
                             playerBullets.add(playerBullet);
@@ -124,13 +133,13 @@ public class SpaceInvadersUi extends Application {
                     enemyBullets.forEach(Shape::moveDown);
 
                     // Enemy movement
-                    if (presentTime - previousEnemyMovement >= 1_000_000_000) {
+                    if (presentTime - previousEnemyMovement >= enemyMovementIncrement) {
                         enemyMovementCounter++;
                         if (enemyMovementCounter >= 34) {
                             enemyMovementCounter = 0;
                         }
                         enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
-                        previousEnemyMovement = presentTime ;
+                        previousEnemyMovement = presentTime;
                     }
 
                     // Checks is player is immortal
@@ -149,7 +158,7 @@ public class SpaceInvadersUi extends Application {
                                     gameUi.playerShip.getShape().setFill(Color.ORANGERED);
                                 }
 
-                                immortalTime = presentTime ;
+                                immortalTime = presentTime;
                             }
                         }
                     }
