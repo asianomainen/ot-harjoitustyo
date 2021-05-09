@@ -25,7 +25,6 @@ public class SettingsUi {
         this.soundCheckBox.setStyle("-fx-font-size:40");
 
         this.invertColours = new CheckBox("Invert colours");
-        this.invertColours.setSelected(true);
         this.invertColours.setStyle("-fx-font-size:40");
 
         this.btnSettingsBackToMainMenu = new Button("Back to Main Menu");
