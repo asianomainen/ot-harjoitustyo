@@ -17,6 +17,12 @@ public class EnemyShip extends Shape {
         super(new Polygon(-20, 0, -20, -15, 0, -12, 20, -15, 20, 0, 15, 7, 10, 0, 5, 0, 0, 15, -5, 0, -10, 0, -15, 7), color, x, y);
     }
 
+    /**
+     * Enables an object to be set as alive (true) or dead (false).
+     *
+     * @param   value   boolean value for alive (true) or dead (false)
+     */
+
     public void move(int counter) {
         if (counter == 0) {
             changeDirection();
@@ -35,6 +41,7 @@ public class EnemyShip extends Shape {
      * Overrides the moveLeft() method of the abstract class Shape
      * to move a larger amount.
      */
+
     @Override
     public void moveLeft() {
         this.getShape().setTranslateX(this.getShape().getTranslateX() - 12.0);
@@ -44,6 +51,7 @@ public class EnemyShip extends Shape {
      * Overrides the moveRight() method of the abstract class Shape
      * to move a larger amount.
      */
+
     @Override
     public void moveRight() {
         this.getShape().setTranslateX(this.getShape().getTranslateX() + 12.0);
@@ -53,6 +61,7 @@ public class EnemyShip extends Shape {
      * Overrides the moveDown() method of the abstract class Shape
      * to move a larger amount.
      */
+
     @Override
     public void moveDown() {
         this.getShape().setTranslateY(this.getShape().getTranslateY() + 45);
@@ -62,6 +71,7 @@ public class EnemyShip extends Shape {
      * Changes the direction of movement for enemies.
      * False: move left. True: move right.
      */
+    
     public void changeDirection() {
         this.direction = !this.direction;
     }
