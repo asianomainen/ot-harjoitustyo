@@ -32,4 +32,5 @@
 | 9.5.  | 2    | Google Sheets API:n testaamista ja implementointia |
 | 9.5.  | 1    | Käyttöliittymän refaktorointia |
 | 13.5.  | 2    | Sovelluslogiikkaa erotettu käyttöliittymästä ja yleistä refaktorointia |
-| Yhteensä | 49    |
+| 13.5.  | 2    | Ajastin lisätty peliin ja testit päivitetty |
+| Yhteensä | 51    |
