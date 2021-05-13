@@ -44,7 +44,7 @@ public class SpaceInvadersUi extends Application {
     private int level = 1;
     private int enemyMovementCounter = 17;
     private double time = 0.0;
-    AtomicInteger gameTime;
+    private AtomicInteger gameTime;
     private long startTime = 0;
 
     @Override
@@ -146,6 +146,7 @@ public class SpaceInvadersUi extends Application {
                     deadShapeRemover.removeDeadShapes();
                     bulletCollisionHandler.handleBulletCollisions();
 
+                    // Game timer
                     if (presentTime - startTime >= 1_000_000_000) {
                         gameUi.gameTimeText.setText("Time: " + (gameTime.addAndGet(1)));
                         startTime = presentTime;
