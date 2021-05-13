@@ -31,21 +31,37 @@ public class EnemyShip extends Shape {
         }
     }
 
+    /**
+     * Overrides the moveLeft() method of the abstract class Shape
+     * to move a larger amount.
+     */
     @Override
     public void moveLeft() {
         this.getShape().setTranslateX(this.getShape().getTranslateX() - 12.0);
     }
 
+    /**
+     * Overrides the moveRight() method of the abstract class Shape
+     * to move a larger amount.
+     */
     @Override
     public void moveRight() {
         this.getShape().setTranslateX(this.getShape().getTranslateX() + 12.0);
     }
 
+    /**
+     * Overrides the moveDown() method of the abstract class Shape
+     * to move a larger amount.
+     */
     @Override
     public void moveDown() {
         this.getShape().setTranslateY(this.getShape().getTranslateY() + 45);
     }
 
+    /**
+     * Changes the direction of movement for enemies.
+     * False: move left. True: move right.
+     */
     public void changeDirection() {
         this.direction = !this.direction;
     }
