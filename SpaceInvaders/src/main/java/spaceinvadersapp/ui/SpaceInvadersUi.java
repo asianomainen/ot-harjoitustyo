@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * Class for creating the ui.
@@ -38,8 +37,9 @@ public class SpaceInvadersUi extends Application {
     private ArrayList<PlayerBullet> playerBullets;
     private ArrayList<EnemyShip> enemies;
     private ArrayList<EnemyBullet> enemyBullets;
-    private ArrayList<BossEnemyShip> bosses;
-    private AtomicInteger points;
+    private DeadShapeRemover deadShapeRemover;
+    private BulletCollisionHandler bulletCollisionHandler;
+    public static long immortalTime = 0;
 
     @Override
     public void init() {
@@ -75,15 +75,18 @@ public class SpaceInvadersUi extends Application {
         playerBullets = new ArrayList<>();
         enemies = new ArrayList<>();
         enemyBullets = new ArrayList<>();
-        bosses = new ArrayList<>();
+        //bosses = new ArrayList<>();
 
         // Creates atomic integer for counting points during game
-        points = new AtomicInteger();
+        //private ArrayList<BossEnemyShip> bosses;
+        AtomicInteger points = new AtomicInteger();
+
+        deadShapeRemover = new DeadShapeRemover(playerBullets, enemyBullets, players, enemies, gameUi);
+        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, gameUi, points);
     }
 
     @Override
     public void start(Stage stage) {
-
         //bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
         players.add(gameUi.playerShip);
 
@@ -91,10 +94,9 @@ public class SpaceInvadersUi extends Application {
         gameScene.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
 
 
-        AnimationTimer animation = new AnimationTimer() {
+        new AnimationTimer() {
             long previousEnemyMovement = 0;
             long enemyMovementIncrement = 1_100_000_000;
-            long immortalTime = 0;
             int killableCounter = 0;
             int level = 1;
             int enemyMovementCounter = 17;
@@ -109,7 +111,7 @@ public class SpaceInvadersUi extends Application {
                     enemyMovementIncrement -= 200_000_000;
                     level++;
                 }
-                System.out.println(enemyMovementIncrement);
+
                 if (!isPaused) {
                     time += 0.02;
                     if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
@@ -121,7 +123,6 @@ public class SpaceInvadersUi extends Application {
                     }
 
                     if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
-                    //if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                         if (gameUi.playerShip.isAlive()) {
                             PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
                             playerBullets.add(playerBullet);
@@ -129,8 +130,17 @@ public class SpaceInvadersUi extends Application {
                         }
                     }
 
+                    gameScene.setOnKeyPressed(event -> {
+                        pressedKeys.put(event.getCode(), Boolean.TRUE);
+                        if (event.getCode().equals(KeyCode.ESCAPE)) {
+                            isPaused = !isPaused;
+                        }
+                    });
+
                     playerBullets.forEach(Shape::moveUp);
                     enemyBullets.forEach(Shape::moveDown);
+                    deadShapeRemover.removeDeadShapes();
+                    bulletCollisionHandler.handleBulletCollisions();
 
                     // Enemy movement
                     if (presentTime - previousEnemyMovement >= enemyMovementIncrement) {
@@ -176,97 +186,9 @@ public class SpaceInvadersUi extends Application {
                             time = 0;
                         }
                     }
-
-                    //bulletCollisionHandler(playerBullets, enemies, gameUi, points, 100);
-
-                    playerBullets.forEach(bullet -> enemies.forEach(enemy -> {
-                        if (bullet.collision(enemy)) {
-                            bullet.setAlive(false);
-                            enemy.setAlive(false);
-                            gameUi.pointsText.setText("Points: " + (points.addAndGet(100)));
-                        }
-                    }));
-
-                    enemyBullets.forEach(bullet -> players.forEach(player -> {
-                        if (bullet.collision(player) && !player.isImmortal()) {
-                            bullet.setAlive(false);
-                            if (player.getLives() <= 1) {
-                                player.setAlive(false);
-                            }
-                            immortalTime++;
-                            player.die();
-                            player.setImmortal(true);
-                            gameUi.pointsText.setText("Points: " + (points.addAndGet(-500)));
-                        }
-                    }));
-
-                    playerBullets.forEach(bullet -> bosses.forEach(boss -> {
-                        if (bullet.collision(boss)) {
-                            bullet.setAlive(false);
-                            boss.setAlive(false);
-                            gameUi.pointsText.setText("Points: " + (points.addAndGet(500)));
-                        }
-                    }));
-
-                    playerBullets.stream()
-                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                            .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-                    playerBullets.removeAll(playerBullets.stream()
-                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                            .collect(Collectors.toList()));
-
-                    enemyBullets.stream()
-                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                            .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-                    enemyBullets.removeAll(enemyBullets.stream()
-                            .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                            .collect(Collectors.toList()));
-
-                    enemies.stream()
-                            .filter(enemy -> !enemy.isAlive())
-                            .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
-                    enemies.removeAll(enemies.stream()
-                            .filter(enemy -> !enemy.isAlive())
-                            .collect(Collectors.toList()));
-
-                    players.stream()
-                            .filter(enemy -> !enemy.isAlive())
-                            .forEach(enemy -> gameUi.pane.getChildren().remove(enemy.getShape()));
-                    players.removeAll(players.stream()
-                            .filter(enemy -> !enemy.isAlive())
-                            .collect(Collectors.toList()));
-
-                    bosses.stream()
-                            .filter(boss -> !boss.isAlive())
-                            .forEach(boss -> gameUi.pane.getChildren().remove(boss.getShape()));
-                    bosses.removeAll(bosses.stream()
-                            .filter(boss -> !boss.isAlive())
-                            .collect(Collectors.toList()));
                 }
-
-                gameScene.setOnKeyPressed(event -> {
-                             /*                       System.out.println("Yep!\n\n\n\n\n\n\n\n\n\n\n\n");
-
-                        if (!isPaused) {
-                            isPaused = true;
-                            gameUi.pane.setEffect(new GaussianBlur());
-                            gamePausePopup.show(stage);
-                            //pop-up here
-                        }
-
-                        if (isPaused) {
-                            isPaused = false;
-                            gamePausePopup.hide();
-                        }*/
-
-                    pressedKeys.put(event.getCode(), Boolean.TRUE);
-                    if (event.getCode().equals(KeyCode.ESCAPE)) {
-                        isPaused = !isPaused;
-                    }
-                });
             }
-        };
-        animation.start();
+        }.start();
 
         // Start game button functions
         mainMenuUi.btnStart.setOnAction(event -> stage.setScene(gameScene));
@@ -312,10 +234,6 @@ public class SpaceInvadersUi extends Application {
         stage.show();
     }
 
-    @Override
-    public void stop() {
-    }
-
     public static int randomNumberGenerator(int min, int max) {
         // Add one to max to include it in possible random numbers generated
         max++;
@@ -330,16 +248,6 @@ public class SpaceInvadersUi extends Application {
             }
         }
     }
-
-/*    public static void bulletCollisionHandler(ArrayList<?> bullets, ArrayList<?> target, GameUi gameUi, AtomicInteger pointCounter, int points) {
-        bullets.forEach(bullet -> target.forEach(enemy -> {
-            if (bullet.collision(enemy)) {
-                bullet.setAlive(false);
-                enemy.setAlive(false);
-                gameUi.pointsText.setText("Points: " + (pointCounter.addAndGet(points)));
-            }
-        }));
-    }*/
 
     public static void main(String[] args) {
         launch(SpaceInvadersUi.class);
