@@ -27,4 +27,8 @@
 | 4.5.  | 1    | Luotiin uusia testejä uusille luokille ja päivitettiin vanhoja testejä |
 | 4.5.  | 1    | JavaDoc päivitetty. Luotiin käyttöohjeet. README päivitetty. Arkkitehtuurikuvaus päivitetty |
 | 6.5.  | 2    | Käyttöliittymän rakentaminen jaettu luokkiin ja lisätty toiminto pelin pysäyttämiseksi ja jatkamiseksi |
-| Yhteensä | 39    |
+| 8.5.  | 4    | Lisätty vihollisten liikkuminen ja optimoitu vihollisten spawnaamista |
+| 9.5.  | 1    | Pelaajalle lisätty kolme elämää ja kuolemattomuus kuolemisen jälkeen |
+| 9.5.  | 1    | Käyttöliittymän refaktorointia |
+| 13.5.  | 2    | Sovelluslogiikkaa erotettu käyttöliittymästä ja yleistä refaktorointia |
+| Yhteensä | 47    |
