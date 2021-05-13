@@ -54,17 +54,40 @@ public class PlayerShip extends Shape {
         super.moveRight();
     }
 
+    /**
+     * Reduces player lives by 1.
+     */
+
     public void die() {
         this.lives--;
     }
+
+    /**
+     * For checking if an object is immortal
+     * (has been hit by a bullet in the previous 3 seconds).
+     *
+     * @return true if the object is immortal, false if not
+     */
 
     public boolean isImmortal() {
         return this.immortal;
     }
 
+    /**
+     * Enables an object to be set as immortal (true) or vulnerable (false).
+     *
+     * @param   value   boolean value for immortal (true) or vulnerable (false)
+     */
+
     public void setImmortal(boolean value) {
         this.immortal = value;
     }
+
+    /**
+     * Returns amount of lives the player has left.
+     *
+     * @return amount of lives player has left (1-3)
+     */
 
     public int getLives() {
         return this.lives;
