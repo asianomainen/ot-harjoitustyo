@@ -9,9 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -40,6 +38,14 @@ public class SpaceInvadersUi extends Application {
     private DeadShapeRemover deadShapeRemover;
     private BulletCollisionHandler bulletCollisionHandler;
     public static long immortalTime = 0;
+    private long previousEnemyMovement = 0;
+    private long enemyMovementIncrement = 1_100_000_000;
+    private int killableCounter = 0;
+    private int level = 1;
+    private int enemyMovementCounter = 17;
+    private double time = 0.0;
+    AtomicInteger gameTime;
+    private long startTime = 0;
 
     @Override
     public void init() {
@@ -80,6 +86,7 @@ public class SpaceInvadersUi extends Application {
         // Creates atomic integer for counting points during game
         //private ArrayList<BossEnemyShip> bosses;
         AtomicInteger points = new AtomicInteger();
+        gameTime = new AtomicInteger();
 
         deadShapeRemover = new DeadShapeRemover(playerBullets, enemyBullets, players, enemies, gameUi);
         bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, gameUi, points);
@@ -93,20 +100,16 @@ public class SpaceInvadersUi extends Application {
         gameScene.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
         gameScene.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
 
-
-        new AnimationTimer() {
-            long previousEnemyMovement = 0;
-            long enemyMovementIncrement = 1_100_000_000;
-            int killableCounter = 0;
-            int level = 1;
-            int enemyMovementCounter = 17;
-            double time = 0.0;
+        AnimationTimer gameAnimation = new AnimationTimer() {
 
             @Override
             public void handle(long presentTime) {
+                if (startTime == 0) {
+                    startTime = presentTime;
+                }
+
                 if (enemies.size() == 0 && level <= 5) {
                     spawnEnemies();
-                    enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
                     enemyMovementCounter = 17;
                     enemyMovementIncrement -= 200_000_000;
                     level++;
@@ -122,6 +125,7 @@ public class SpaceInvadersUi extends Application {
                         gameUi.playerShip.moveRight();
                     }
 
+                    //if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                     if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
                         if (gameUi.playerShip.isAlive()) {
                             PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
@@ -142,6 +146,11 @@ public class SpaceInvadersUi extends Application {
                     deadShapeRemover.removeDeadShapes();
                     bulletCollisionHandler.handleBulletCollisions();
 
+                    if (presentTime - startTime >= 1_000_000_000) {
+                        gameUi.gameTimeText.setText("Time: " + (gameTime.addAndGet(1)));
+                        startTime = presentTime;
+                    }
+
                     // Enemy movement
                     if (presentTime - previousEnemyMovement >= enemyMovementIncrement) {
                         enemyMovementCounter++;
@@ -152,7 +161,7 @@ public class SpaceInvadersUi extends Application {
                         previousEnemyMovement = presentTime;
                     }
 
-                    // Checks is player is immortal
+                    // Checks if player has been shot and makes them immortal for 3 seconds
                     if (immortalTime > 0) {
                         if (killableCounter >= 12) {
                             gameUi.playerShip.getShape().setFill(Color.ORANGERED);
@@ -188,10 +197,13 @@ public class SpaceInvadersUi extends Application {
                     }
                 }
             }
-        }.start();
+        };
 
         // Start game button functions
-        mainMenuUi.btnStart.setOnAction(event -> stage.setScene(gameScene));
+        mainMenuUi.btnStart.setOnAction(event -> {
+            stage.setScene(gameScene);
+            gameAnimation.start();
+        });
 
         // Settings button functions
         mainMenuUi.btnSettings.setOnAction(event -> stage.setScene(settingsMenuScene));
@@ -247,6 +259,8 @@ public class SpaceInvadersUi extends Application {
                 enemies.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
             }
         }
+
+        enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
     }
 
     public static void main(String[] args) {
