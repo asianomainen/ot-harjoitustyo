@@ -18,9 +18,13 @@ public class EnemyShip extends Shape {
     }
 
     /**
-     * Enables an object to be set as alive (true) or dead (false).
+     * Moves the enemies left or right.
      *
-     * @param   value   boolean value for alive (true) or dead (false)
+     * Counter keeps track of how many times the enemy has moved.
+     * When enemy direction is to be changed, the counter value
+     * must be 0.
+     *
+     * @param   counter   amount of times the enemy has moved
      */
 
     public void move(int counter) {
@@ -71,7 +75,7 @@ public class EnemyShip extends Shape {
      * Changes the direction of movement for enemies.
      * False: move left. True: move right.
      */
-    
+
     public void changeDirection() {
         this.direction = !this.direction;
     }
