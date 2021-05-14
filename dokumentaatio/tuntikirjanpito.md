@@ -35,4 +35,5 @@
 | 13.5.  | 2    | Ajastin lisätty peliin ja testit päivitetty |
 | 14.5.  | 1    | Pause menu lisätty peliin |
 | 14.5.  | 1    | Seinät lisätty peliin |
-| Yhteensä | 53    |
+| 14.5.  | 3    | Pelin aikainen pause menu ja pelin jälkeinen high score lisätty |
+| Yhteensä | 56    |
