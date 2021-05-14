@@ -52,8 +52,8 @@ public class SpaceInvadersUi extends Application {
     private int level = 5;
     private int enemyMovementCounter = 17;
     private double time = 0.0;
-    public static AtomicInteger gameTime;
-    public static AtomicInteger gamePoints;
+    private AtomicInteger gameTime;
+    private AtomicInteger gamePoints;
     private long startTime = 0;
     private Stage pauseStage;
     private Stage highScoreStage;
@@ -155,6 +155,7 @@ public class SpaceInvadersUi extends Application {
 
                 if (!isPaused) {
                     time += 0.02;
+
                     if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
                         gameUi.playerShip.moveLeft();
                     }
@@ -367,8 +368,11 @@ public class SpaceInvadersUi extends Application {
         shapeRemover.removeAllShapes(playerBullets, enemyBullets, enemyShips, walls, gameUi);
         gameUi.playerShip.getShape().setTranslateX(WIDTH / 2.0);
         gameUi.playerShip.setLives(3);
+        gameTime = new AtomicInteger();
         gameUi.gameTimeText.setText("Time: 0");
+        gamePoints = new AtomicInteger();
         gameUi.pointsText.setText("Points: 0");
+        startTime = 0;
     }
 
     public static void main(String[] args) {
