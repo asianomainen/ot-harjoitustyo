@@ -20,7 +20,9 @@ public class PauseGameUi {
         this.stgGrid.setPrefSize(width / 2, height / 2);
         this.stgGrid.setHgap(10);
         this.stgGrid.setVgap(10);
-        this.stgGrid.setStyle("-fx-background-color: white;");
+        this.stgGrid.setStyle("-fx-background-color: white,#b5b5b5, " +
+                              "linear-gradient(#fdfdfd, #e1e1e1), " +
+                              "linear-gradient(#eeeeee, #d9d9d9)");
 
         this.btnResume = new Button("Resume Game");
         this.btnResume.setStyle("-fx-font-size:30");
