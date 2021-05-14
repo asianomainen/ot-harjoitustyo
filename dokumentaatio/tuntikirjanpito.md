@@ -34,4 +34,5 @@
 | 13.5.  | 2    | Sovelluslogiikkaa erotettu käyttöliittymästä ja yleistä refaktorointia |
 | 13.5.  | 2    | Ajastin lisätty peliin ja testit päivitetty |
 | 14.5.  | 1    | Pause menu lisätty peliin |
-| Yhteensä | 52    |
+| 14.5.  | 1    | Seinät lisätty peliin |
+| Yhteensä | 53    |
