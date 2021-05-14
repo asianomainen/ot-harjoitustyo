@@ -17,7 +17,7 @@ public class PauseGameUi {
     public PauseGameUi(int width, int height) {
         this.stgGrid = new GridPane();
         this.stgGrid.setAlignment(Pos.CENTER);
-        this.stgGrid.setPrefSize(width / 2, height / 2);
+        this.stgGrid.setPrefSize(width / 2.0, height / 2.0);
         this.stgGrid.setHgap(10);
         this.stgGrid.setVgap(10);
         this.stgGrid.setStyle("-fx-background-color: white,#b5b5b5, " +

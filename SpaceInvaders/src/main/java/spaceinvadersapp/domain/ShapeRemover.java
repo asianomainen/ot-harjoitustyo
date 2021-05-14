@@ -5,7 +5,7 @@ import spaceinvadersapp.ui.GameUi;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class DeadShapeRemover {
+public class ShapeRemover {
     ArrayList<PlayerBullet> playerBullets;
     ArrayList<EnemyBullet> enemyBullets;
     ArrayList<PlayerShip> playerShips;
@@ -13,7 +13,7 @@ public class DeadShapeRemover {
     ArrayList<GameWall> walls;
     GameUi gameUi;
 
-    public DeadShapeRemover(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
+    public ShapeRemover(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
         this.playerBullets = playerBullets;
         this.enemyBullets = enemyBullets;
         this.playerShips = playerShips;
@@ -28,6 +28,17 @@ public class DeadShapeRemover {
         removeDeadPlayerShips(playerShips);
         removeDeadEnemyShips(enemyShips);
         removeDeadWalls(walls);
+    }
+
+    public void removeAllShapes(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
+        playerBullets.forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+        playerBullets.removeAll(new ArrayList<>(playerBullets));
+        enemyBullets.forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+        enemyBullets.removeAll(new ArrayList<>(enemyBullets));
+        enemyShips.forEach(ship -> gameUi.pane.getChildren().remove(ship.getShape()));
+        enemyShips.removeAll(new ArrayList<>(enemyShips));
+        walls.forEach(wall -> gameUi.pane.getChildren().remove(wall.getShape()));
+        walls.removeAll(new ArrayList<>(walls));
     }
 
     private void removeDeadPlayerBullets(ArrayList<PlayerBullet> playerBullets) {

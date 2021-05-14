@@ -1,8 +1,6 @@
 package spaceinvadersapp.ui;
 
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import spaceinvadersapp.domain.*;
@@ -36,32 +34,35 @@ public class SpaceInvadersUi extends Application {
     private HighScoreUi highScoreUi;
     private Scene highScoreMenuScene;
     private PauseGameUi pauseGameUi;
-    private Scene gamePausePopup;
+    private Scene gamePausePopupScene;
+    private GameOverHighScoreUi gameOverHighScoreUi;
+    private Scene gameOverHighScoreScene;
     private HashMap<KeyCode, Boolean> pressedKeys;
     private ArrayList<PlayerShip> players;
     private ArrayList<PlayerBullet> playerBullets;
     private ArrayList<EnemyShip> enemies;
     private ArrayList<EnemyBullet> enemyBullets;
     private ArrayList<GameWall> walls;
-    private DeadShapeRemover deadShapeRemover;
+    private ShapeRemover shapeRemover;
     private BulletCollisionHandler bulletCollisionHandler;
     public static long immortalTime = 0;
     private long previousEnemyMovement = 0;
     private long enemyMovementIncrement = 1_100_000_000;
     private int killableCounter = 0;
-    private int level = 1;
+    private int level = 5;
     private int enemyMovementCounter = 17;
     private double time = 0.0;
     private AtomicInteger gameTime;
     private long startTime = 0;
     private Stage pauseStage;
+    private Stage highScoreStage;
 
     @Override
     public void init() {
         // DAO
 
 
-        // Application logic
+        // UI
         // Create UI for main menu
         mainMenuUi = new MainMenuUi(WIDTH, HEIGHT);
         mainMenuScene = mainMenuUi.getScene();
@@ -80,8 +81,14 @@ public class SpaceInvadersUi extends Application {
 
         // Create scene for pause menu popup in game
         pauseGameUi = new PauseGameUi(WIDTH, HEIGHT);
-        gamePausePopup = pauseGameUi.getScene();
+        gamePausePopupScene = pauseGameUi.getScene();
 
+        // Create scene for high score popup after game
+        gameOverHighScoreUi = new GameOverHighScoreUi(WIDTH, HEIGHT);
+        gameOverHighScoreScene = gameOverHighScoreUi.getScene();
+
+
+        // APPLICATION LOGIC
         // Creates hash map for handling pressed keys during game
         pressedKeys = new HashMap<>();
 
@@ -91,23 +98,16 @@ public class SpaceInvadersUi extends Application {
         enemies = new ArrayList<>();
         enemyBullets = new ArrayList<>();
         walls = new ArrayList<>();
-        //bosses = new ArrayList<>();
 
-        // Creates atomic integer for counting points during game
-        //private ArrayList<BossEnemyShip> bosses;
-        AtomicInteger points = new AtomicInteger();
+        // Creates atomic integer for keeping track of game time
         gameTime = new AtomicInteger();
 
-/*        GameWall wall = new GameWall(WIDTH / 2, 580, Color.PURPLE);
-        gameUi.pane.getChildren().add(wall.getShape());*/
-
-        deadShapeRemover = new DeadShapeRemover(playerBullets, enemyBullets, players, enemies, walls, gameUi);
-        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, walls, gameUi, points);
+        shapeRemover = new ShapeRemover(playerBullets, enemyBullets, players, enemies, walls, gameUi);
+        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, walls, gameUi, new AtomicInteger());
     }
 
     @Override
     public void start(Stage stage) {
-        //bosses.add(new BossEnemyShip(WIDTH / 2, 20, Color.CYAN));
         players.add(gameUi.playerShip);
 
         gameScene.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
@@ -117,6 +117,11 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
+                playerBullets.forEach(Shape::moveUp);
+                enemyBullets.forEach(Shape::moveDown);
+                shapeRemover.removeDeadShapes();
+                bulletCollisionHandler.handleBulletCollisions();
+
                 if (startTime == 0) {
                     startTime = presentTime;
                 }
@@ -132,6 +137,16 @@ public class SpaceInvadersUi extends Application {
                     level++;
                 }
 
+                if (enemies.size() == 0 && level == 6) {
+                    highScoreStage = new Stage();
+                    highScoreStage.initModality(Modality.APPLICATION_MODAL);
+                    highScoreStage.initStyle(StageStyle.UNDECORATED);
+                    highScoreStage.initOwner(stage);
+                    highScoreStage.setScene(gameOverHighScoreScene);
+                    highScoreStage.show();
+                    this.stop();
+                }
+
                 if (!isPaused) {
                     time += 0.02;
                     if (pressedKeys.getOrDefault(KeyCode.LEFT, false)) {
@@ -142,12 +157,11 @@ public class SpaceInvadersUi extends Application {
                         gameUi.playerShip.moveRight();
                     }
 
-                    //if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
-                    if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
+                    if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                         if (gameUi.playerShip.isAlive()) {
                             PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(),
-                                                                         (int) gameUi.playerShip.getShape().getTranslateY(),
-                                                                         Color.BLACK);
+                                    (int) gameUi.playerShip.getShape().getTranslateY(),
+                                    Color.BLACK);
                             playerBullets.add(playerBullet);
                             gameUi.pane.getChildren().add(playerBullet.getShape());
                         }
@@ -159,11 +173,6 @@ public class SpaceInvadersUi extends Application {
                             isPaused = !isPaused;
                         }
                     });
-
-                    playerBullets.forEach(Shape::moveUp);
-                    enemyBullets.forEach(Shape::moveDown);
-                    deadShapeRemover.removeDeadShapes();
-                    bulletCollisionHandler.handleBulletCollisions();
 
                     // Game timer
                     if (presentTime - startTime >= 1_000_000_000) {
@@ -208,8 +217,8 @@ public class SpaceInvadersUi extends Application {
                             if (Math.random() > 0.5) {
                                 int random = randomNumberGenerator(0, enemies.size() - 1);
                                 EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(),
-                                                                          (int) enemies.get(random).getShape().getTranslateY(),
-                                                                          Color.CHOCOLATE);
+                                        (int) enemies.get(random).getShape().getTranslateY(),
+                                        Color.CHOCOLATE);
                                 enemyBullets.add(enemyBullet);
                                 gameUi.pane.getChildren().add(enemyBullet.getShape());
                             }
@@ -222,7 +231,7 @@ public class SpaceInvadersUi extends Application {
                     pauseStage.initModality(Modality.APPLICATION_MODAL);
                     pauseStage.initStyle(StageStyle.UNDECORATED);
                     pauseStage.initOwner(stage);
-                    pauseStage.setScene(gamePausePopup);
+                    pauseStage.setScene(gamePausePopupScene);
                     pauseStage.show();
                     this.stop();
                 }
@@ -231,6 +240,7 @@ public class SpaceInvadersUi extends Application {
 
         // Start game button functions
         mainMenuUi.btnStart.setOnAction(event -> {
+            initNewGame();
             stage.setScene(gameScene);
             gameAnimation.start();
         });
@@ -243,7 +253,7 @@ public class SpaceInvadersUi extends Application {
             gameAnimation.start();
         });
 
-        applySettings(pauseGameUi.invertColours, settingsUi.invertColours);
+        applyColorSettings(pauseGameUi.invertColours, settingsUi.invertColours);
 
         pauseGameUi.btnPauseBackToMainMenu.setOnAction(event -> {
             stage.setScene(mainMenuScene);
@@ -262,11 +272,25 @@ public class SpaceInvadersUi extends Application {
             }
         });
 
-        applySettings(settingsUi.invertColours, pauseGameUi.invertColours);
+        applyColorSettings(settingsUi.invertColours, pauseGameUi.invertColours);
 
         // High Scores button functions
         mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenuScene));
         highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
+
+        // Game over High Scores button functions
+        gameOverHighScoreUi.btnNewGame.setOnAction(event -> {
+            initNewGame();
+            highScoreStage.close();
+            stage.setScene(gameScene);
+            gameAnimation.start();
+        });
+
+        gameOverHighScoreUi.btnPauseBackToMainMenu.setOnAction(event -> {
+            highScoreStage.close();
+            pressedKeys.clear();
+            stage.setScene(mainMenuScene);
+        });
 
         // Exit button functions
         mainMenuUi.btnExit.setOnAction(event -> stage.close());
@@ -278,7 +302,7 @@ public class SpaceInvadersUi extends Application {
         stage.show();
     }
 
-    private void applySettings(CheckBox invertButton1, CheckBox invertButton2) {
+    private void applyColorSettings(CheckBox invertButton1, CheckBox invertButton2) {
         invertButton1.setOnAction((event) -> {
             if (invertButton1.isSelected()) {
                 color.setPaint(Color.WHITE);
@@ -296,6 +320,7 @@ public class SpaceInvadersUi extends Application {
             highScoreUi.hsVBox.setEffect(blend);
             settingsUi.stgGrid.setEffect(blend);
             pauseGameUi.stgGrid.setEffect(blend);
+            gameOverHighScoreUi.highScoreGrid.setEffect(blend);
         });
     }
 
@@ -322,6 +347,22 @@ public class SpaceInvadersUi extends Application {
         }
 
         enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
+    }
+
+    public void initNewGame() {
+        immortalTime = 0;
+        previousEnemyMovement = 0;
+        enemyMovementIncrement = 1_100_000_000;
+        killableCounter = 0;
+        level = 5;
+        enemyMovementCounter = 17;
+        time = 0.0;
+        pressedKeys.clear();
+        shapeRemover.removeAllShapes(playerBullets, enemyBullets, enemies, walls, gameUi);
+        gameUi.playerShip.getShape().setTranslateX(WIDTH / 2.0);
+        gameUi.playerShip.setLives(3);
+        gameUi.gameTimeText.setText("Time: 0");
+        gameUi.pointsText.setText("Points: 0");
     }
 
     public static void main(String[] args) {

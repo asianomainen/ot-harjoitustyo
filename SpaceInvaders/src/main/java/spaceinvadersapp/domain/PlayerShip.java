@@ -92,4 +92,8 @@ public class PlayerShip extends Shape {
     public int getLives() {
         return this.lives;
     }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 }
