@@ -10,13 +10,15 @@ public class DeadShapeRemover {
     ArrayList<EnemyBullet> enemyBullets;
     ArrayList<PlayerShip> playerShips;
     ArrayList<EnemyShip> enemyShips;
+    ArrayList<GameWall> walls;
     GameUi gameUi;
 
-    public DeadShapeRemover(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, GameUi gameUi) {
+    public DeadShapeRemover(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
         this.playerBullets = playerBullets;
         this.enemyBullets = enemyBullets;
         this.playerShips = playerShips;
         this.enemyShips = enemyShips;
+        this.walls = walls;
         this.gameUi = gameUi;
     }
 
@@ -25,6 +27,7 @@ public class DeadShapeRemover {
         removeDeadEnemyBullets(enemyBullets);
         removeDeadPlayerShips(playerShips);
         removeDeadEnemyShips(enemyShips);
+        removeDeadWalls(walls);
     }
 
     private void removeDeadPlayerBullets(ArrayList<PlayerBullet> playerBullets) {
@@ -60,6 +63,15 @@ public class DeadShapeRemover {
                 .forEach(ship -> gameUi.pane.getChildren().remove(ship.getShape()));
         enemyShips.removeAll(enemyShips.stream()
                 .filter(ship -> !ship.isAlive() || ship.outOfBounds())
+                .collect(Collectors.toList()));
+    }
+
+    private void removeDeadWalls(ArrayList<GameWall> walls) {
+        walls.stream()
+                .filter(wall -> !wall.isAlive())
+                .forEach(wall -> gameUi.pane.getChildren().remove(wall.getShape()));
+        walls.removeAll(walls.stream()
+                .filter(wall -> !wall.isAlive())
                 .collect(Collectors.toList()));
     }
 }

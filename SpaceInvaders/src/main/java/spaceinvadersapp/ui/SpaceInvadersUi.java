@@ -1,6 +1,7 @@
 package spaceinvadersapp.ui;
 
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
@@ -41,6 +42,7 @@ public class SpaceInvadersUi extends Application {
     private ArrayList<PlayerBullet> playerBullets;
     private ArrayList<EnemyShip> enemies;
     private ArrayList<EnemyBullet> enemyBullets;
+    private ArrayList<GameWall> walls;
     private DeadShapeRemover deadShapeRemover;
     private BulletCollisionHandler bulletCollisionHandler;
     public static long immortalTime = 0;
@@ -88,6 +90,7 @@ public class SpaceInvadersUi extends Application {
         playerBullets = new ArrayList<>();
         enemies = new ArrayList<>();
         enemyBullets = new ArrayList<>();
+        walls = new ArrayList<>();
         //bosses = new ArrayList<>();
 
         // Creates atomic integer for counting points during game
@@ -95,8 +98,11 @@ public class SpaceInvadersUi extends Application {
         AtomicInteger points = new AtomicInteger();
         gameTime = new AtomicInteger();
 
-        deadShapeRemover = new DeadShapeRemover(playerBullets, enemyBullets, players, enemies, gameUi);
-        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, gameUi, points);
+/*        GameWall wall = new GameWall(WIDTH / 2, 580, Color.PURPLE);
+        gameUi.pane.getChildren().add(wall.getShape());*/
+
+        deadShapeRemover = new DeadShapeRemover(playerBullets, enemyBullets, players, enemies, walls, gameUi);
+        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, walls, gameUi, points);
     }
 
     @Override
@@ -113,6 +119,10 @@ public class SpaceInvadersUi extends Application {
             public void handle(long presentTime) {
                 if (startTime == 0) {
                     startTime = presentTime;
+                }
+
+                if (level == 1) {
+                    spawnWalls();
                 }
 
                 if (enemies.size() == 0 && level <= 5) {
@@ -233,24 +243,7 @@ public class SpaceInvadersUi extends Application {
             gameAnimation.start();
         });
 
-        pauseGameUi.invertColours.setOnAction((event) -> {
-            if (pauseGameUi.invertColours.isSelected()) {
-                color.setPaint(Color.WHITE);
-                settingsUi.invertColours.setSelected(true);
-            } else {
-                color.setPaint(Color.BLACK);
-                settingsUi.invertColours.setSelected(false);
-            }
-
-            color.setWidth(Double.MAX_VALUE);
-            color.setHeight(Double.MAX_VALUE);
-            blend.setBottomInput(color);
-            gameUi.pane.setEffect(blend);
-            mainMenuUi.vbButtons.setEffect(blend);
-            highScoreUi.hsVBox.setEffect(blend);
-            settingsUi.stgGrid.setEffect(blend);
-            pauseGameUi.stgGrid.setEffect(blend);
-        });
+        applySettings(pauseGameUi.invertColours, settingsUi.invertColours);
 
         pauseGameUi.btnPauseBackToMainMenu.setOnAction(event -> {
             stage.setScene(mainMenuScene);
@@ -269,24 +262,7 @@ public class SpaceInvadersUi extends Application {
             }
         });
 
-        settingsUi.invertColours.setOnAction((event) -> {
-            if (settingsUi.invertColours.isSelected()) {
-                color.setPaint(Color.WHITE);
-                pauseGameUi.invertColours.setSelected(true);
-            } else {
-                color.setPaint(Color.BLACK);
-                pauseGameUi.invertColours.setSelected(false);
-            }
-
-            color.setWidth(Double.MAX_VALUE);
-            color.setHeight(Double.MAX_VALUE);
-            blend.setBottomInput(color);
-            gameUi.pane.setEffect(blend);
-            mainMenuUi.vbButtons.setEffect(blend);
-            highScoreUi.hsVBox.setEffect(blend);
-            settingsUi.stgGrid.setEffect(blend);
-            pauseGameUi.stgGrid.setEffect(blend);
-        });
+        applySettings(settingsUi.invertColours, pauseGameUi.invertColours);
 
         // High Scores button functions
         mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenuScene));
@@ -302,11 +278,40 @@ public class SpaceInvadersUi extends Application {
         stage.show();
     }
 
+    private void applySettings(CheckBox invertButton1, CheckBox invertButton2) {
+        invertButton1.setOnAction((event) -> {
+            if (invertButton1.isSelected()) {
+                color.setPaint(Color.WHITE);
+                invertButton2.setSelected(true);
+            } else {
+                color.setPaint(Color.BLACK);
+                invertButton2.setSelected(false);
+            }
+
+            color.setWidth(Double.MAX_VALUE);
+            color.setHeight(Double.MAX_VALUE);
+            blend.setBottomInput(color);
+            gameUi.pane.setEffect(blend);
+            mainMenuUi.vbButtons.setEffect(blend);
+            highScoreUi.hsVBox.setEffect(blend);
+            settingsUi.stgGrid.setEffect(blend);
+            pauseGameUi.stgGrid.setEffect(blend);
+        });
+    }
+
     public static int randomNumberGenerator(int min, int max) {
         // Add one to max to include it in possible random numbers generated
         max++;
         Random random = new Random();
         return random.nextInt(max - min) + min;
+    }
+
+    public void spawnWalls() {
+        for (int i = 0; i < 4; i++) {
+            walls.add(new GameWall((215 + i * 175), 580, Color.BLACK));
+        }
+
+        walls.forEach(wall -> gameUi.pane.getChildren().add(wall.getShape()));
     }
 
     public void spawnEnemies() {

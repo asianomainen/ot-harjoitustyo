@@ -4,7 +4,6 @@ import spaceinvadersapp.ui.GameUi;
 import spaceinvadersapp.ui.SpaceInvadersUi;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
 import java.util.ArrayList;
 
 public class BulletCollisionHandler {
@@ -12,14 +11,16 @@ public class BulletCollisionHandler {
     ArrayList<EnemyBullet> enemyBullets;
     ArrayList<PlayerShip> playerShips;
     ArrayList<EnemyShip> enemyShips;
+    ArrayList<GameWall> walls;
     GameUi gameUi;
     AtomicInteger points;
 
-    public BulletCollisionHandler(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, GameUi gameUi, AtomicInteger points) {
+    public BulletCollisionHandler(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi, AtomicInteger points) {
         this.playerBullets = playerBullets;
         this.enemyBullets = enemyBullets;
         this.playerShips = playerShips;
         this.enemyShips = enemyShips;
+        this.walls = walls;
         this.gameUi = gameUi;
         this.points = points;
     }
@@ -37,6 +38,17 @@ public class BulletCollisionHandler {
                 gameUi.pointsText.setText("Points: " + (points.addAndGet(100)));
             }
         }));
+
+        playerBullets.forEach(bullet -> walls.forEach(wall -> {
+            if (bullet.collision(wall)) {
+                bullet.setAlive(false);
+                if (wall.getLives() <= 1) {
+                    wall.setAlive(false);
+                }
+                wall.die();
+                wall.getShape().setOpacity(wall.getShape().getOpacity() - 0.09);
+            }
+        }));
     }
 
     private void handleEnemyShots() {
@@ -50,6 +62,17 @@ public class BulletCollisionHandler {
                 player.die();
                 player.setImmortal(true);
                 gameUi.pointsText.setText("Points: " + (points.addAndGet(-500)));
+            }
+        }));
+
+        enemyBullets.forEach(bullet -> walls.forEach(wall -> {
+            if (bullet.collision(wall)) {
+                bullet.setAlive(false);
+                if (wall.getLives() <= 1) {
+                    wall.setAlive(false);
+                }
+                wall.die();
+                wall.getShape().setOpacity(wall.getShape().getOpacity() - 0.09);
             }
         }));
     }
