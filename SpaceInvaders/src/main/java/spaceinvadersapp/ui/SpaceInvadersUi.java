@@ -1,5 +1,9 @@
 package spaceinvadersapp.ui;
 
+import javafx.scene.Node;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import spaceinvadersapp.domain.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -30,6 +34,8 @@ public class SpaceInvadersUi extends Application {
     private Scene settingsMenuScene;
     private HighScoreUi highScoreUi;
     private Scene highScoreMenuScene;
+    private PauseGameUi pauseGameUi;
+    private Scene gamePausePopup;
     private HashMap<KeyCode, Boolean> pressedKeys;
     private ArrayList<PlayerShip> players;
     private ArrayList<PlayerBullet> playerBullets;
@@ -46,6 +52,7 @@ public class SpaceInvadersUi extends Application {
     private double time = 0.0;
     private AtomicInteger gameTime;
     private long startTime = 0;
+    private Stage pauseStage;
 
     @Override
     public void init() {
@@ -69,9 +76,9 @@ public class SpaceInvadersUi extends Application {
         highScoreUi = new HighScoreUi(WIDTH, HEIGHT);
         highScoreMenuScene = highScoreUi.getScene();
 
-        /*        // Create scene for pause menu popup in game
-        PauseGameUi pauseGameUi = new PauseGameUi();
-        Popup gamePausePopup = pauseGameUi.createPauseGameUi(WIDTH, HEIGHT);*/
+        // Create scene for pause menu popup in game
+        pauseGameUi = new PauseGameUi(WIDTH, HEIGHT);
+        gamePausePopup = pauseGameUi.getScene();
 
         // Creates hash map for handling pressed keys during game
         pressedKeys = new HashMap<>();
@@ -128,7 +135,9 @@ public class SpaceInvadersUi extends Application {
                     //if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                     if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
                         if (gameUi.playerShip.isAlive()) {
-                            PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(), (int) gameUi.playerShip.getShape().getTranslateY(), Color.BLACK);
+                            PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(),
+                                                                         (int) gameUi.playerShip.getShape().getTranslateY(),
+                                                                         Color.BLACK);
                             playerBullets.add(playerBullet);
                             gameUi.pane.getChildren().add(playerBullet.getShape());
                         }
@@ -188,7 +197,9 @@ public class SpaceInvadersUi extends Application {
                         if (time > 1) {
                             if (Math.random() > 0.5) {
                                 int random = randomNumberGenerator(0, enemies.size() - 1);
-                                EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(), (int) enemies.get(random).getShape().getTranslateY(), Color.CHOCOLATE);
+                                EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(),
+                                                                          (int) enemies.get(random).getShape().getTranslateY(),
+                                                                          Color.CHOCOLATE);
                                 enemyBullets.add(enemyBullet);
                                 gameUi.pane.getChildren().add(enemyBullet.getShape());
                             }
@@ -196,6 +207,14 @@ public class SpaceInvadersUi extends Application {
                             time = 0;
                         }
                     }
+                } else {
+                    pauseStage = new Stage();
+                    pauseStage.initModality(Modality.APPLICATION_MODAL);
+                    pauseStage.initStyle(StageStyle.UNDECORATED);
+                    pauseStage.initOwner(stage);
+                    pauseStage.setScene(gamePausePopup);
+                    pauseStage.show();
+                    this.stop();
                 }
             }
         };
@@ -204,6 +223,39 @@ public class SpaceInvadersUi extends Application {
         mainMenuUi.btnStart.setOnAction(event -> {
             stage.setScene(gameScene);
             gameAnimation.start();
+        });
+
+        // Pause menu button functions
+        pauseGameUi.btnResume.setOnAction(event -> {
+            pauseStage.close();
+            isPaused = false;
+            pressedKeys.clear();
+            gameAnimation.start();
+        });
+
+        pauseGameUi.invertColours.setOnAction((event) -> {
+            if (pauseGameUi.invertColours.isSelected()) {
+                color.setPaint(Color.WHITE);
+                settingsUi.invertColours.setSelected(true);
+            } else {
+                color.setPaint(Color.BLACK);
+                settingsUi.invertColours.setSelected(false);
+            }
+
+            color.setWidth(Double.MAX_VALUE);
+            color.setHeight(Double.MAX_VALUE);
+            blend.setBottomInput(color);
+            gameUi.pane.setEffect(blend);
+            mainMenuUi.vbButtons.setEffect(blend);
+            highScoreUi.hsVBox.setEffect(blend);
+            settingsUi.stgGrid.setEffect(blend);
+            pauseGameUi.stgGrid.setEffect(blend);
+        });
+
+        pauseGameUi.btnPauseBackToMainMenu.setOnAction(event -> {
+            stage.setScene(mainMenuScene);
+            pauseStage.close();
+            pressedKeys.clear();
         });
 
         // Settings button functions
@@ -220,8 +272,10 @@ public class SpaceInvadersUi extends Application {
         settingsUi.invertColours.setOnAction((event) -> {
             if (settingsUi.invertColours.isSelected()) {
                 color.setPaint(Color.WHITE);
+                pauseGameUi.invertColours.setSelected(true);
             } else {
                 color.setPaint(Color.BLACK);
+                pauseGameUi.invertColours.setSelected(false);
             }
 
             color.setWidth(Double.MAX_VALUE);
@@ -231,6 +285,7 @@ public class SpaceInvadersUi extends Application {
             mainMenuUi.vbButtons.setEffect(blend);
             highScoreUi.hsVBox.setEffect(blend);
             settingsUi.stgGrid.setEffect(blend);
+            pauseGameUi.stgGrid.setEffect(blend);
         });
 
         // High Scores button functions

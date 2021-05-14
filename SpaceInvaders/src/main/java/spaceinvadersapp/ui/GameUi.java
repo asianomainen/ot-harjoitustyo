@@ -7,8 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import spaceinvadersapp.domain.PlayerShip;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class GameUi {
     public Pane pane;
     public Text pointsText;
