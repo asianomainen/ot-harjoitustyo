@@ -27,7 +27,7 @@ public class SpaceInvadersUi extends Application {
     private boolean isPaused = false;
     private MainMenuUi mainMenuUi;
     private Scene mainMenuScene;
-    private GameUi gameUi;
+    public static GameUi gameUi;
     private Scene gameScene;
     private SettingsUi settingsUi;
     private Scene settingsMenuScene;
@@ -38,9 +38,9 @@ public class SpaceInvadersUi extends Application {
     private GameOverHighScoreUi gameOverHighScoreUi;
     private Scene gameOverHighScoreScene;
     private HashMap<KeyCode, Boolean> pressedKeys;
-    private ArrayList<PlayerShip> players;
+    private ArrayList<PlayerShip> playerShips;
     private ArrayList<PlayerBullet> playerBullets;
-    private ArrayList<EnemyShip> enemies;
+    private ArrayList<EnemyShip> enemyShips;
     private ArrayList<EnemyBullet> enemyBullets;
     private ArrayList<GameWall> walls;
     private ShapeRemover shapeRemover;
@@ -52,7 +52,8 @@ public class SpaceInvadersUi extends Application {
     private int level = 5;
     private int enemyMovementCounter = 17;
     private double time = 0.0;
-    private AtomicInteger gameTime;
+    public static AtomicInteger gameTime;
+    public static AtomicInteger gamePoints;
     private long startTime = 0;
     private Stage pauseStage;
     private Stage highScoreStage;
@@ -62,8 +63,29 @@ public class SpaceInvadersUi extends Application {
         // DAO
 
 
-        // UI
-        // Create UI for main menu
+        // APPLICATION LOGIC
+        shapeRemover = new ShapeRemover();
+        bulletCollisionHandler = new BulletCollisionHandler();
+
+        // Creates hash map for handling pressed keys during game
+        pressedKeys = new HashMap<>();
+
+        // Creates array lists for handling shape creation and collision
+        playerShips = new ArrayList<>();
+        playerBullets = new ArrayList<>();
+        enemyShips = new ArrayList<>();
+        enemyBullets = new ArrayList<>();
+        walls = new ArrayList<>();
+
+        // Creates atomic integer for keeping track of game time
+        gameTime = new AtomicInteger();
+
+        // Creates atomic integer for keeping track of game points
+        gamePoints = new AtomicInteger();
+    }
+
+    @Override
+    public void start(Stage stage) {
         mainMenuUi = new MainMenuUi(WIDTH, HEIGHT);
         mainMenuScene = mainMenuUi.getScene();
 
@@ -87,28 +109,7 @@ public class SpaceInvadersUi extends Application {
         gameOverHighScoreUi = new GameOverHighScoreUi(WIDTH, HEIGHT);
         gameOverHighScoreScene = gameOverHighScoreUi.getScene();
 
-
-        // APPLICATION LOGIC
-        // Creates hash map for handling pressed keys during game
-        pressedKeys = new HashMap<>();
-
-        // Creates array lists for handling shape creation and collision
-        players = new ArrayList<>();
-        playerBullets = new ArrayList<>();
-        enemies = new ArrayList<>();
-        enemyBullets = new ArrayList<>();
-        walls = new ArrayList<>();
-
-        // Creates atomic integer for keeping track of game time
-        gameTime = new AtomicInteger();
-
-        shapeRemover = new ShapeRemover(playerBullets, enemyBullets, players, enemies, walls, gameUi);
-        bulletCollisionHandler = new BulletCollisionHandler(playerBullets, enemyBullets, players, enemies, walls, gameUi, new AtomicInteger());
-    }
-
-    @Override
-    public void start(Stage stage) {
-        players.add(gameUi.playerShip);
+        playerShips.add(gameUi.playerShip);
 
         gameScene.setOnKeyPressed(event -> pressedKeys.put(event.getCode(), Boolean.TRUE));
         gameScene.setOnKeyReleased(event -> pressedKeys.put(event.getCode(), Boolean.FALSE));
@@ -119,8 +120,13 @@ public class SpaceInvadersUi extends Application {
             public void handle(long presentTime) {
                 playerBullets.forEach(Shape::moveUp);
                 enemyBullets.forEach(Shape::moveDown);
-                shapeRemover.removeDeadShapes();
-                bulletCollisionHandler.handleBulletCollisions();
+                shapeRemover.removeDeadPlayerShips(playerShips, gameUi);
+                shapeRemover.removeDeadEnemyShips(enemyShips, gameUi);
+                shapeRemover.removeDeadPlayerBullets(playerBullets, gameUi);
+                shapeRemover.removeDeadEnemyBullets(enemyBullets, gameUi);
+                shapeRemover.removeDeadWalls(walls, gameUi);
+                bulletCollisionHandler.handlePlayerShots(playerBullets, enemyShips, walls, gamePoints, gameUi);
+                bulletCollisionHandler.handleEnemyShots(enemyBullets, playerShips, walls, gamePoints, gameUi);
 
                 if (startTime == 0) {
                     startTime = presentTime;
@@ -130,14 +136,14 @@ public class SpaceInvadersUi extends Application {
                     spawnWalls();
                 }
 
-                if (enemies.size() == 0 && level <= 5) {
+                if (enemyShips.size() == 0 && level <= 5) {
                     spawnEnemies();
                     enemyMovementCounter = 17;
                     enemyMovementIncrement -= 200_000_000;
                     level++;
                 }
 
-                if (enemies.size() == 0 && level == 6) {
+                if (enemyShips.size() == 0 && level == 6) {
                     highScoreStage = new Stage();
                     highScoreStage.initModality(Modality.APPLICATION_MODAL);
                     highScoreStage.initStyle(StageStyle.UNDECORATED);
@@ -186,7 +192,7 @@ public class SpaceInvadersUi extends Application {
                         if (enemyMovementCounter >= 34) {
                             enemyMovementCounter = 0;
                         }
-                        enemies.forEach(Enemy -> Enemy.move(enemyMovementCounter));
+                        enemyShips.forEach(Enemy -> Enemy.move(enemyMovementCounter));
                         previousEnemyMovement = presentTime;
                     }
 
@@ -212,12 +218,12 @@ public class SpaceInvadersUi extends Application {
                     }
 
                     // Enemy shooting
-                    if (enemies.size() >= 1) {
+                    if (enemyShips.size() >= 1) {
                         if (time > 1) {
                             if (Math.random() > 0.5) {
-                                int random = randomNumberGenerator(0, enemies.size() - 1);
-                                EnemyBullet enemyBullet = new EnemyBullet((int) enemies.get(random).getShape().getTranslateX(),
-                                        (int) enemies.get(random).getShape().getTranslateY(),
+                                int random = randomNumberGenerator(0, enemyShips.size() - 1);
+                                EnemyBullet enemyBullet = new EnemyBullet((int) enemyShips.get(random).getShape().getTranslateX(),
+                                        (int) enemyShips.get(random).getShape().getTranslateY(),
                                         Color.CHOCOLATE);
                                 enemyBullets.add(enemyBullet);
                                 gameUi.pane.getChildren().add(enemyBullet.getShape());
@@ -342,11 +348,11 @@ public class SpaceInvadersUi extends Application {
     public void spawnEnemies() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
-                enemies.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
+                enemyShips.add(new EnemyShip((230 + i * 55), (65 + j * 65), Color.PURPLE));
             }
         }
 
-        enemies.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
+        enemyShips.forEach(enemy -> gameUi.pane.getChildren().add(enemy.getShape()));
     }
 
     public void initNewGame() {
@@ -358,7 +364,7 @@ public class SpaceInvadersUi extends Application {
         enemyMovementCounter = 17;
         time = 0.0;
         pressedKeys.clear();
-        shapeRemover.removeAllShapes(playerBullets, enemyBullets, enemies, walls, gameUi);
+        shapeRemover.removeAllShapes(playerBullets, enemyBullets, enemyShips, walls, gameUi);
         gameUi.playerShip.getShape().setTranslateX(WIDTH / 2.0);
         gameUi.playerShip.setLives(3);
         gameUi.gameTimeText.setText("Time: 0");

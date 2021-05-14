@@ -6,29 +6,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ShapeRemover {
-    ArrayList<PlayerBullet> playerBullets;
-    ArrayList<EnemyBullet> enemyBullets;
-    ArrayList<PlayerShip> playerShips;
-    ArrayList<EnemyShip> enemyShips;
-    ArrayList<GameWall> walls;
-    GameUi gameUi;
-
-    public ShapeRemover(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
-        this.playerBullets = playerBullets;
-        this.enemyBullets = enemyBullets;
-        this.playerShips = playerShips;
-        this.enemyShips = enemyShips;
-        this.walls = walls;
-        this.gameUi = gameUi;
-    }
-
-    public void removeDeadShapes() {
-        removeDeadPlayerBullets(playerBullets);
-        removeDeadEnemyBullets(enemyBullets);
-        removeDeadPlayerShips(playerShips);
-        removeDeadEnemyShips(enemyShips);
-        removeDeadWalls(walls);
-    }
 
     public void removeAllShapes(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi) {
         playerBullets.forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
@@ -41,25 +18,7 @@ public class ShapeRemover {
         walls.removeAll(new ArrayList<>(walls));
     }
 
-    private void removeDeadPlayerBullets(ArrayList<PlayerBullet> playerBullets) {
-        playerBullets.stream()
-                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-        playerBullets.removeAll(playerBullets.stream()
-                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                .collect(Collectors.toList()));
-    }
-
-    private void removeDeadEnemyBullets(ArrayList<EnemyBullet> enemyBullets) {
-        enemyBullets.stream()
-                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
-        enemyBullets.removeAll(enemyBullets.stream()
-                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
-                .collect(Collectors.toList()));
-    }
-
-    private void removeDeadPlayerShips(ArrayList<PlayerShip> playerShips) {
+    public void removeDeadPlayerShips(ArrayList<PlayerShip> playerShips, GameUi gameUi) {
         playerShips.stream()
                 .filter(ship -> !ship.isAlive() || ship.outOfBounds())
                 .forEach(ship -> gameUi.pane.getChildren().remove(ship.getShape()));
@@ -68,7 +27,7 @@ public class ShapeRemover {
                 .collect(Collectors.toList()));
     }
 
-    private void removeDeadEnemyShips(ArrayList<EnemyShip> enemyShips) {
+    public void removeDeadEnemyShips(ArrayList<EnemyShip> enemyShips, GameUi gameUi) {
         enemyShips.stream()
                 .filter(ship -> !ship.isAlive() || ship.outOfBounds())
                 .forEach(ship -> gameUi.pane.getChildren().remove(ship.getShape()));
@@ -77,7 +36,25 @@ public class ShapeRemover {
                 .collect(Collectors.toList()));
     }
 
-    private void removeDeadWalls(ArrayList<GameWall> walls) {
+    public void removeDeadPlayerBullets(ArrayList<PlayerBullet> playerBullets, GameUi gameUi) {
+        playerBullets.stream()
+                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+        playerBullets.removeAll(playerBullets.stream()
+                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                .collect(Collectors.toList()));
+    }
+
+    public void removeDeadEnemyBullets(ArrayList<EnemyBullet> enemyBullets, GameUi gameUi) {
+        enemyBullets.stream()
+                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                .forEach(bullet -> gameUi.pane.getChildren().remove(bullet.getShape()));
+        enemyBullets.removeAll(enemyBullets.stream()
+                .filter(bullet -> !bullet.isAlive() || bullet.outOfBounds())
+                .collect(Collectors.toList()));
+    }
+
+    public void removeDeadWalls(ArrayList<GameWall> walls, GameUi gameUi) {
         walls.stream()
                 .filter(wall -> !wall.isAlive())
                 .forEach(wall -> gameUi.pane.getChildren().remove(wall.getShape()));

@@ -3,39 +3,17 @@ package spaceinvadersapp.domain;
 import spaceinvadersapp.ui.GameUi;
 import spaceinvadersapp.ui.SpaceInvadersUi;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BulletCollisionHandler {
-    ArrayList<PlayerBullet> playerBullets;
-    ArrayList<EnemyBullet> enemyBullets;
-    ArrayList<PlayerShip> playerShips;
-    ArrayList<EnemyShip> enemyShips;
-    ArrayList<GameWall> walls;
-    GameUi gameUi;
-    AtomicInteger points;
 
-    public BulletCollisionHandler(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi, AtomicInteger points) {
-        this.playerBullets = playerBullets;
-        this.enemyBullets = enemyBullets;
-        this.playerShips = playerShips;
-        this.enemyShips = enemyShips;
-        this.walls = walls;
-        this.gameUi = gameUi;
-        this.points = points;
-    }
-
-    public void handleBulletCollisions() {
-        handlePlayerShots();
-        handleEnemyShots();
-    }
-
-    private void handlePlayerShots() {
+    public void handlePlayerShots(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, AtomicInteger gamePoints, GameUi gameUi) {
         playerBullets.forEach(bullet -> enemyShips.forEach(enemy -> {
             if (bullet.collision(enemy)) {
                 bullet.setAlive(false);
                 enemy.setAlive(false);
-                gameUi.pointsText.setText("Points: " + (points.addAndGet(100)));
+                gameUi.pointsText.setText("Points: " + (gamePoints.addAndGet(100)));
             }
         }));
 
@@ -51,7 +29,7 @@ public class BulletCollisionHandler {
         }));
     }
 
-    private void handleEnemyShots() {
+    public void handleEnemyShots(ArrayList<EnemyBullet> enemyBullets, ArrayList<PlayerShip> playerShips, ArrayList<GameWall> walls, AtomicInteger gamePoints, GameUi gameUi) {
         enemyBullets.forEach(bullet -> playerShips.forEach(player -> {
             if (bullet.collision(player) && !player.isImmortal()) {
                 bullet.setAlive(false);
@@ -61,7 +39,7 @@ public class BulletCollisionHandler {
                 SpaceInvadersUi.immortalTime++;
                 player.die();
                 player.setImmortal(true);
-                gameUi.pointsText.setText("Points: " + (points.addAndGet(-500)));
+                gameUi.pointsText.setText("Points: " + (gamePoints.addAndGet(-500)));
             }
         }));
 
