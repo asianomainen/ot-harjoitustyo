@@ -30,7 +30,7 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
      - [x] Settings
      - [x] High Score
      - [x] Exit
-   - [ ] Peli:
+   - [x] Peli:
       - [x] Pelin voi aloittaa
       - [x] Pelin aikana ESC-napin painaminen:
         - [x] Peli pysähtyy
@@ -46,9 +46,9 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
         - [x] Viholliset liikkuvat
         - [x] Vihollisia pystyy ampumaan
         - [x] Viholliset pystyvät ampumaan pelaajaa
-      - [ ] Esteet (seinät)
-        - [ ] Pelissä on esteitä
-        - [ ] Esteitä voi tuhota
+      - [x] Esteet (seinät)
+        - [x] Pelissä on esteitä
+        - [x] Esteitä voi tuhota
       - [x] Pelin tasot
         - [x] Taso vaihtuu
         - [x] Pelissä on 5 tasoa
