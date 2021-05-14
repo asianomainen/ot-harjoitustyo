@@ -52,6 +52,8 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
       - [x] Pelin tasot
         - [x] Taso vaihtuu
         - [x] Pelissä on 5 tasoa
+      - [x] Pelin jälkeen
+        - [x] High Score menu avautuu
    - [ ] Asetukset:
       - [ ] Näppäinasetukset
       - [x] Väriasetukset
