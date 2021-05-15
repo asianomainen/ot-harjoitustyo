@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FileHighScoreDao implements HighScoreDao {
     private Sheets sheetsService;
-    private String spreadsheetID;
+    private final String spreadsheetID;
 
     public FileHighScoreDao(String spreadsheetID) {
         this.spreadsheetID = spreadsheetID;
