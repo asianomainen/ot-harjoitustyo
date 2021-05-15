@@ -148,23 +148,7 @@ public class SpaceInvadersUi extends Application {
                 }
 
                 if (enemyShips.size() == 0 && level == 6) {
-                    highScoreStage = new Stage();
-                    highScoreStage.initModality(Modality.APPLICATION_MODAL);
-                    highScoreStage.initStyle(StageStyle.UNDECORATED);
-                    highScoreStage.initOwner(stage);
-                    highScoreStage.setScene(gameOverHighScoreScene);
-                    highScoreStage.show();
-
-                    saveHighScoreUi.setPlayerTime(gameTime.intValue());
-                    saveHighScoreUi.setPlayerPoints(gamePoints.intValue());
-                    newHighScoreStage = new Stage();
-                    newHighScoreStage.setAlwaysOnTop(true);
-                    newHighScoreStage.initModality(Modality.APPLICATION_MODAL);
-                    newHighScoreStage.initStyle(StageStyle.UNDECORATED);
-                    newHighScoreStage.initOwner(stage);
-                    newHighScoreStage.setScene(saveHighScoreScene);
-                    newHighScoreStage.show();
-                    //gameOverHighScoreUi.refreshHighScoreGrid();
+                    showAfterGameMenus(stage, gameOverHighScoreScene, saveHighScoreScene);
                     this.stop();
                 }
 
@@ -401,6 +385,25 @@ public class SpaceInvadersUi extends Application {
         gamePoints = new AtomicInteger();
         gameUi.pointsText.setText("Points: 0");
         startTime = 0;
+    }
+
+    public void showAfterGameMenus(Stage stage, Scene gameOverHighScoreScene, Scene saveHighScoreScene) {
+        highScoreStage = new Stage();
+        highScoreStage.initModality(Modality.APPLICATION_MODAL);
+        highScoreStage.initStyle(StageStyle.UNDECORATED);
+        highScoreStage.initOwner(stage);
+        highScoreStage.setScene(gameOverHighScoreScene);
+        highScoreStage.show();
+
+        saveHighScoreUi.setPlayerTime(gameTime.intValue());
+        saveHighScoreUi.setPlayerPoints(gamePoints.intValue());
+        newHighScoreStage = new Stage();
+        newHighScoreStage.setAlwaysOnTop(true);
+        newHighScoreStage.initModality(Modality.APPLICATION_MODAL);
+        newHighScoreStage.initStyle(StageStyle.UNDECORATED);
+        newHighScoreStage.initOwner(stage);
+        newHighScoreStage.setScene(saveHighScoreScene);
+        newHighScoreStage.show();
     }
 
     public static void main(String[] args) {
