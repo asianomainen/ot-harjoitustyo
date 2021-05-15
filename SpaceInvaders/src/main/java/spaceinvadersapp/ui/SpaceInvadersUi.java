@@ -274,13 +274,6 @@ public class SpaceInvadersUi extends Application {
         // Settings button functions
         mainMenuUi.btnSettings.setOnAction(event -> stage.setScene(settingsMenuScene));
         settingsUi.btnSettingsBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
-        settingsUi.soundCheckBox.setOnAction(event -> {
-            if (settingsUi.soundCheckBox.isSelected()) {
-                settingsUi.soundCheckBox.setText("Sound ON");
-            } else {
-                settingsUi.soundCheckBox.setText("Sound OFF");
-            }
-        });
 
         applyColorSettings(settingsUi.invertColours, pauseGameUi.invertColours);
 
