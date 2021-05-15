@@ -14,6 +14,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -58,11 +61,16 @@ public class SpaceInvadersUi extends Application {
     HighScoreService hsService;
 
     @Override
-    public void init() {
+    public void init() throws IOException {
+        // PROPERTIES
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        String spreadsheetID = properties.getProperty("spreadsheetID");
+
         // DAO
         GoogleAuthorizeUtil googleAuthorizeUtil = new GoogleAuthorizeUtil();
         SheetsServiceUtil sheetsServiceUtil = new SheetsServiceUtil();
-        hsService = new HighScoreService(googleAuthorizeUtil, sheetsServiceUtil);
+        hsService = new HighScoreService(googleAuthorizeUtil, sheetsServiceUtil, spreadsheetID);
 
         // APPLICATION LOGIC
         shapeRemover = new ShapeRemover();

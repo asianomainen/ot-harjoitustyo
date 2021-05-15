@@ -27,10 +27,10 @@ public class HighScoreService {
      * @see spaceinvadersapp.dao.SheetsServiceUtil
      */
 
-    public HighScoreService(GoogleAuthorizeUtil gau, SheetsServiceUtil ssu) {
+    public HighScoreService(GoogleAuthorizeUtil gau, SheetsServiceUtil ssu, String spreadsheetID) {
         this.googleAuthorizeUtil = gau;
         this.sheetsServiceUtil = ssu;
-        this.hsDao = new FileHighScoreDao();
+        this.hsDao = new FileHighScoreDao(spreadsheetID);
     }
 
     /**

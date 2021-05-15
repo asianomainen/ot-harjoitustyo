@@ -12,9 +12,10 @@ import java.util.List;
 
 public class FileHighScoreDao implements HighScoreDao {
     private Sheets sheetsService;
-    private final String spreadsheetID = "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU";
+    private String spreadsheetID;
 
-    public FileHighScoreDao() {
+    public FileHighScoreDao(String spreadsheetID) {
+        this.spreadsheetID = spreadsheetID;
         try {
             sheetsService = SheetsServiceUtil.getSheetsService();
         } catch (IOException | GeneralSecurityException e) {
