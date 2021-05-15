@@ -54,13 +54,11 @@ Sovelluksen aukeaa pääsivulle, josta pelaaja voi aloittaa uuden pelin, muuttaa
         - [x] Pelissä on 5 tasoa
       - [x] Pelin jälkeen
         - [x] High Score menu avautuu
-   - [ ] Asetukset:
-      - [ ] Näppäinasetukset
+   - [x] Asetukset:
       - [x] Väriasetukset
-      - [x] Ääniasetukset (toistaiseksi sovellukseen ei ole lisätty ääniä)
-   - [ ] Ennätykset:
+   - [x] Ennätykset:
       - [x] Ennätyslista
-      - [ ] Uudet ennätykset tallentuvat listalle
+      - [x] Uudet ennätykset tallentuvat listalle
    - [x] Exit:
       - [x] Sulkee sovelluksen
 
