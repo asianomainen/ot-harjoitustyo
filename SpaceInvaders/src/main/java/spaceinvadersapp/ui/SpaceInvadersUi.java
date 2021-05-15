@@ -149,7 +149,7 @@ public class SpaceInvadersUi extends Application {
                     level++;
                 }
 
-                if (enemyShips.size() == 0 && level == 6) {
+                if (enemyShips.size() == 0 && level == 6 || gameUi.playerShip.getLives() == 0) {
                     showAfterGameMenus(stage, gameOverScene, saveHighScoreScene);
                     this.stop();
                 }
