@@ -6,11 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import spaceinvadersapp.domain.HighScore;
 
 public class HighScoreUi {
     public VBox hsVBox;
     public Button btnHighScoreBackToMainMenu;
+    public TableView<HighScore> hsTable;
 
     public HighScoreUi(int width, int height) {
         this.hsVBox = new VBox();
@@ -18,26 +21,32 @@ public class HighScoreUi {
         this.hsVBox.setPadding(new Insets(20, 20, 20, 20));
         this.hsVBox.setPrefSize(width, height);
 
-        TableView<String> hsTable = new TableView<>();
+        hsTable = new TableView<>();
         hsTable.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-        TableColumn ranking = new TableColumn("#");
-        ranking.setStyle("-fx-font-size:30");
-        ranking.setMinWidth(100);
+/*        TableColumn rankingColumn = new TableColumn("#");
+        rankingColumn.setStyle("-fx-font-size:30");
+        rankingColumn.setMinWidth(100);*/
 
-        TableColumn playerName = new TableColumn("Name");
-        playerName.setStyle("-fx-font-size:30");
-        playerName.setMinWidth(420);
+        TableColumn playerNameColumn = new TableColumn<>("Name");
+        playerNameColumn.setStyle("-fx-font-size:30");
+        playerNameColumn.setMinWidth(420);
 
-        TableColumn time = new TableColumn("Time");
-        time.setStyle("-fx-font-size:30");
-        time.setMinWidth(200);
+        TableColumn timeColumn = new TableColumn<>("Time (s)");
+        timeColumn.setStyle("-fx-font-size:30");
+        timeColumn.setMinWidth(200);
 
-        TableColumn score = new TableColumn("Score");
-        score.setStyle("-fx-font-size:30");
-        score.setMinWidth(200);
+        TableColumn pointsColumn = new TableColumn<>("Score");
+        pointsColumn.setStyle("-fx-font-size:30");
+        pointsColumn.setMinWidth(300);
 
-        hsTable.getColumns().addAll(ranking, playerName, time, score);
+        //rankingColumn.setCellValueFactory(new PropertyValueFactory<String, String>("1"));
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("name"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("time"));
+        pointsColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("points"));
+
+        //hsTable.getColumns().addAll(rankingColumn, playerNameColumn, timeColumn, pointsColumn);
+        hsTable.getColumns().addAll(playerNameColumn, timeColumn, pointsColumn);
 
         this.btnHighScoreBackToMainMenu = new Button("Back to Main Menu");
         this.btnHighScoreBackToMainMenu.setStyle("-fx-font-size:30");

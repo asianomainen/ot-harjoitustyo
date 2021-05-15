@@ -1,12 +1,13 @@
 package spaceinvadersapp.dao;
 
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FileHighScoreDao implements HighScoreDao {
     private Sheets sheetsService;
@@ -22,9 +23,8 @@ public class FileHighScoreDao implements HighScoreDao {
     }
 
     @Override
-    public boolean addHighScore(String name, int time, int points) throws Exception {
-        ValueRange appendBody = new ValueRange()
-                .setValues(Arrays.asList(Arrays.asList(name, time, points)));
+    public boolean addHighScore(String name, String time, String points) {
+        ValueRange appendBody = new ValueRange().setValues(Arrays.asList(Arrays.asList(name, time, points)));
 
         try {
             sheetsService.spreadsheets().values()
@@ -40,12 +40,12 @@ public class FileHighScoreDao implements HighScoreDao {
     }
 
     @Override
-    public ArrayList<String> getHighScores() throws Exception {
-        return null;
-    }
-
-    @Override
-    public void setSpreadsheetId(String id) {
-        this.SPREADSHEET_ID = id;
+    public BatchGetValuesResponse getHighScores() throws IOException {
+        List<String> ranges = Arrays.asList("E3:E","F3:F","G3:G");
+        BatchGetValuesResponse readResult = sheetsService.spreadsheets().values()
+                .batchGet(SPREADSHEET_ID)
+                .setRanges(ranges)
+                .execute();
+        return readResult;
     }
 }

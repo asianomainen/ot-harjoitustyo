@@ -1,25 +1,27 @@
 package spaceinvadersapp.domain;
 
-public class HighScore {
-    public String name;
-    public int time;
-    public int points;
+import javafx.beans.property.SimpleStringProperty;
 
-    public HighScore(String name, int time, int points) {
-        this.name = name;
-        this.time = time;
-        this.points = points;
+public class HighScore {
+    public SimpleStringProperty name;
+    public SimpleStringProperty time;
+    public SimpleStringProperty points;
+
+    public HighScore(String name, String time, String points) {
+        this.name = new SimpleStringProperty(name);
+        this.time = new SimpleStringProperty(time);
+        this.points = new SimpleStringProperty(points);
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 
-    public int getTime() {
-        return time;
+    public String getTime() {
+        return time.get();
     }
 
-    public int getPoints() {
-        return points;
+    public String getPoints() {
+        return points.get();
     }
 }

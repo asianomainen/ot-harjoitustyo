@@ -1,6 +1,9 @@
 package spaceinvadersapp.ui;
 
+import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
+import com.google.api.services.sheets.v4.model.ValueRange;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import spaceinvadersapp.dao.GoogleAuthorizeUtil;
@@ -283,7 +286,11 @@ public class SpaceInvadersUi extends Application {
         applyColorSettings(settingsUi.invertColours, pauseGameUi.invertColours);
 
         // High Scores button functions
-        mainMenuUi.btnHighScores.setOnAction(event -> stage.setScene(highScoreMenuScene));
+        mainMenuUi.btnHighScores.setOnAction(event -> {
+            BatchGetValuesResponse range = hsService.getAllHighScores();
+            hsService.writeScoresToTable(highScoreUi.hsTable, range);
+            stage.setScene(highScoreMenuScene);
+        });
         highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
 
         // Game over High Scores button functions
@@ -302,16 +309,22 @@ public class SpaceInvadersUi extends Application {
 
         // Save new high score button functions
         saveHighScoreUi.saveScore.setOnAction(event -> {
-            hsService.addNewHighScore(new HighScore(saveHighScoreUi.getPlayerName(), gameTime.intValue(), gamePoints.intValue()));
+            hsService.addNewHighScore(new HighScore(saveHighScoreUi.getPlayerName(), String.valueOf(gameTime.intValue()),  String.valueOf(gamePoints.intValue())));
             newHighScoreStage.close();
         });
 
-        saveHighScoreUi.cancel.setOnAction(event -> {
-            newHighScoreStage.close();
-        });
+        saveHighScoreUi.cancel.setOnAction(event -> newHighScoreStage.close());
 
         // Exit button functions
-        mainMenuUi.btnExit.setOnAction(event -> stage.close());
+        mainMenuUi.btnExit.setOnAction(event -> {
+            stage.close();
+            try {
+                pauseStage.close();
+                highScoreStage.close();
+                newHighScoreStage.close();
+            } catch (Exception ignored) {
+            }
+        });
 
         // Finalizes stage
         stage.setResizable(false);

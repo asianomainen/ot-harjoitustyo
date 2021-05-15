@@ -1,12 +1,10 @@
 package spaceinvadersapp.dao;
 
-import java.util.ArrayList;
+import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
 
 public interface HighScoreDao {
 
-    boolean addHighScore(String name, int time, int points) throws Exception;
+    boolean addHighScore(String name, String time, String points) throws Exception;
 
-    ArrayList<String> getHighScores() throws Exception;
-
-    void setSpreadsheetId(String id);
+    BatchGetValuesResponse getHighScores() throws Exception;
 }
