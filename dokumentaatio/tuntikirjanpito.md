@@ -37,4 +37,5 @@
 | 14.5.  | 1    | Seinät lisätty peliin |
 | 14.5.  | 3    | Pelin aikainen pause menu ja pelin jälkeinen high score lisätty |
 | 14.5.  | 1    | DAO:n alustamista |
-| Yhteensä | 57    |
+| 15.5.  | 4    | Lisättiin High Scoren tallentaminen |
+| Yhteensä | 61    |
