@@ -12,6 +12,10 @@ import javafx.scene.shape.Polygon;
 
 public class EnemyBullet extends Shape {
 
+    /**
+     * Creates a new enemy bullet.
+     */
+
     public EnemyBullet(int x, int y, Color color) {
         super(new Polygon(-1, 1, -1, 8, 0, 13, 1, 8, 1, 1, 0, 2), color, x, y);
     }

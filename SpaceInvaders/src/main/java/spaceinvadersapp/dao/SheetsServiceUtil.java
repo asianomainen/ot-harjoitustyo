@@ -8,8 +8,18 @@ import com.google.api.services.sheets.v4.Sheets;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/**
+ * Class to interact with Google Sheets.
+ */
+
 public class SheetsServiceUtil {
     private static final String APPLICATION_NAME = "Space Invaders";
+
+    /**
+     * Uses credentials from GoogleAuthorizeUtil
+     * to access the database.
+     * @see spaceinvadersapp.dao.GoogleAuthorizeUtil
+     */
 
     public static Sheets getSheetsService() throws IOException, GeneralSecurityException {
         Credential credential = GoogleAuthorizeUtil.authorize();

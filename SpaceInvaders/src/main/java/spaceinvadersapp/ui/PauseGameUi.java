@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Creates the pause menu UI.
+ */
+
 public class PauseGameUi {
     Button btnResume;
     GridPane stgGrid;
@@ -43,6 +47,12 @@ public class PauseGameUi {
         this.stgGrid.add(this.invertColours, 0, 2);
         this.stgGrid.add(this.btnPauseBackToMainMenu, 0, 3);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return Scene returns a new scene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.stgGrid);

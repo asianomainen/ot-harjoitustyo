@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Class for creating the ui.
+ * Class for creating the UI.
  */
 
 public class SpaceInvadersUi extends Application {
@@ -32,7 +32,7 @@ public class SpaceInvadersUi extends Application {
     private SettingsUi settingsUi;
     private HighScoreUi highScoreUi;
     private PauseGameUi pauseGameUi;
-    private GameOverHighScoreUi gameOverHighScoreUi;
+    private GameOverUi gameOverUi;
     private SaveHighScoreUi saveHighScoreUi;
     private HashMap<KeyCode, Boolean> pressedKeys;
     private ArrayList<PlayerShip> playerShips;
@@ -42,16 +42,16 @@ public class SpaceInvadersUi extends Application {
     private ArrayList<GameWall> walls;
     private ShapeRemover shapeRemover;
     private BulletCollisionHandler bulletCollisionHandler;
-    public static long immortalTime = 0;
-    private long previousEnemyMovement = 0;
-    private long enemyMovementIncrement = 1_100_000_000;
-    private int killableCounter = 0;
-    private int level = 5;
-    private int enemyMovementCounter = 17;
-    private double time = 0.0;
+    public static long immortalTime;
+    private long previousEnemyMovement;
+    private long enemyMovementIncrement;
+    private int killableCounter;
+    private int level;
+    private int enemyMovementCounter;
+    private double time;
     private AtomicInteger gameTime;
     private AtomicInteger gamePoints;
-    private long startTime = 0;
+    private long startTime;
     private Stage pauseStage;
     private Stage highScoreStage;
     private Stage newHighScoreStage;
@@ -87,6 +87,7 @@ public class SpaceInvadersUi extends Application {
 
     @Override
     public void start(Stage stage) {
+        //Create scene for main menu
         mainMenuUi = new MainMenuUi(WIDTH, HEIGHT);
         Scene mainMenuScene = mainMenuUi.getScene();
 
@@ -107,9 +108,10 @@ public class SpaceInvadersUi extends Application {
         Scene gamePausePopupScene = pauseGameUi.getScene();
 
         // Create scene for high score popup after game
-        gameOverHighScoreUi = new GameOverHighScoreUi(WIDTH, HEIGHT);
-        Scene gameOverHighScoreScene = gameOverHighScoreUi.getScene();
+        gameOverUi = new GameOverUi(WIDTH, HEIGHT);
+        Scene gameOverScene = gameOverUi.getScene();
 
+        //Create scene for high score
         saveHighScoreUi = new SaveHighScoreUi(WIDTH, HEIGHT);
         Scene saveHighScoreScene = saveHighScoreUi.getScene();
 
@@ -148,7 +150,7 @@ public class SpaceInvadersUi extends Application {
                 }
 
                 if (enemyShips.size() == 0 && level == 6) {
-                    showAfterGameMenus(stage, gameOverHighScoreScene, saveHighScoreScene);
+                    showAfterGameMenus(stage, gameOverScene, saveHighScoreScene);
                     this.stop();
                 }
 
@@ -163,7 +165,7 @@ public class SpaceInvadersUi extends Application {
                         gameUi.playerShip.moveRight();
                     }
 
-                    if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
+                    if (pressedKeys.getOrDefault(KeyCode.SPACE, false) && playerBullets.size() < 1) {
                         if (gameUi.playerShip.isAlive()) {
                             PlayerBullet playerBullet = new PlayerBullet(
                                     (int) gameUi.playerShip.getShape().getTranslateX(),
@@ -291,14 +293,14 @@ public class SpaceInvadersUi extends Application {
         highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));
 
         // Game over High Scores button functions
-        gameOverHighScoreUi.btnNewGame.setOnAction(event -> {
+        gameOverUi.btnNewGame.setOnAction(event -> {
             initNewGame();
             highScoreStage.close();
             stage.setScene(gameScene);
             gameAnimation.start();
         });
 
-        gameOverHighScoreUi.btnPauseBackToMainMenu.setOnAction(event -> {
+        gameOverUi.btnPauseBackToMainMenu.setOnAction(event -> {
             highScoreStage.close();
             pressedKeys.clear();
             stage.setScene(mainMenuScene);
@@ -348,7 +350,7 @@ public class SpaceInvadersUi extends Application {
             highScoreUi.hsVBox.setEffect(blend);
             settingsUi.stgGrid.setEffect(blend);
             pauseGameUi.stgGrid.setEffect(blend);
-            gameOverHighScoreUi.highScoreGrid.setEffect(blend);
+            gameOverUi.highScoreGrid.setEffect(blend);
             saveHighScoreUi.newScoreGrid.setEffect(blend);
         });
     }
@@ -383,7 +385,7 @@ public class SpaceInvadersUi extends Application {
         previousEnemyMovement = 0;
         enemyMovementIncrement = 1_100_000_000;
         killableCounter = 0;
-        level = 5;
+        level = 1;
         enemyMovementCounter = 17;
         time = 0.0;
         pressedKeys.clear();

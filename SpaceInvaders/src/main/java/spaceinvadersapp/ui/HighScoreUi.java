@@ -10,6 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import spaceinvadersapp.domain.HighScore;
 
+/**
+ * Creates the high score menu UI.
+ */
+
 public class HighScoreUi {
     public VBox hsVBox;
     public Button btnHighScoreBackToMainMenu;
@@ -24,10 +28,6 @@ public class HighScoreUi {
         hsTable = new TableView<>();
         hsTable.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-/*        TableColumn rankingColumn = new TableColumn("#");
-        rankingColumn.setStyle("-fx-font-size:30");
-        rankingColumn.setMinWidth(100);*/
-
         TableColumn playerNameColumn = new TableColumn<>("Name");
         playerNameColumn.setStyle("-fx-font-size:30");
         playerNameColumn.setMinWidth(418);
@@ -39,8 +39,7 @@ public class HighScoreUi {
         TableColumn pointsColumn = new TableColumn<>("Points");
         pointsColumn.setStyle("-fx-font-size:30");
         pointsColumn.setMinWidth(300);
-
-        //rankingColumn.setCellValueFactory(new PropertyValueFactory<String, String>("1"));
+        
         playerNameColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("name"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("time"));
         pointsColumn.setCellValueFactory(new PropertyValueFactory<HighScore, String>("points"));
@@ -54,6 +53,12 @@ public class HighScoreUi {
 
         this.hsVBox.getChildren().addAll(hsTable, this.btnHighScoreBackToMainMenu);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return scene returns a new scene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.hsVBox);

@@ -93,6 +93,12 @@ public class PlayerShip extends Shape {
         return this.lives;
     }
 
+    /**
+     * Sets the players lives to the value given as a parameter.
+     *
+     * @param   lives   int value of the lives
+     */
+
     public void setLives(int lives) {
         this.lives = lives;
     }

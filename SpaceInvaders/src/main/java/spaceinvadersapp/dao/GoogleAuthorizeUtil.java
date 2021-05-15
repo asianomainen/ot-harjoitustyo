@@ -17,7 +17,16 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class for Google Sheets API authorization.
+ */
+
 public class GoogleAuthorizeUtil {
+
+    /**
+     * Checks that the user is authorized to access
+     * the database and returns the credentials.
+     */
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream input = GoogleAuthorizeUtil.class.getResourceAsStream("/google-sheets-client-secret.json");
@@ -26,8 +35,9 @@ public class GoogleAuthorizeUtil {
 
         List<String> scopes = Arrays.asList(SheetsScopes.SPREADSHEETS);
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), clientSecrets, scopes).setDataStoreFactory(new MemoryDataStoreFactory())
-                .setAccessType("offline").build();
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.
+                Builder(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), clientSecrets, scopes).
+                setDataStoreFactory(new MemoryDataStoreFactory()).setAccessType("offline").build();
 
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }

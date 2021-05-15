@@ -7,6 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Creates the settings menu UI.
+ */
+
 public class SettingsUi {
     public GridPane stgGrid;
     public CheckBox soundCheckBox;
@@ -35,6 +39,12 @@ public class SettingsUi {
         this.stgGrid.add(this.invertColours, 0, 1);
         this.stgGrid.add(this.btnSettingsBackToMainMenu, 0, 2);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return Scene returns a new scene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.stgGrid);

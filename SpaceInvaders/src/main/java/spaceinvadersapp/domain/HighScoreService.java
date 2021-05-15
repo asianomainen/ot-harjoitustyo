@@ -8,16 +8,36 @@ import spaceinvadersapp.dao.GoogleAuthorizeUtil;
 import spaceinvadersapp.dao.HighScoreDao;
 import spaceinvadersapp.dao.SheetsServiceUtil;
 
+/**
+ * Class that handles the creation of new high scores.
+ */
+
 public class HighScoreService {
     GoogleAuthorizeUtil googleAuthorizeUtil;
     SheetsServiceUtil sheetsServiceUtil;
     HighScoreDao hsDao;
+
+    /**
+     * Creates a new high score manager.
+     *
+     * @param   gau   google authorization class. Reads the json file to check for credentials.
+     * @param   ssu   google sheets service class. Checks that the user is authorized to use the Google Sheet API.
+     *
+     * @see spaceinvadersapp.dao.GoogleAuthorizeUtil
+     * @see spaceinvadersapp.dao.SheetsServiceUtil
+     */
 
     public HighScoreService(GoogleAuthorizeUtil gau, SheetsServiceUtil ssu) {
         this.googleAuthorizeUtil = gau;
         this.sheetsServiceUtil = ssu;
         this.hsDao = new FileHighScoreDao();
     }
+
+    /**
+     * Creates a new high score manager.
+     *
+     * @param   highScore   adds a new high score to the database.
+     */
 
     public boolean addNewHighScore(HighScore highScore) {
         try {
@@ -28,6 +48,12 @@ public class HighScoreService {
         return true;
     }
 
+    /**
+     * Makes a database query for all the data in the database.
+     *
+     * @return    BatchGetValuesResponse   the result of the databse query.
+     */
+
     public BatchGetValuesResponse getAllHighScores() {
         BatchGetValuesResponse result;
         try {
@@ -37,6 +63,10 @@ public class HighScoreService {
         }
         return result;
     }
+
+    /**
+     * Writes the TOP 10 high scores to the high score table.
+     */
 
     public void writeScoresToTable(TableView<HighScore> hsTable) {
         BatchGetValuesResponse range = getAllHighScores();

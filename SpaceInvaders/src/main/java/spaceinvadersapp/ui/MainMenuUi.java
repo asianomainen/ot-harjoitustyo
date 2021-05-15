@@ -5,6 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+/**
+ * Creates the main menu UI.
+ */
+
 public class MainMenuUi {
     public Button btnStart;
     public Button btnSettings;
@@ -29,6 +33,12 @@ public class MainMenuUi {
 
         this.vbButtons.getChildren().addAll(this.btnStart, this.btnSettings, this.btnHighScores, this.btnExit);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return Scene returns a new scene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.vbButtons);

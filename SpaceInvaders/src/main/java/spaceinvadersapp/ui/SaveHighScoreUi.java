@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+/**
+ * Creates the high score save menu UI.
+ */
+
 public class SaveHighScoreUi {
     public Button saveScore;
     public Button cancel;
@@ -53,13 +57,31 @@ public class SaveHighScoreUi {
         this.newScoreGrid.add(this.cancel, 0, 9);
     }
 
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return   Scene   returns a new scene from the UI
+     */
+
     public Scene getScene() {
         return new Scene(this.newScoreGrid);
     }
 
+    /**
+     * Returns the player's name.
+     *
+     * @return   name   player name
+     */
+
     public String getPlayerName() {
         return this.nameInput.getText();
     }
+
+    /**
+     * Sets the UI with the player's total game time.
+     *
+     * @param   time   name player name
+     */
 
     public void setPlayerTime(int time) {
         this.newScoreGrid.getChildren().remove(playerTime);
@@ -68,6 +90,12 @@ public class SaveHighScoreUi {
         GridPane.setHalignment(this.playerTime, HPos.CENTER);
         this.newScoreGrid.add(this.playerTime, 0, 5);
     }
+
+    /**
+     * Sets the UI with the player's total points.
+     *
+     * @param   points   name player name
+     */
 
     public void setPlayerPoints(int points) {
         this.newScoreGrid.getChildren().remove(playerPoints);

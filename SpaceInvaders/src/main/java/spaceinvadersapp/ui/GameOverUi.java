@@ -7,12 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-public class GameOverHighScoreUi {
+/**
+ * Creates the game over UI.
+ */
+
+public class GameOverUi {
     public Button btnNewGame;
     public GridPane highScoreGrid;
     public Button btnPauseBackToMainMenu;
 
-    public GameOverHighScoreUi(int width, int height) {
+    public GameOverUi(int width, int height) {
         this.highScoreGrid = new GridPane();
         this.highScoreGrid.setAlignment(Pos.CENTER);
         this.highScoreGrid.setPrefSize(width / 2.0, height / 2.0);
@@ -38,6 +42,12 @@ public class GameOverHighScoreUi {
         this.highScoreGrid.add(this.btnNewGame, 0, 1);
         this.highScoreGrid.add(this.btnPauseBackToMainMenu, 0, 2);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return Scene returns a new cene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.highScoreGrid);

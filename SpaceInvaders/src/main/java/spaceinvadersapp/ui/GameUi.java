@@ -7,6 +7,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import spaceinvadersapp.domain.PlayerShip;
 
+/**
+ * Creates the game UI.
+ */
+
 public class GameUi {
     public Pane pane;
     public Text pointsText;
@@ -30,6 +34,12 @@ public class GameUi {
 
         this.pane.getChildren().addAll(this.pointsText, this.playerShip.getShape(), pressEscToPause, this.gameTimeText);
     }
+
+    /**
+     * Creates new a new Scene from the UI.
+     *
+     * @return Scene returns a new scene from the UI
+     */
 
     public Scene getScene() {
         return new Scene(this.pane);
