@@ -1,6 +1,5 @@
 package spaceinvadersapp.ui;
 
-import com.google.api.services.sheets.v4.model.BatchGetValuesResponse;
 import javafx.scene.control.CheckBox;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
@@ -59,7 +58,7 @@ public class SpaceInvadersUi extends Application {
     HighScoreService hsService;
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         // DAO
         GoogleAuthorizeUtil googleAuthorizeUtil = new GoogleAuthorizeUtil();
         SheetsServiceUtil sheetsServiceUtil = new SheetsServiceUtil();
@@ -286,8 +285,7 @@ public class SpaceInvadersUi extends Application {
         // High Scores button functions
         mainMenuUi.btnHighScores.setOnAction(event -> {
             highScoreUi.hsTable.getItems().clear();
-            BatchGetValuesResponse range = hsService.getAllHighScores();
-            hsService.writeScoresToTable(highScoreUi.hsTable, range);
+            hsService.writeScoresToTable(highScoreUi.hsTable);
             stage.setScene(highScoreMenuScene);
         });
         highScoreUi.btnHighScoreBackToMainMenu.setOnAction(event -> stage.setScene(mainMenuScene));

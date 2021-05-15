@@ -18,7 +18,7 @@ public class HighScoreUi {
     public HighScoreUi(int width, int height) {
         this.hsVBox = new VBox();
         this.hsVBox.setSpacing(20);
-        this.hsVBox.setPadding(new Insets(20, 20, 20, 20));
+        this.hsVBox.setPadding(new Insets(20, 20, 90, 20));
         this.hsVBox.setPrefSize(width, height);
 
         hsTable = new TableView<>();
@@ -30,13 +30,13 @@ public class HighScoreUi {
 
         TableColumn playerNameColumn = new TableColumn<>("Name");
         playerNameColumn.setStyle("-fx-font-size:30");
-        playerNameColumn.setMinWidth(420);
+        playerNameColumn.setMinWidth(418);
 
         TableColumn timeColumn = new TableColumn<>("Time (s)");
         timeColumn.setStyle("-fx-font-size:30");
         timeColumn.setMinWidth(200);
 
-        TableColumn pointsColumn = new TableColumn<>("Score");
+        TableColumn pointsColumn = new TableColumn<>("Points");
         pointsColumn.setStyle("-fx-font-size:30");
         pointsColumn.setMinWidth(300);
 

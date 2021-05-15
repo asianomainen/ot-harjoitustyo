@@ -38,25 +38,17 @@ public class HighScoreService {
         return result;
     }
 
-    public void writeScoresToTable(TableView<HighScore> hsTable, BatchGetValuesResponse range) {
+    public void writeScoresToTable(TableView<HighScore> hsTable) {
+        BatchGetValuesResponse range = getAllHighScores();
         ValueRange names = range.getValueRanges().get(0);
         ValueRange times = range.getValueRanges().get(1);
         ValueRange points = range.getValueRanges().get(2);
 
-/*        ValueRange names = range.getValueRanges().get(0);
-        System.out.println(names.getValues().get(0).get(0));
-        ValueRange times = range.getValueRanges().get(1);
-        System.out.println(times.getValues().get(0).get(0));
-        ValueRange points = range.getValueRanges().get(2);
-        System.out.println(points.getValues().get(0).get(0));
+        if (names.getValues() == null) {
+            return;
+        }
 
-        System.out.println(names.getValues().get(1).get(0));
-        System.out.println(times.getValues().get(1).get(0));
-        System.out.println(points.getValues().get(1).get(0));*/
-
-        //hsTable.getItems().add(new HighScore("Jorma", 1, 2));
-
-        for (int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < names.getValues().size(); i++) {
             hsTable.getItems().add(new HighScore(names.getValues().get(i).get(0).toString(),
                     String.valueOf(times.getValues().get(i).get(0)),
                     String.valueOf(points.getValues().get(i).get(0))));

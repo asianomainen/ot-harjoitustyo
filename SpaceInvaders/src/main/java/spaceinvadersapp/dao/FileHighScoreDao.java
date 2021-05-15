@@ -28,7 +28,7 @@ public class FileHighScoreDao implements HighScoreDao {
 
         try {
             sheetsService.spreadsheets().values()
-                    .append(SPREADSHEET_ID, "B2", appendBody)
+                    .append(SPREADSHEET_ID, "A4", appendBody)
                     .setValueInputOption("RAW")
                     .setInsertDataOption("INSERT_ROWS")
                     .setIncludeValuesInResponse(true)
@@ -41,7 +41,7 @@ public class FileHighScoreDao implements HighScoreDao {
 
     @Override
     public BatchGetValuesResponse getHighScores() throws IOException {
-        List<String> ranges = Arrays.asList("E3:E","F3:F","G3:G");
+        List<String> ranges = Arrays.asList("E3:E12","F3:F12","G3:G12");
         BatchGetValuesResponse readResult = sheetsService.spreadsheets().values()
                 .batchGet(SPREADSHEET_ID)
                 .setRanges(ranges)
