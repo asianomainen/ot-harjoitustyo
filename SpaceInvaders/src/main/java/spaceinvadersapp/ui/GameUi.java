@@ -23,7 +23,7 @@ public class GameUi {
         this.gameTimeText = new Text(width - 138, 60, "Time: 0");
         this.gameTimeText.setStyle("-fx-font-size:20");
 
-        Label pressEscToPause = new Label("Press ESC to pause/resume game");
+        Label pressEscToPause = new Label("Press ESC to pause game");
         pressEscToPause.setStyle("-fx-font-size:20");
 
         this.playerShip = new PlayerShip(width / 2, 650, Color.ORANGERED);

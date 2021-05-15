@@ -3,6 +3,8 @@ package spaceinvadersapp.ui;
 import javafx.scene.control.CheckBox;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import spaceinvadersapp.dao.GoogleAuthorizeUtil;
+import spaceinvadersapp.dao.SheetsServiceUtil;
 import spaceinvadersapp.domain.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -26,17 +28,12 @@ public class SpaceInvadersUi extends Application {
     private final Blend blend = new Blend(BlendMode.DIFFERENCE);
     private boolean isPaused = false;
     private MainMenuUi mainMenuUi;
-    private Scene mainMenuScene;
-    public static GameUi gameUi;
-    private Scene gameScene;
+    private GameUi gameUi;
     private SettingsUi settingsUi;
-    private Scene settingsMenuScene;
     private HighScoreUi highScoreUi;
-    private Scene highScoreMenuScene;
     private PauseGameUi pauseGameUi;
-    private Scene gamePausePopupScene;
     private GameOverHighScoreUi gameOverHighScoreUi;
-    private Scene gameOverHighScoreScene;
+    private SaveHighScoreUi saveHighScoreUi;
     private HashMap<KeyCode, Boolean> pressedKeys;
     private ArrayList<PlayerShip> playerShips;
     private ArrayList<PlayerBullet> playerBullets;
@@ -57,11 +54,15 @@ public class SpaceInvadersUi extends Application {
     private long startTime = 0;
     private Stage pauseStage;
     private Stage highScoreStage;
+    private Stage newHighScoreStage;
+    HighScoreService hsService;
 
     @Override
-    public void init() {
+    public void init() throws Exception {
         // DAO
-
+        GoogleAuthorizeUtil googleAuthorizeUtil = new GoogleAuthorizeUtil();
+        SheetsServiceUtil sheetsServiceUtil = new SheetsServiceUtil();
+        hsService = new HighScoreService(googleAuthorizeUtil, sheetsServiceUtil);
 
         // APPLICATION LOGIC
         shapeRemover = new ShapeRemover();
@@ -87,27 +88,30 @@ public class SpaceInvadersUi extends Application {
     @Override
     public void start(Stage stage) {
         mainMenuUi = new MainMenuUi(WIDTH, HEIGHT);
-        mainMenuScene = mainMenuUi.getScene();
+        Scene mainMenuScene = mainMenuUi.getScene();
 
         //Create scene for game
         gameUi = new GameUi(WIDTH, HEIGHT);
-        gameScene = gameUi.getScene();
+        Scene gameScene = gameUi.getScene();
 
         // Create scene for settings menu
         settingsUi = new SettingsUi(WIDTH, HEIGHT);
-        settingsMenuScene = settingsUi.getScene();
+        Scene settingsMenuScene = settingsUi.getScene();
 
         // Create scene for High Scores
         highScoreUi = new HighScoreUi(WIDTH, HEIGHT);
-        highScoreMenuScene = highScoreUi.getScene();
+        Scene highScoreMenuScene = highScoreUi.getScene();
 
         // Create scene for pause menu popup in game
         pauseGameUi = new PauseGameUi(WIDTH, HEIGHT);
-        gamePausePopupScene = pauseGameUi.getScene();
+        Scene gamePausePopupScene = pauseGameUi.getScene();
 
         // Create scene for high score popup after game
         gameOverHighScoreUi = new GameOverHighScoreUi(WIDTH, HEIGHT);
-        gameOverHighScoreScene = gameOverHighScoreUi.getScene();
+        Scene gameOverHighScoreScene = gameOverHighScoreUi.getScene();
+
+        saveHighScoreUi = new SaveHighScoreUi(WIDTH, HEIGHT);
+        Scene saveHighScoreScene = saveHighScoreUi.getScene();
 
         playerShips.add(gameUi.playerShip);
 
@@ -150,6 +154,17 @@ public class SpaceInvadersUi extends Application {
                     highScoreStage.initOwner(stage);
                     highScoreStage.setScene(gameOverHighScoreScene);
                     highScoreStage.show();
+
+                    saveHighScoreUi.setPlayerTime(gameTime.intValue());
+                    saveHighScoreUi.setPlayerPoints(gamePoints.intValue());
+                    newHighScoreStage = new Stage();
+                    newHighScoreStage.setAlwaysOnTop(true);
+                    newHighScoreStage.initModality(Modality.APPLICATION_MODAL);
+                    newHighScoreStage.initStyle(StageStyle.UNDECORATED);
+                    newHighScoreStage.initOwner(stage);
+                    newHighScoreStage.setScene(saveHighScoreScene);
+                    newHighScoreStage.show();
+                    //gameOverHighScoreUi.refreshHighScoreGrid();
                     this.stop();
                 }
 
@@ -166,7 +181,8 @@ public class SpaceInvadersUi extends Application {
 
                     if (pressedKeys.getOrDefault(KeyCode.SPACE, false)) {
                         if (gameUi.playerShip.isAlive()) {
-                            PlayerBullet playerBullet = new PlayerBullet((int) gameUi.playerShip.getShape().getTranslateX(),
+                            PlayerBullet playerBullet = new PlayerBullet(
+                                    (int) gameUi.playerShip.getShape().getTranslateX(),
                                     (int) gameUi.playerShip.getShape().getTranslateY(),
                                     Color.BLACK);
                             playerBullets.add(playerBullet);
@@ -223,7 +239,8 @@ public class SpaceInvadersUi extends Application {
                         if (time > 1) {
                             if (Math.random() > 0.5) {
                                 int random = randomNumberGenerator(0, enemyShips.size() - 1);
-                                EnemyBullet enemyBullet = new EnemyBullet((int) enemyShips.get(random).getShape().getTranslateX(),
+                                EnemyBullet enemyBullet = new EnemyBullet(
+                                        (int) enemyShips.get(random).getShape().getTranslateX(),
                                         (int) enemyShips.get(random).getShape().getTranslateY(),
                                         Color.CHOCOLATE);
                                 enemyBullets.add(enemyBullet);
@@ -299,6 +316,16 @@ public class SpaceInvadersUi extends Application {
             stage.setScene(mainMenuScene);
         });
 
+        // Save new high score button functions
+        saveHighScoreUi.saveScore.setOnAction(event -> {
+            hsService.addNewHighScore(new HighScore(saveHighScoreUi.getPlayerName(), gameTime.intValue(), gamePoints.intValue()));
+            newHighScoreStage.close();
+        });
+
+        saveHighScoreUi.cancel.setOnAction(event -> {
+            newHighScoreStage.close();
+        });
+
         // Exit button functions
         mainMenuUi.btnExit.setOnAction(event -> stage.close());
 
@@ -328,6 +355,7 @@ public class SpaceInvadersUi extends Application {
             settingsUi.stgGrid.setEffect(blend);
             pauseGameUi.stgGrid.setEffect(blend);
             gameOverHighScoreUi.highScoreGrid.setEffect(blend);
+            saveHighScoreUi.newScoreGrid.setEffect(blend);
         });
     }
 

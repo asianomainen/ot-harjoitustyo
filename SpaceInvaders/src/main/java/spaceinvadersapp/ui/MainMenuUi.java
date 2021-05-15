@@ -18,7 +18,7 @@ public class MainMenuUi {
         this.vbButtons.setAlignment(Pos.CENTER);
         this.vbButtons.setPrefSize(width, height);
 
-        this.btnStart = new Button("Start Game");
+        this.btnStart = new Button("Start/Resume Game");
         this.btnStart.setStyle("-fx-font-size:40");
         this.btnSettings = new Button("Settings");
         this.btnSettings.setStyle("-fx-font-size:40");
