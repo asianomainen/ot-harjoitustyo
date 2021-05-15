@@ -38,4 +38,6 @@
 | 14.5.  | 3    | Pelin aikainen pause menu ja pelin jälkeinen high score lisätty |
 | 14.5.  | 1    | DAO:n alustamista |
 | 15.5.  | 4    | Lisättiin High Scoren tallentaminen |
-| Yhteensä | 61    |
+| 15.5.  | 1    | JavaDoc lisätty kaikille luokille |
+| 15.5.  | 3    | Refaktoroitiin koodia ja poistettiin käyttämättömiä elementtejä. Korjattiin Google Sheets API:n bugeja |
+| Yhteensä | 65    |
