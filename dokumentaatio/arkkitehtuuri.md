@@ -4,7 +4,7 @@
 
 Ohjelman rakenne:
 
-![pakkausrakenne](https://user-images.githubusercontent.com/46067482/116990283-8e4a9580-acdb-11eb-918d-4b807eb2ef0f.jpg)
+![pakkausrakenne(1)](https://user-images.githubusercontent.com/46067482/118401407-411cdb00-b66e-11eb-95fe-3488a6a48aac.jpg)
 
 Pakkaus _spaceinvadersapp.ui_ sisältää JavaFX:llä toteutetun käyttöliittymän, _spaceinvadersapp.domain_ ohjelman sovelluslogiikan ja _spaceinvadersapp.dao_ tietojen pysyväistallennuksen.
 
@@ -23,32 +23,29 @@ Käyttöliittymän toteutus on jaettu jokaista näkymää vastaavaan luokkaan ja
 
 ## Sovelluslogiikka
 
-Sovelluslogiikka muodostuu
+Sovelluksella on vain yhden tyyppisiä käyttäjiä: pelaaja. Pelaajaa varten ei ole luotu omaa luokkaa, koska sovellus on suunniteltu monen ihmisen käytettäväksi yhdellä laitteella. Sovelluslogiikka muodostuu abstraktista luokasta _Shape_ ja sen perivistä luokista, _BulletCollisionHandler_ luokasta, _ShapeRemover_ luokasta, _HighScore_ luokasta ja _HighScoreService_ luokasta.
 
-- Abstraktista luokasta _Shape_ ja sen perivistä luokista
-  - PlayerShip 
-    - pelaajan hahmo
-  - PlayerBullet 
-    - pelaajan ammukset
-  - EnemyShip 
-    - vihollisen hahmo
-  - EnemyBullet 
-    - vihollisen ammukset
-  - GameWall 
-    - seinät eli esteet
-- BulletCollisionHandler 
-  - hoitaa luotien kohteeseen osumisen toiminnot
-- ShapeRemover
-  - hoitaa kuolleiden tai ruudun ulkopuolelle liikkuneiden hahmojen poistamisen
-- HichScore
-  - luo uuden ennätys-olion
-- HighScoreService
-  - hoitaa ennätysten käsittelyn
+Abstrakti _Shape_ luokka ja sen perivät luokat muodostavat pelin hahmot, ammukset ja seinät:
+- _PlayerShip_
+  - pelaajan hahmo
+- _PlayerBullet_ 
+  - pelaajan ammukset
+- _EnemyShip_ 
+  - vihollisen hahmo 
+- _EnemyBullet_ 
+  - vihollisen ammukset
+- _GameWall_ 
+  - seinät eli esteet
 
-![Luokkakaavio](https://user-images.githubusercontent.com/46067482/116996687-7cb9bb80-ace4-11eb-83f0-3eea687b44d4.jpg)
+_BulletCollisionHandler_ luokka hoitaa luotien kohteeseen osumisen toiminnot. Esim. tarkistaa onko luoti osunut viholliseen ja merkitsee vihollisen kuolleeksi ja luodin kuolleeksi.
 
-Kyseisten luokkien toiminnot keskittyvät nimenomaan pelin toteuttamiseen ja ennätysten käsittelyyn.
+_ShapeRemover_ luokka hoitaa kuolleiden tai ruudun ulkopuolelle liikkuneiden hahmojen poistamisen.
 
+_HighScore_ luokkaa käytetään uusien ennätys-olioiden luomiseen
+
+_HighScoreService_ luookka hoitaa ennätysten käsittelyn. Esim. tallentamisen tietokantaan ja hakemisen tietokannasta.
+
+<pre>
 Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvitsevat metodit:
 - Polygon getShape()
   - palauttaa olion muodon
@@ -64,16 +61,16 @@ Abstrakti luokka _Shape_ tarjoaa jokaiselle sen perivälle luokalle niiden tarvi
 - boolean collision(Shape target)
   - vertaa ovatko kyseinen olio ja parametrina annettu olio törmänneet toisiinsa
   - palauttaa true jos kyllä, muuten false
+</pre>
 
-Abstraktin _Shape_ luokan ja sen perivien luokkien luokkakaavio:
-
-![luokkakaavio](https://user-images.githubusercontent.com/46067482/117036766-76d8d000-ad0e-11eb-8648-6706a10ecdac.jpg)
-
+<pre>
 _HighScore_ luokan metodit:
 - String getName()
 - String getTime()
 - String getPoints()
+</pre>
 
+<pre>
 _HighScoreService_ luokan metodit:
 - boolean addNewHighScore(HighScore highScore)
   - palauttaa true jos ennätyksen lisääminen tietokantaan onnistui, muuten false
@@ -81,13 +78,17 @@ _HighScoreService_ luokan metodit:
   - hakee tietokannasta kaikki ennätykset
 - void writeScoresToTable(TableView<HighScore> hsTable)
   - kirjoittaa ennätykset parametrina annettuun ennätyslistaan
+</pre>
 
+<pre>
 _BulletCollisionHandler_ luokan metodit:
 - void handlePlayerShots()
 - void handleEnemyShots()
   - molemmat luokat saavat parametrina useita listoja ja pelinäkymän 
   - tarkistaa mikäli luodit ovat osuneet johonkin ja merkitsee luodit ja kohteen kuolleeksi
+</pre>
 
+<pre>
 _ShapeRemover_ luokan metodit:
 - removeAllShapes(ArrayList<PlayerBullet> playerBullets, ArrayList<EnemyBullet> enemyBullets, ArrayList<EnemyShip> enemyShips, ArrayList<GameWall> walls, GameUi gameUi)
 - removeDeadPlayerShips(ArrayList<PlayerShip> playerShips, GameUi gameUi)
@@ -96,6 +97,11 @@ _ShapeRemover_ luokan metodit:
 - removeDeadEnemyBullets(ArrayList<EnemyBullet> enemyBullets, GameUi gameUi)
 - removeDeadWalls(ArrayList<GameWall> walls, GameUi gameUi)
   - kukin metodi saa parametrina listan olioista ja poistaa kaikki kyseisen tyyppisen kuolleet ja pelinäkymän ulkopuolella olevat oliot
+</pre>
+
+Sovelluksen toiminnallisuutta kuvaava luokka/pakkauskaavio:
+
+![luokka_pakkauskaavio_final](https://user-images.githubusercontent.com/46067482/118403117-93152f00-b675-11eb-8b7c-982969b3aa55.jpg)
 
 ## Ennätysten tallentaminen - Google Sheets API
 
