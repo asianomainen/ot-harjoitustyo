@@ -10,7 +10,11 @@ Ennen kuin generoit jar-tiedoston voit halutessasi luoda oman Google Sheets doku
 
 Mikäli käytät omaa tiedostoa, niin kopioi tarkalleen vakiotiedoston kaava ja taulukot omaan tiedostoosi (huomaa kaksi sivua, jotka ovat vaihdettavissa vasemmassa alareunassa). Nimeä myöskin omaan tiedostoon sivut täsmälleen samannimisiksi: "All scores" ja "TOP10". HUOM! suomen- ja englanninkielisessä Google Sheetsissä on eroja. Sovellus ja vakiotiedosto on totetutettu englanninkielisellä versiolla ja ennätysten tallentaminen ei välttämättä toimi mikäli käytät suomenkielistä Sheetsiä. Kieltä voi vaihtaa Google-tilisi asetuksista.
 
-Mikäli luot oman tiedoston, niin kopioi tiedoston tunniste tiedoston verkkosivun osoitteesta. Vakiotiedostossa esimerkiksi tämä tunniste on "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU". Liitä kopioimasi tunniste config.properties tiedoston ensimmäiselle riville seuraavasti: "spreadsheetID=_tunniste tähän_"
+Mikäli luot oman tiedoston, niin kopioi tiedoston tunniste tiedoston verkkosivun osoitteesta. Vakiotiedostossa esimerkiksi tämä tunniste on "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU". Liitä kopioimasi tunniste SpaceInvadersUi tiedoston riville 68 spreadsheetID-muuttujaan:
+
+```
+String spreadsheetID = "lisää tunniste tähän";
+```
 
 ### Mahdollistamme seuraavaksi tiedon tallentamisen Google Sheetsiin
 
