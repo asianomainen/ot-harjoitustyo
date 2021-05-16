@@ -60,16 +60,13 @@ public class SpaceInvadersUi extends Application {
     private HighScoreService hsService;
 
     @Override
-    public void init() throws IOException {
-/*        // PROPERTIES
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("config.properties"));
-        String spreadsheetID = properties.getProperty("spreadsheetID");*/
+    public void init() {
 
         // DAO
         GoogleAuthorizeUtil googleAuthorizeUtil = new GoogleAuthorizeUtil();
         SheetsServiceUtil sheetsServiceUtil = new SheetsServiceUtil();
-        hsService = new HighScoreService(googleAuthorizeUtil, sheetsServiceUtil, "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU");
+        String spreadsheetID = "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU";
+        hsService = new HighScoreService(googleAuthorizeUtil, sheetsServiceUtil, spreadsheetID);
 
         // APPLICATION LOGIC
         shapeRemover = new ShapeRemover();

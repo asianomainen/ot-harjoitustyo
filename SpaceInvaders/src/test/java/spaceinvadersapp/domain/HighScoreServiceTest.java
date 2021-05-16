@@ -39,10 +39,4 @@ public class HighScoreServiceTest {
         HighScore hs = new HighScore("Marko", "22", "6600");
         assertTrue(hsService.addNewHighScore(hs));
     }
-
-    @Test
-    public void writeScoresToTableWorks() {
-        hsService.writeScoresToTable(highScoreUi.hsTable);
-        assertEquals("Marko", highScoreUi.hsTable.getItems().get(2).getName());
-    }
 }
