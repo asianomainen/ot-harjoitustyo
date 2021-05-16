@@ -14,7 +14,7 @@ Mikäli luot oman tiedoston, niin kopioi tiedoston tunniste tiedoston verkkosivu
 
 ### Mahdollistamme seuraavaksi tiedon tallentamisen Google Sheetsiin
 
-# HUOM! Mikäli olet ohjaaja/arvioija, niin voit ohittaa tämän vaiheen lähettämällä minulle sähköpostia osoitteeseen oskari.nuottonen@gmail.com. Voin lisätä sinut manuaalisesti sovelluksen testaajaksi ja antaa käyttöön minun OAuth tunnukset. Tarvitsen vain gmail-sähköpostiosoitteesi.
+#### HUOM! Mikäli olet ohjaaja/arvioija, niin voit ohittaa tämän vaiheen lähettämällä minulle sähköpostia osoitteeseen oskari.nuottonen@gmail.com. Voin lisätä sinut manuaalisesti sovelluksen testaajaksi ja antaa käyttöön minun OAuth tunnukset. Tarvitsen vain gmail-sähköpostiosoitteesi.
 
 Huolimatta siitä oletko käyttänyt omaa tiedostoa vai vakiotiedostoa, tee seuraavat toimenpiteet:
 
