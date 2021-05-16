@@ -59,7 +59,7 @@ public class ShapeRemoverTest {
     @Test
     public void removeDeadPlayerShipsWorksWhenOutOfBounds() {
         for (PlayerShip ship : playerShips) {
-            ship.getShape().setTranslateX(-10);
+            ship.getShape().setTranslateX(-100);
         }
         remover.removeDeadPlayerShips(playerShips, gameUi);
         assertEquals(0, playerShips.size());
@@ -77,7 +77,7 @@ public class ShapeRemoverTest {
     @Test
     public void removeDeadEnemyShipsWorksWhenOutOfBounds() {
         for (EnemyShip ship : enemyShips) {
-            ship.getShape().setTranslateX(-10);
+            ship.getShape().setTranslateX(-100);
         }
         remover.removeDeadEnemyShips(enemyShips, gameUi);
         assertEquals(0, enemyShips.size());
@@ -95,7 +95,7 @@ public class ShapeRemoverTest {
     @Test
     public void removeDeadPlayerBulletsWorksWhenOutOfBounds() {
         for (PlayerBullet bullet : playerBullets) {
-            bullet.getShape().setTranslateX(-10);
+            bullet.getShape().setTranslateX(-100);
         }
         remover.removeDeadPlayerBullets(playerBullets, gameUi);
         assertEquals(0, playerBullets.size());
@@ -113,7 +113,7 @@ public class ShapeRemoverTest {
     @Test
     public void removeDeadEnemyBulletsWorksWhenOutOfBounds() {
         for (EnemyBullet bullet : enemyBullets) {
-            bullet.getShape().setTranslateX(-10);
+            bullet.getShape().setTranslateX(-100);
         }
         remover.removeDeadEnemyBullets(enemyBullets, gameUi);
         assertEquals(0, enemyBullets.size());
