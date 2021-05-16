@@ -57,7 +57,7 @@ public class SpaceInvadersUi extends Application {
     private Stage pauseStage;
     private Stage highScoreStage;
     private Stage newHighScoreStage;
-    HighScoreService hsService;
+    private HighScoreService hsService;
 
     @Override
     public void init() throws IOException {
@@ -131,6 +131,9 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
+                System.out.println("Lives: " + gameUi.playerShip.getLives());
+                System.out.println("Alive: " + gameUi.playerShip.isAlive());
+                System.out.println("Immortal: " + gameUi.playerShip.isImmortal());
                 playerBullets.forEach(Shape::moveUp);
                 enemyBullets.forEach(Shape::moveDown);
                 shapeRemover.removeDeadPlayerShips(playerShips, gameUi);
@@ -392,6 +395,7 @@ public class SpaceInvadersUi extends Application {
         shapeRemover.removeAllShapes(playerBullets, enemyBullets, enemyShips, walls, gameUi);
         gameUi.playerShip.getShape().setTranslateX(WIDTH / 2.0);
         gameUi.playerShip.setLives(3);
+        gameUi.playerShip.setAlive(true);
         gameTime = new AtomicInteger();
         gameUi.gameTimeText.setText("Time: 0");
         gamePoints = new AtomicInteger();
