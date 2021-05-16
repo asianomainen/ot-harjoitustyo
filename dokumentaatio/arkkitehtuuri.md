@@ -105,7 +105,7 @@ Sovelluksen toteutuksessa on noudatettu DAO-mallia, ja tiedon tallennuksen hoita
 
 Tässä tulee ottaa huomioon Google Sheets API:n vaatima OAuth 2.0 varmennus, jotta tietokanta toimisi oikein. Katso lisää esim. [tämän sivun](https://www.baeldung.com/google-sheets-java-client) kohta 3.
 
-Tiedot tallennetaan _HighScoreUi_ luokan sisältämään TableView-taulukkoon. Ennätkset tallennetaan taulukkoon HighScore-olioina.
+Tiedot tallennetaan _HighScoreUi_ luokan sisältämään TableView-taulukkoon HighScore-olioina.
 
 ## Päätoiminnallisuudet
 
