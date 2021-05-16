@@ -12,6 +12,8 @@ Tämä ohjelma emuloi Space Invaders -peliä. Peli on yksinpeli ja siinä on 5 v
 
 [Arkkitehtuurikuvaus](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Testausdokumentti](https://github.com/asianomainen/ot-harjoitustyo/blob/master/dokumentaatio/testausdokumentti.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/asianomainen/ot-harjoitustyo/releases/tag/viikko5_v2)
