@@ -20,7 +20,7 @@ DAO-luokkia testataan käyttämällä testejä varten erikseen luotua [Google Sh
 
 Testeissä ei oteta huomioon käyttöliittymän rakentavaa ui-pakkausta. Testien rivikattavuus on 97% ja haarautumakattavuus 73%. Haarautumakattavuuden puuteet johtuvat _ShapeRemover_ luokan metodeista.
 
-<img src="https://raw.githubusercontent.com/mluukkai/OtmTodoApp/master/dokumentaatio/kuvat/t-1.png" width="800">
+![testikattavuus](https://user-images.githubusercontent.com/46067482/118408192-1d1cc200-b68d-11eb-8054-dd5e14bc703c.png)
 
 Testaamatta jäivät tilanteet, joissa käyttäjät tai tehtävät tallettavia tiedostoja ei ole, tai niihin ei ole luku- ja kirjoitusoikeutta.
 
