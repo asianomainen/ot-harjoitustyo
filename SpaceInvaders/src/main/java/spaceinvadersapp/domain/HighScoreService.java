@@ -70,9 +70,17 @@ public class HighScoreService {
 
     public void writeScoresToTable(TableView<HighScore> hsTable) {
         BatchGetValuesResponse range = getAllHighScores();
-        ValueRange names = range.getValueRanges().get(0);
-        ValueRange times = range.getValueRanges().get(1);
-        ValueRange points = range.getValueRanges().get(2);
+        ValueRange names;
+        ValueRange times;
+        ValueRange points;
+        try {
+            names = range.getValueRanges().get(0);
+            times = range.getValueRanges().get(1);
+            points = range.getValueRanges().get(2);
+        } catch (Exception e) {
+            return;
+        }
+
 
         if (names.getValues() == null) {
             return;
