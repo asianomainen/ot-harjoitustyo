@@ -41,3 +41,5 @@ Kaikki [määrittelydokumentissa](https://github.com/asianomainen/ot-harjoitusty
 ## Sovellukseen jääneet laatuongelmat
 
 Sovelluksessa ei ole virheilmoituksia ja sen sijaan kehittäjä (minä) on uljaasti luottanut taitoihinsa ja todennut, että virheilmoituksia ei tule mikäli käyttöohjeita on noudatettu oikein.
+
+Jostain syystä jar-tiedoston käynnistäminen ei onnistu mikäli sovelluksen konfiguraatiot on määritelty config.properties tiedostossa. Sovellus käynnistyy normaalisti ohjelmointiympäristössä, mutta jar-tiedostoa käynnistäessä tulee virheilmoitus, että kyseistä tiedostoa ei ole olemassa. Tästä syystä Google Sheets -dokumentin tunniste on kovakoodattu ohjelman koodiin.
