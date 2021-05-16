@@ -1,10 +1,6 @@
 # Käyttöohje
 
-Kloonaa sovelluksen repositoria tietokoneellesi siirtymällä hakemistoon mihin haluat ohjelman ladattavan ja antamalla komennon
-
-```
-git clone https://github.com/asianomainen/ot-harjoitustyo.git
-```
+Lataa sovelluksen zip-tiedoston viimeisimmästä releasesta.
 
 ## Ennen kuin käynnistät sovelluksen (tärkeä)
 
@@ -17,6 +13,8 @@ Mikäli käytät omaa tiedostoa, niin kopioi tarkalleen vakiotiedoston kaava ja 
 Mikäli luot oman tiedoston, niin kopioi tiedoston tunniste tiedoston verkkosivun osoitteesta. Vakiotiedostossa esimerkiksi tämä tunniste on "1e9IFMWunUko426Z4eMbGNMGwWqPIPVMd3q1gWKos9IU". Liitä kopioimasi tunniste config.properties tiedoston ensimmäiselle riville seuraavasti: "spreadsheetID=_tunniste tähän_"
 
 ### Mahdollistamme seuraavaksi tiedon tallentamisen Google Sheetsiin
+
+#### HUOM! Mikäli olet ohjaaja/arvioija, niin voit ohittaa tämän vaiheen lähettämällä minulle sähköpostia osoitteeseen oskari.nuottonen@gmail.com. Voin lisätä sinut manuaalisesti sovelluksen testaajaksi ja antaa käyttöön minun OAuth tunnukset. Tarvitsen vain gmail-sähköpostiosoitteesi.
 
 Huolimatta siitä oletko käyttänyt omaa tiedostoa vai vakiotiedostoa, tee seuraavat toimenpiteet:
 
