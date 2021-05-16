@@ -41,4 +41,6 @@
 | 15.5.  | 1    | JavaDoc lisätty kaikille luokille |
 | 15.5.  | 3    | Refaktoroitiin koodia ja poistettiin käyttämättömiä elementtejä. Korjattiin Google Sheets API:n bugeja |
 | 16.5.  | 3    | Lisättiin testejä ja korjattiin bugi high scoren tallentamisessa |
-| Yhteensä | 68    |
+| 16.5.  | 2    | Bugien korjaamista liittyen jar-tiedoston luomiseen ja Google Sheets API:in |
+| 16.5.  | 2    | Dokumentaation päivittäminen ja loppupalautuksen tekeminen |
+| Yhteensä | 72    |
