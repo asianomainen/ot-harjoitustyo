@@ -40,4 +40,5 @@
 | 15.5.  | 4    | Lisättiin High Scoren tallentaminen |
 | 15.5.  | 1    | JavaDoc lisätty kaikille luokille |
 | 15.5.  | 3    | Refaktoroitiin koodia ja poistettiin käyttämättömiä elementtejä. Korjattiin Google Sheets API:n bugeja |
-| Yhteensä | 65    |
+| 16.5.  | 3    | Lisättiin testejä ja korjattiin bugi high scoren tallentamisessa |
+| Yhteensä | 68    |
