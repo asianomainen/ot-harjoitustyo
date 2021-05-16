@@ -1,3 +1,4 @@
+![Untitled Diagram](https://user-images.githubusercontent.com/46067482/118410857-47c14780-b69a-11eb-9769-11cc7d34fb31.jpg)
 # Arkkitehtuurikuvaus
 
 ## Rakenne
@@ -111,10 +112,13 @@ Sovelluksen toteutuksessa on noudatettu DAO-mallia, ja tiedon tallennuksen hoita
 
 Tässä tulee ottaa huomioon Google Sheets API:n vaatima OAuth 2.0 varmennus, jotta tietokanta toimisi oikein. Katso lisää esim. [tämän sivun](https://www.baeldung.com/google-sheets-java-client) kohta 3.
 
+
 Tiedot tallennetaan _HighScoreUi_ luokan sisältämään TableView-taulukkoon HighScore-olioina hyödyntämällä _HighScore_ luokan metodeja.
 
 ## Päätoiminnallisuudet
 
-Alustava sekvenssikaavio pelin pelaamisesta. Sekvenssikaavio esittää uuden pelin aloittamista, liikettä ja ampumista:
+Sekvenssikaavio pelin pelaamisesta.
 
-![SpaceInvadersSeuqnce](https://user-images.githubusercontent.com/46067482/116302653-201d4480-a7aa-11eb-813a-a5b405320db3.png)
+![Untitled Diagram](https://user-images.githubusercontent.com/46067482/118410862-4d1e9200-b69a-11eb-8992-c39d1191893e.jpg)
+
+Kun pelaaja on käynnistänyt pelin, niin käyttöliittymä rekisteröi pelaajan napinpainalluksia. AnimationTimer-luokka kutsuu sekvenssikaaviossa esitettyjä komentoja n. 100 kertaa sekunnissa. Eli sekvenssikaaviossa esitetty _ShapeRemover_ ja _BulletCollisionHandler_ luokkien toiminnot kutsutaan todellisuudessa joka kerta kun Animation Timer "päivittää" kerran. Pelaajan ampuminen ja liikkuminen toteutetaan vain pelaajan painaessa nappeja.
