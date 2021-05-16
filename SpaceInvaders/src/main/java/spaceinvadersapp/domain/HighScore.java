@@ -1,5 +1,5 @@
 package spaceinvadersapp.domain;
-
+;
 import javafx.beans.property.SimpleStringProperty;
 
 /**

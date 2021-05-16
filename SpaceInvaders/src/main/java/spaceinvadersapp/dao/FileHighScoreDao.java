@@ -26,11 +26,11 @@ public class FileHighScoreDao implements HighScoreDao {
 
     @Override
     public boolean addHighScore(String name, String time, String points) {
-        ValueRange appendBody = new ValueRange().setValues(Collections.singletonList(Arrays.asList(name, time, points)));
+        ValueRange appendBody = new ValueRange().setValues(Collections.singletonList(Arrays.asList(name, Integer.valueOf(time), Integer.valueOf(points))));
 
         try {
             sheetsService.spreadsheets().values()
-                    .append(spreadsheetID, "A4", appendBody)
+                    .append(spreadsheetID, "All scores!A4", appendBody)
                     .setValueInputOption("RAW")
                     .setInsertDataOption("INSERT_ROWS")
                     .setIncludeValuesInResponse(true)
@@ -43,7 +43,7 @@ public class FileHighScoreDao implements HighScoreDao {
 
     @Override
     public BatchGetValuesResponse getHighScores() throws IOException {
-        List<String> ranges = Arrays.asList("E3:E12", "F3:F12", "G3:G12");
+        List<String> ranges = Arrays.asList("TOP10!A3:A12", "TOP10!B3:B12", "TOP10!C3:C12");
         return sheetsService.spreadsheets().values()
                 .batchGet(spreadsheetID)
                 .setRanges(ranges)

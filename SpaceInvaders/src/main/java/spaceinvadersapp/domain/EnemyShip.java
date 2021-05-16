@@ -22,7 +22,7 @@ public class EnemyShip extends Shape {
     }
 
     /**
-     * Moves the enemies left or right.
+     * Moves the enemies left (false) or right (true).
      *
      * Counter keeps track of how many times the enemy has moved.
      * When enemy direction is to be changed, the counter value
@@ -82,5 +82,9 @@ public class EnemyShip extends Shape {
 
     public void changeDirection() {
         this.direction = !this.direction;
+    }
+
+    public boolean getDirection() {
+        return direction;
     }
 }

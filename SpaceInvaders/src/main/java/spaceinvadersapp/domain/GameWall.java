@@ -37,4 +37,14 @@ public class GameWall extends Shape {
     public int getLives() {
         return this.lives;
     }
+
+    /**
+     * Sets the amount of lives to the given value.
+     *
+     * @param lives amount of lives for the wall to be set to.
+     */
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 }
