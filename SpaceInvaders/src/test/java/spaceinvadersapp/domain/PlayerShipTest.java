@@ -109,4 +109,37 @@ public class PlayerShipTest {
         PlayerShip ship2 = new PlayerShip(115, 105, Color.BEIGE);
         assertFalse(ship1.collision(ship2));
     }
+
+    @Test
+    public void returnsCorrectAmountOfLives() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        assertEquals(3, ship.getLives(), 0);
+    }
+
+    @Test
+    public void returnsCorrectAmountOfLivesWhenPlayerHasDied() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        ship.die();
+        assertEquals(2, ship.getLives(), 0);
+    }
+
+    @Test
+    public void returnsFalseWhenNotImmortal() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        assertFalse(ship.isImmortal());
+    }
+
+    @Test
+    public void returnsTrueWhenImmortal() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        ship.setImmortal(true);
+        assertTrue(ship.isImmortal());
+    }
+
+    @Test
+    public void returnsCorrectAmountOfLivesWhenLivesAreSet() {
+        PlayerShip ship = new PlayerShip(15, 5, Color.BEIGE);
+        ship.setLives(1);
+        assertEquals(1, ship.getLives(), 0);
+    }
 }
