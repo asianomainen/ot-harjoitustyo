@@ -34,14 +34,6 @@ public class BulletCollisionHandlerTest {
         walls = new ArrayList<>();
         gamePoints = new AtomicInteger();
         gamePoints.addAndGet(500);
-
-/*        for (int i = 0; i < 3; i++) {
-            playerShips.add(new PlayerShip(15, 15, Color.BEIGE));
-            playerBullets.add(new PlayerBullet(15, 15, Color.BEIGE));
-            enemyShips.add(new EnemyShip(15, 15, Color.BEIGE));
-            enemyBullets.add(new EnemyBullet(15, 15, Color.BEIGE));
-            walls.add(new GameWall(15, 15, Color.BEIGE));
-        }*/
     }
 
     @Test
@@ -56,37 +48,42 @@ public class BulletCollisionHandlerTest {
         assertFalse(pBullet.isAlive());
     }
 
-/*    @Test
-    public void handlePlayerShotsWorks() {
-        for (int i = 0; i < 3; i++) {
-            PlayerBullet pBullet1 = new PlayerBullet(15 * i, 15 * i, Color.BEIGE);
-            EnemyShip eShip = new EnemyShip(15 * i, 15 * i, Color.BEIGE);
-            PlayerBullet pBullet2 = new PlayerBullet(50 * i, 50 * i, Color.BEIGE);
-            GameWall wall = new GameWall(50 * i, 50 * i, Color.BEIGE);
-            wall.setLives(1);
-            playerBullets.add(pBullet1);
-            playerBullets.add(pBullet2);
-            enemyShips.add(eShip);
-            walls.add(wall);
-            gameUi.pane.getChildren().addAll(pBullet1.getShape(), pBullet2.getShape(), eShip.getShape(), wall.getShape());
-        }
+    @Test
+    public void handlePlayerShotsWorksWithPlayerBulletsAndWalls() {
+        PlayerBullet pBullet = new PlayerBullet(15, 15, Color.BEIGE);
+        GameWall wall = new GameWall(15, 15, Color.BEIGE);
+        wall.setLives(1);
+        playerBullets.add(pBullet);
+        walls.add(wall);
+        gameUi.pane.getChildren().addAll(pBullet.getShape(), wall.getShape());
+        handler.handlePlayerShots(playerBullets, enemyShips, walls, gamePoints, gameUi);
 
-        for (PlayerBullet bullet : playerBullets) {
-            for (EnemyShip ship : enemyShips) {
-                bullet.collision(ship);
-                handler.handlePlayerShots(playerBullets, enemyShips, walls, gamePoints, gameUi);
-            }
-        }
+        assertFalse(pBullet.isAlive());
+    }
 
-        for (PlayerBullet bullet : playerBullets) {
-            for (GameWall wall : walls) {
-                if (bullet.collision(wall)) {
-                    handler.handlePlayerShots(playerBullets, enemyShips, walls, gamePoints, gameUi);
-                }
-            }
-        }
+    @Test
+    public void handleEnemyShotsWorksWithEnemyBulletsAndPlayers() {
+        EnemyBullet eBullet = new EnemyBullet(15, 15, Color.BEIGE);
+        PlayerShip pShip = new PlayerShip(15, 15, Color.BEIGE);
+        pShip.setLives(1);
+        enemyBullets.add(eBullet);
+        playerShips.add(pShip);
+        gameUi.pane.getChildren().addAll(eBullet.getShape(), pShip.getShape());
+        handler.handleEnemyShots(enemyBullets, playerShips, walls, gamePoints, gameUi);
 
-        int total = playerBullets.size() + enemyShips.size() + walls.size();
-        assertEquals(0, total);
-    }*/
+        assertFalse(eBullet.isAlive());
+    }
+
+    @Test
+    public void handleEnemyShotsWorksWithEnemyBulletsAndWalls() {
+        EnemyBullet eBullet = new EnemyBullet(15, 15, Color.BEIGE);
+        GameWall wall = new GameWall(15, 15, Color.BEIGE);
+        wall.setLives(1);
+        enemyBullets.add(eBullet);
+        walls.add(wall);
+        gameUi.pane.getChildren().addAll(eBullet.getShape(), wall.getShape());
+        handler.handleEnemyShots(enemyBullets, playerShips, walls, gamePoints, gameUi);
+
+        assertFalse(eBullet.isAlive());
+    }
 }
