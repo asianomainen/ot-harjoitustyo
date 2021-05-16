@@ -131,9 +131,6 @@ public class SpaceInvadersUi extends Application {
 
             @Override
             public void handle(long presentTime) {
-                System.out.println("Lives: " + gameUi.playerShip.getLives());
-                System.out.println("Alive: " + gameUi.playerShip.isAlive());
-                System.out.println("Immortal: " + gameUi.playerShip.isImmortal());
                 playerBullets.forEach(Shape::moveUp);
                 enemyBullets.forEach(Shape::moveDown);
                 shapeRemover.removeDeadPlayerShips(playerShips, gameUi);
