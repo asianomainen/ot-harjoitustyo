@@ -1,10 +1,6 @@
 # Käyttöohje
 
-Kloonaa sovelluksen repositoria tietokoneellesi siirtymällä hakemistoon mihin haluat ohjelman ladattavan ja antamalla komennon
-
-```
-git clone https://github.com/asianomainen/ot-harjoitustyo.git
-```
+Lataa sovelluksen zip-tiedoston viimeisimmästä releasesta.
 
 ## Ennen kuin käynnistät sovelluksen (tärkeä)
 
